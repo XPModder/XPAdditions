@@ -1,0 +1,10 @@
+
+
+item.star_item.name=Mini Star
+item.medium_star_item.name=Medium Star
+item.big_star_item.name=Big Star
+item.dense_star_item.name=Dense Star
+
+tile.starfield_block.name=Starfield Block
+tile.star_block.name=Star Block
+tile.bright_star_block.name=Lightsource

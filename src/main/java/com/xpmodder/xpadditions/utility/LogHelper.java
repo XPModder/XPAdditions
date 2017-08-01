@@ -9,7 +9,7 @@ public class LogHelper {
 
     public static void log(Level logLevel, Object object){
 
-        FMLLog.log(Reference.MOD_ID, logLevel, String.valueOf(object));
+        FMLLog.log(Reference.MOD_ID, logLevel, "[" + Reference.NAME + "]: " + String.valueOf(object));
 
     }
 
