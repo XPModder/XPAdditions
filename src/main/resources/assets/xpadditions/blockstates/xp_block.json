@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "xpadditions:xp_block" }
+  }
+}

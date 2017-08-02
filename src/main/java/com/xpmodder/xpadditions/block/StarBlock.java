@@ -1,8 +1,8 @@
 package com.xpmodder.xpadditions.block;
 
+import static com.xpmodder.xpadditions.handler.ConfigurationHandler.starBlockRadius;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.init.ModBlocks;
-import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -10,9 +10,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+
 public class StarBlock extends Block {
 
-    int radius = 20;
+    int radius = starBlockRadius;
 
     public StarBlock(String unlocalizedName) {
 

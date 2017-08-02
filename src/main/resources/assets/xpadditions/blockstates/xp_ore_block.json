@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=overworld": { "model": "xpadditions:xp_ore_block_0" },
+    "type=nether": { "model": "xpadditions:xp_ore_block_1"},
+    "type=end": { "model": "xpadditions:xp_ore_block_2"}
+  }
+}

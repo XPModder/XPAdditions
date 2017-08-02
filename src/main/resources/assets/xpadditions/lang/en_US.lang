@@ -4,7 +4,12 @@ item.star_item.name=Mini Star
 item.medium_star_item.name=Medium Star
 item.big_star_item.name=Big Star
 item.dense_star_item.name=Dense Star
+item.xp_orb_item.name=Orb of XP
 
 tile.starfield_block.name=Starfield Block
 tile.star_block.name=Star Block
 tile.bright_star_block.name=Lightsource
+tile.xp_block.name=Block of XP
+tile.xp_ore_block.overworld.name=XP Ore
+tile.xp_ore_block.nether.name=Nether XP Ore
+tile.xp_ore_block.end.name=Ender XP Ore

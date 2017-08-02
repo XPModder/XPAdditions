@@ -1,13 +1,19 @@
 package com.xpmodder.xpadditions.block;
 
+import com.xpmodder.xpadditions.particle.LargeStarParticle;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BrightStarBlock extends Block{
 
@@ -20,7 +26,14 @@ public class BrightStarBlock extends Block{
         this.setHarvestLevel("pickaxe", 3);
         this.setLightLevel(1.0F);
         this.setLightOpacity(0);
+        this.setTickRandomly(true);
 
+    }
+
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
     }
 
     @Nullable
@@ -34,11 +47,6 @@ public class BrightStarBlock extends Block{
         return false;
     }
 
-    public boolean canCollideCheck(IBlockState state, boolean hitIfLiquid)
-    {
-        return false;
-    }
-
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
     {
     }
@@ -47,5 +55,19 @@ public class BrightStarBlock extends Block{
     {
         return false;
     }
+
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand){
+
+        double dX = (double)pos.getX() + 0.5D;
+        double dY = (double)pos.getY() + 0.5D;
+        double dZ = (double)pos.getZ() + 0.5D;
+
+
+        LargeStarParticle effect = new LargeStarParticle(worldIn, dX, dY, dZ, 0.0D, 0.0D, 0.0D);
+        Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+
+    }
+
 
 }
