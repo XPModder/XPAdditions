@@ -20,7 +20,7 @@ public class ModCrafting {
 
 
         GameRegistry.addShapelessRecipe(new ItemStack(Items.EXPERIENCE_BOTTLE), new Object[] {Items.GLASS_BOTTLE, ModItems.xpOrbItem, ModItems.xpOrbItem, ModItems.xpOrbItem});
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.xpOrbItem, 3), new Object[] {Items.EXPERIENCE_BOTTLE});
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.xpOrbItem), new Object[] {Items.EXPERIENCE_BOTTLE});
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.starItem, 9), new Object[] {ModItems.mediumStarItem});
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.mediumStarItem, 9), new Object[] {ModItems.bigStarItem});
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.bigStarItem, 9), new Object[] {ModItems.denseStarItem});
