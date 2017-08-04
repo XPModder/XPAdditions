@@ -38,11 +38,11 @@ public class StarBlock extends Block {
 
             worldIn.setBlockState(pos2, ModBlocks.brightStarBlock.getDefaultState(), 2);
 
-            for(int x = radius * -1; x < radius; x+= 4 ){
+            for(int x = (radius * -1) - 1; x < radius; x+= 4 ){
 
-                for (int z = radius * -1; z < radius; z+= 4 ){
+                for (int z = (radius * -1) - 1; z < radius; z+= 4 ){
 
-                    for (int y = 0; y < radius; y += 10){
+                    for (int y = 0; y < radius; y += 9){
 
                         BlockPos currentPos = new BlockPos(pos2.getX() + x, pos2.getY() - y, pos2.getZ() + z);
 
@@ -63,11 +63,11 @@ public class StarBlock extends Block {
 
             worldIn.setBlockState(pos3, ModBlocks.brightStarBlock.getDefaultState(), 2);
 
-            for(int x = radius * -1; x < radius; x+= 4 ){
+            for(int x = (radius * -1) - 1; x < radius; x+= 4 ){
 
-                for (int z = radius * -1; z < radius; z+= 4 ){
+                for (int z = (radius * -1) - 1; z < radius; z+= 4 ){
 
-                    for (int y = 0; y < radius; y += 10){
+                    for (int y = 0; y < radius; y += 9){
 
                         BlockPos currentPos = new BlockPos(pos3.getX() + x, pos3.getY() + y, pos3.getZ() + z);
 
@@ -108,9 +108,9 @@ public class StarBlock extends Block {
 
             worldIn.setBlockToAir(pos2);
 
-            for(int x = radius * -1; x < radius; x++ ){
+            for(int x = (radius * -1) - 1; x < radius; x++ ){
 
-                for (int z = radius * -1; z < radius; z++ ){
+                for (int z = (radius * -1) - 1; z < radius; z++ ){
 
                     for (int y = 0; y < radius; y ++){
 
@@ -133,9 +133,9 @@ public class StarBlock extends Block {
 
             worldIn.setBlockToAir(pos3);
 
-            for(int x = radius * -1; x < radius; x++ ){
+            for(int x = (radius * -1) - 1; x < radius; x++ ){
 
-                for (int z = radius * -1; z < radius; z++ ){
+                for (int z = (radius * -1) - 1; z < radius; z++ ){
 
                     for (int y = 0; y < radius; y ++){
 

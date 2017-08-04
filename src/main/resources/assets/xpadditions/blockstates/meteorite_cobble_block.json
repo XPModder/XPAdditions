@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "xpadditions:meteorite_cobble_block" }
+  }
+}
