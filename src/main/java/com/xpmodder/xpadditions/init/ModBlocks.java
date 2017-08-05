@@ -29,7 +29,7 @@ public final class ModBlocks {
         GameRegistry.registerBlock(burntStoneBlock = new BasicBlock("burnt_stone_block"), "burnt_stone_block");
         GameRegistry.registerBlock(meteoriteCobbleBlock = new BasicBlock( "meteorite_cobble_block"), "meteorite_cobble_block");
         GameRegistry.registerBlock(meteoriteRockBlock = new DropBlock( "meteorite_rock_block", Material.ROCK, Item.getItemFromBlock(ModBlocks.meteoriteCobbleBlock)), "meteorite_rock_block");
-        GameRegistry.registerBlock(meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 5), "meteorite_star_block");
+        GameRegistry.registerBlock(meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3), "meteorite_star_block");
 
     }
 

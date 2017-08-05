@@ -12,7 +12,7 @@ public class ConfigurationHandler {
 
     public static Configuration configuration;
     public static boolean configValue = false;
-    public static int starBlockRadius = 10;
+    public static int starBlockRadius;
 
     public static void init(File configFile){
 
