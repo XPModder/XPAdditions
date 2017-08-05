@@ -15,6 +15,7 @@ public class ClientProxy extends CommonProxy {
 
         blockRenderRegister.preInit();
 
+
     }
 
     @Override
