@@ -3,6 +3,7 @@ package com.xpmodder.xpadditions.block;
 import static com.xpmodder.xpadditions.handler.ConfigurationHandler.starBlockRadius;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.utility.MathHelper;
 import com.xpmodder.xpadditions.utility.ShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -51,53 +52,21 @@ public class StarBlock extends Block {
 
     public void RemoveLightsources(World worldIn, BlockPos pos){
 
-        BlockPos pos2 = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ());
-        BlockPos pos3 = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
+        int maxX = pos.getX() + radius + 2;
+        int minX = maxX * -1;
+        int maxZ = pos.getZ() + radius + 2;
+        int minZ = maxZ * -1;
 
-        if (worldIn.getBlockState(pos2).getBlock() == ModBlocks.brightStarBlock){
+        int currX;
+        int currZ;
 
-            worldIn.setBlockToAir(pos2);
+        for (currX = minX; currX <= maxX; currX++){
 
-            for(int x = (radius * -1) - 1; x < radius; x++ ){
+            for (currZ = minZ; currZ <= maxZ; currZ++){
 
-                for (int z = (radius * -1) - 1; z < radius; z++ ){
+                if (worldIn.getBlockState(new BlockPos(currX, pos.getY() + 1, currZ)).getBlock() == ModBlocks.brightStarBlock){
 
-                    for (int y = 0; y < radius; y ++){
-
-                        BlockPos currentPos = new BlockPos(pos2.getX() + x, pos2.getY() - y, pos2.getZ() + z);
-
-                        if (worldIn.getBlockState(currentPos).getBlock() == ModBlocks.brightStarBlock){
-
-                            worldIn.setBlockToAir(currentPos);
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-        else if (worldIn.getBlockState(pos3).getBlock() == ModBlocks.brightStarBlock){
-
-            worldIn.setBlockToAir(pos3);
-
-            for(int x = (radius * -1) - 1; x < radius; x++ ){
-
-                for (int z = (radius * -1) - 1; z < radius; z++ ){
-
-                    for (int y = 0; y < radius; y ++){
-
-                        BlockPos currentPos = new BlockPos(pos3.getX() + x, pos3.getY() + y, pos3.getZ() + z);
-
-                        if (worldIn.getBlockState(currentPos).getBlock() == ModBlocks.brightStarBlock){
-
-                            worldIn.setBlockToAir(currentPos);
-
-                        }
-
-                    }
+                    worldIn.setBlockState(new BlockPos(currX, pos.getY() + 1, currZ), Blocks.AIR.getDefaultState());
 
                 }
 
@@ -107,57 +76,38 @@ public class StarBlock extends Block {
 
     }
 
-    public void addLightsources(World worldIn, BlockPos pos){
+    public void addLightsources(World worldIn, BlockPos pos) {
 
-        BlockPos pos2 = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ());
-        BlockPos pos3 = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
+        int maxX = pos.getX() + radius + 2;
+        int minX = maxX * -1;
+        int maxZ = pos.getZ() + radius + 2;
+        int minZ = maxZ * -1;
 
-        if ( worldIn.isAirBlock(pos2)){
+        int currX;
+        int currZ;
 
-            worldIn.setBlockState(pos2, ModBlocks.brightStarBlock.getDefaultState(), 2);
+        int place = 0;
 
-            for(int x = (radius * -1) - 1; x < radius; x+= 4 ){
+        for (currX = minX; currX <= maxX; currX++){
 
-                for (int z = (radius * -1) - 1; z < radius; z+= 4 ){
+            for (currZ = minZ; currZ <= maxZ; currZ++){
 
-                    for (int y = 0; y < radius; y += 9){
+                if (MathHelper.isPosOnHCircle(currX, pos.getY() + 1, currZ, radius, pos.getX(), pos.getY() + 1, pos.getZ()) || MathHelper.isPosInHCircle(currX, pos.getY(), currZ, radius, pos.getX(), pos.getY(), pos.getZ())){
 
-                        BlockPos currentPos = new BlockPos(pos2.getX() + x, pos2.getY() - y, pos2.getZ() + z);
+                    if (worldIn.isAirBlock(new BlockPos(currX, pos.getY() + 1, currZ))){
 
-                        if (worldIn.isAirBlock(currentPos)){
+                        if (worldIn.getLight(new BlockPos(currX, pos.getY() + 1, currZ)) < 8 || place == 6){
 
-                            worldIn.setBlockState(currentPos, ModBlocks.brightStarBlock.getDefaultState(), 2);
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-        else if (worldIn.isAirBlock(pos3)){
-
-            worldIn.setBlockState(pos3, ModBlocks.brightStarBlock.getDefaultState(), 2);
-
-            for(int x = (radius * -1) - 1; x < radius; x+= 4 ){
-
-                for (int z = (radius * -1) - 1; z < radius; z+= 4 ){
-
-                    for (int y = 0; y < radius; y += 9){
-
-                        BlockPos currentPos = new BlockPos(pos3.getX() + x, pos3.getY() + y, pos3.getZ() + z);
-
-                        if (worldIn.isAirBlock(currentPos)){
-
-                            worldIn.setBlockState(currentPos, ModBlocks.brightStarBlock.getDefaultState(), 2);
+                            worldIn.setBlockState(new BlockPos(currX, pos.getY() + 1, currZ), ModBlocks.brightStarBlock.getDefaultState());
+                            place = 0;
 
                         }
 
                     }
 
                 }
+
+                place++;
 
             }
 

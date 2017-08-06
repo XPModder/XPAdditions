@@ -1,5 +1,6 @@
 package com.xpmodder.xpadditions;
 
+import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.handler.ConfigurationHandler;
 import com.xpmodder.xpadditions.proxy.CommonProxy;
 import com.xpmodder.xpadditions.reference.Reference;
@@ -22,12 +23,16 @@ public class XPAdditions {
     @SidedProxy(clientSide = Reference.ClientProxyClass, serverSide = Reference.ServerProxyClass)
     public static CommonProxy proxy;
 
+    public static ModFluids fluids;
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event){
 
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+
+        fluids = new ModFluids();
+        fluids.registerFluids();
 
         this.proxy.preInit(event);
 
