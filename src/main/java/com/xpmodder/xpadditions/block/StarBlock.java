@@ -1,22 +1,22 @@
 package com.xpmodder.xpadditions.block;
 
-import static com.xpmodder.xpadditions.handler.ConfigurationHandler.starBlockRadius;
+import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.utility.MathHelper;
-import com.xpmodder.xpadditions.utility.ShapeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 
 public class StarBlock extends Block {
 
-    int radius = starBlockRadius;
+    int radius = XPAdditions.instance.config.starBlockRadius.getInt();
 
     public StarBlock(String unlocalizedName) {
 
@@ -53,61 +53,81 @@ public class StarBlock extends Block {
     public void RemoveLightsources(World worldIn, BlockPos pos){
 
         int maxX = pos.getX() + radius + 2;
-        int minX = maxX * -1;
+        int minX = pos.getX() - radius - 2;
+        int maxY = pos.getY() + radius + 2;
+        int minY = pos.getY() - radius - 2;
         int maxZ = pos.getZ() + radius + 2;
-        int minZ = maxZ * -1;
+        int minZ = pos.getZ() - radius - 2;
 
         int currX;
+        int currY;
         int currZ;
+
+        BlockPos currPos;
 
         for (currX = minX; currX <= maxX; currX++){
 
-            for (currZ = minZ; currZ <= maxZ; currZ++){
+            for (currY = minY; currY <= maxY; currY++) {
 
-                if (worldIn.getBlockState(new BlockPos(currX, pos.getY() + 1, currZ)).getBlock() == ModBlocks.brightStarBlock){
+                for (currZ = minZ; currZ <= maxZ; currZ++) {
 
-                    worldIn.setBlockState(new BlockPos(currX, pos.getY() + 1, currZ), Blocks.AIR.getDefaultState());
+                    currPos = new BlockPos(currX, currY, currZ);
+
+                    if (worldIn.getBlockState(currPos).getBlock() == ModBlocks.brightStarBlock) {
+
+                        worldIn.setBlockToAir(currPos);
+
+                    }
 
                 }
 
             }
 
         }
-
     }
 
     public void addLightsources(World worldIn, BlockPos pos) {
 
         int maxX = pos.getX() + radius + 2;
-        int minX = maxX * -1;
+        int minX = pos.getX() - radius - 2;
+        int maxY = pos.getY() + radius + 2;
+        int minY = pos.getY() - radius - 2;
         int maxZ = pos.getZ() + radius + 2;
-        int minZ = maxZ * -1;
+        int minZ = pos.getZ() - radius - 2;
 
         int currX;
+        int currY;
         int currZ;
 
-        int place = 0;
+        Chunk chunk;
+
+        BlockPos currPos;
 
         for (currX = minX; currX <= maxX; currX++){
 
-            for (currZ = minZ; currZ <= maxZ; currZ++){
+            for (currY = minY; currY <= maxY; currY++) {
 
-                if (MathHelper.isPosOnHCircle(currX, pos.getY() + 1, currZ, radius, pos.getX(), pos.getY() + 1, pos.getZ()) || MathHelper.isPosInHCircle(currX, pos.getY(), currZ, radius, pos.getX(), pos.getY(), pos.getZ())){
+                for (currZ = minZ; currZ <= maxZ; currZ++) {
 
-                    if (worldIn.isAirBlock(new BlockPos(currX, pos.getY() + 1, currZ))){
+                    currPos = new BlockPos(currX, currY, currZ);
 
-                        if (worldIn.getLight(new BlockPos(currX, pos.getY() + 1, currZ)) < 8 || place == 6){
+                    if (MathHelper.isPosOnSphere(currPos, radius, pos) || MathHelper.isPosInSphere(currPos, radius, pos)) {
 
-                            worldIn.setBlockState(new BlockPos(currX, pos.getY() + 1, currZ), ModBlocks.brightStarBlock.getDefaultState());
-                            place = 0;
+                        if (worldIn.isAirBlock(currPos)) {
+
+                            chunk = worldIn.getChunkFromBlockCoords(currPos);
+
+                            if (chunk.getLightFor(EnumSkyBlock.BLOCK, currPos) < 8) {
+
+                                worldIn.setBlockState(currPos, ModBlocks.brightStarBlock.getDefaultState());
+
+                            }
 
                         }
 
                     }
 
                 }
-
-                place++;
 
             }
 

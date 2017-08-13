@@ -13,7 +13,7 @@ public class CreativeTabXPA {
         @Override
         public Item getTabIconItem() {
 
-            return ModItems.starItem;
+            return ModItems.xpOrbItem;
 
         }
 

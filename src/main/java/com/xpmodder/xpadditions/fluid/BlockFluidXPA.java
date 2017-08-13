@@ -1,13 +1,10 @@
 package com.xpmodder.xpadditions.fluid;
 
-import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.apache.commons.lang3.StringUtils;
 
 public class BlockFluidXPA extends BlockFluidClassic {
 

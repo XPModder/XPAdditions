@@ -5,6 +5,7 @@ item.medium_star_item.name=Medium Star
 item.big_star_item.name=Big Star
 item.dense_star_item.name=Dense Star
 item.xp_orb_item.name=Orb of XP
+item.bucketLiquid_xp.name=Liquid XP Bucket
 
 tile.starfield_block.name=Starfield Block
 tile.star_block.name=Star Block
@@ -16,4 +17,4 @@ tile.xp_ore_block.end.name=Ender XP Ore
 tile.burnt_stone_block.name=Burnt Stone
 tile.meteorite_cobble_block.name=Meteoric Cobble
 tile.meteorite_rock_block.name=Meteoric Rock
-tile.meteorite_star_block.name=Meteoric Rock with fragment of fallen Star
+tile.meteorite_star_block.name=Meteoric Rock with star fragment

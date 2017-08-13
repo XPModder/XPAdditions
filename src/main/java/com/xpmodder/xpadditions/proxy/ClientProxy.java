@@ -19,6 +19,7 @@ public class ClientProxy extends CommonProxy {
 
         XPAdditions.fluids.registerRenderers();
         Buckets.createBuckets();
+        Buckets.registerRenderers();
 
     }
 

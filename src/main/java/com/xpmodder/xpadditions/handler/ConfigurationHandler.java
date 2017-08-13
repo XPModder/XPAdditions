@@ -3,6 +3,7 @@ package com.xpmodder.xpadditions.handler;
 
 import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -10,43 +11,39 @@ import java.io.File;
 
 public class ConfigurationHandler {
 
-    public static Configuration configuration;
-    public static boolean configValue = false;
-    public static int starBlockRadius;
+    public Configuration configuration;
 
-    public static void init(File configFile){
+    public Property starBlockRadius;
 
-        if (configuration == null) {
+    public ConfigurationHandler(File configFile){
 
-            configuration = new Configuration(configFile);
-            loadConfiguration();
+        configuration = new Configuration(configFile);
+        reload();
 
-        }
+    }
+
+    void reload(){
+
+        configuration.load();
+
+        starBlockRadius = configuration.get(Configuration.CATEGORY_GENERAL, "starBlockRadius", 20, "This is the radius in which a Star Block spawns lightsources!");
+
+        update();
 
     }
 
     @SubscribeEvent
-    public void onConfigurationChangedEvent (ConfigChangedEvent.OnConfigChangedEvent event){
+    public void OnConfigChanged(ConfigChangedEvent event) {
 
-        if (event.getModID() == Reference.MOD_ID){
-
-            loadConfiguration();
-
-        }
+        if (event.getModID().equals(Reference.MOD_ID)) update();
 
     }
 
-    private static void loadConfiguration(){
+    void update(){
 
-        configuration.load();
+        starBlockRadius.set(Math.min(Math.max(starBlockRadius.getInt(20), 40), 4));
 
-        configValue = configuration.getBoolean("configValue", Configuration.CATEGORY_GENERAL, false, "This is an Example!");
-        starBlockRadius = configuration.getInt("starBlockRadius", Configuration.CATEGORY_GENERAL, 10, 4,30,"This is the radius in which a Star Block spawns lightsources!");
-
-        if (configuration.hasChanged()){
-
-            configuration.save();
-        }
+        configuration.save();
 
     }
 

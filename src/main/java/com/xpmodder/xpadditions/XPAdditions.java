@@ -5,7 +5,7 @@ import com.xpmodder.xpadditions.handler.ConfigurationHandler;
 import com.xpmodder.xpadditions.proxy.CommonProxy;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.client.gui.GuiFactory")
 public class XPAdditions {
 
+    public ConfigurationHandler config;
 
     @Mod.Instance(Reference.MOD_ID)
     public static XPAdditions instance;
@@ -28,8 +29,7 @@ public class XPAdditions {
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event){
 
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-        FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+        config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
 
         fluids = new ModFluids();
         fluids.registerFluids();
@@ -41,6 +41,8 @@ public class XPAdditions {
 
     @Mod.EventHandler
     public void Init (FMLInitializationEvent event){
+
+        MinecraftForge.EVENT_BUS.register(config);
 
         this.proxy.init(event);
 
