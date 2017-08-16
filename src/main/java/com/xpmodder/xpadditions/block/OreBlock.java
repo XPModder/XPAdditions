@@ -65,7 +65,7 @@ public class OreBlock extends Block implements IMetaBlockName {
 
     }
 
-    public static final PropertyEnum DIMENSION = PropertyEnum.create("type", OreBlock.EnumDim.class);
+    public static final PropertyEnum<OreBlock.EnumDim> DIMENSION = PropertyEnum.<OreBlock.EnumDim>create("type", OreBlock.EnumDim.class);
 
     public enum EnumDim implements IStringSerializable {
 
