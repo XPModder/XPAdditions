@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "xpadditions:blocks/xpOreBlock1"
+    "all":"xpadditions:blocks/xp_ore_block_0"
   }
 }

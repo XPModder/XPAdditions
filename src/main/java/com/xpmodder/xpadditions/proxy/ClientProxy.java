@@ -4,9 +4,11 @@ import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.client.render.blocks.blockRenderRegister;
 import com.xpmodder.xpadditions.client.render.items.itemRenderRegister;
 import com.xpmodder.xpadditions.fluid.Buckets;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy {
 

@@ -2,6 +2,7 @@ package com.xpmodder.xpadditions.client.render.blocks;
 
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.reference.Reference;
+import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -38,9 +39,11 @@ public final class blockRenderRegister {
 
     public static void preInit(){
 
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 0, new ModelResourceLocation("xpadditions:xp_ore_block_0"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 1, new ModelResourceLocation("xpadditions:xp_ore_block_1"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 2, new ModelResourceLocation("xpadditions:xp_ore_block_2"));
+        LogHelper.info("blockRenderRegister.preInit():");
+        LogHelper.info(new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "overworld"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 0, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "overworld"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 1, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "nether"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 2, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "end"));
 
     }
 

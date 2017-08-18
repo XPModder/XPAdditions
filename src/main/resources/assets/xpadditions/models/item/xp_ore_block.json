@@ -1,0 +1,6 @@
+{
+  "parent":"xpadditions:block/xp_ore_block",
+  "textures": {
+    "layer0":"xpadditions:blocks/xp_ore_block_0"
+  }
+}

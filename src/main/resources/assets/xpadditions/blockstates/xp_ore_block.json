@@ -1,7 +1,11 @@
 {
+  "forge_marker": 1,
   "variants": {
-    "type=overworld": { "model": "xpadditions:xp_ore_block_0" },
-    "type=nether": { "model": "xpadditions:xp_ore_block_1"},
-    "type=end": { "model": "xpadditions:xp_ore_block_2"}
+    "type=overworld": { "model": "xpadditions:xp_ore_block",
+                        "textures": { "all": "xpadditions:blocks/xp_ore_block_0"}},
+    "type=nether": { "model": "xpadditions:xp_ore_block",
+                     "textures": { "all": "xpadditions:blocks/xp_ore_block_1"}},
+    "type=end": { "model": "xpadditions:xp_ore_block",
+                  "textures": { "all": "xpadditions:blocks/xp_ore_block_2"}}
   }
 }
