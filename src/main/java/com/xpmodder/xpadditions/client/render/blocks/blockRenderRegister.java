@@ -40,10 +40,10 @@ public final class blockRenderRegister {
     public static void preInit(){
 
         LogHelper.info("blockRenderRegister.preInit():");
-        LogHelper.info(new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "overworld"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 0, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "overworld"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 1, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "nether"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 2, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName(), "end"));
+        LogHelper.info(new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_0", "overworld"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 0, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_0", "overworld"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 1, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_1", "nether"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 2, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_2", "end"));
 
     }
 
