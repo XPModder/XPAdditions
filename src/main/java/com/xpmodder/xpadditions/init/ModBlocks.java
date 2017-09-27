@@ -1,9 +1,13 @@
 package com.xpmodder.xpadditions.init;
 
 import com.xpmodder.xpadditions.block.*;
+import com.xpmodder.xpadditions.reference.Reference;
+import com.xpmodder.xpadditions.tileentity.XPInterfaceBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ModBlocks {
@@ -17,6 +21,7 @@ public final class ModBlocks {
     public static Block meteoriteCobbleBlock;
     public static Block meteoriteRockBlock;
     public static Block meteoriteStarBlock;
+    public static BlockContainer xpInterfaceBlock;
 
     public static void createBlocks() {
 
@@ -29,6 +34,7 @@ public final class ModBlocks {
         GameRegistry.registerBlock(meteoriteCobbleBlock = new BasicBlock( "meteorite_cobble_block"), "meteorite_cobble_block");
         GameRegistry.registerBlock(meteoriteRockBlock = new DropBlock( "meteorite_rock_block", Material.ROCK, Item.getItemFromBlock(ModBlocks.meteoriteCobbleBlock)), "meteorite_rock_block");
         GameRegistry.registerBlock(meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3), "meteorite_star_block");
+        GameRegistry.register(xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block"), new ResourceLocation(Reference.MOD_ID, "xp_interface_block"));
 
     }
 

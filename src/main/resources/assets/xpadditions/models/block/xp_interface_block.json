@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "xpadditions:blocks/bright_star_block"
+    "all": "xpadditions:blocks/xp_interface_block"
   }
 }

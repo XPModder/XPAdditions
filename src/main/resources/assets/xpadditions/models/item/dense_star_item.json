@@ -1,6 +1,6 @@
 {
   "parent":"xpadditions:item/standard_item",
   "textures": {
-    "layer0":"xpadditions:items/denseStarItem"
+    "layer0":"xpadditions:items/dense_star_item"
   }
 }

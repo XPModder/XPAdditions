@@ -1,6 +1,6 @@
 {
   "parent":"xpadditions:item/standard_item",
   "textures": {
-    "layer0":"xpadditions:items/xpOrbItem"
+    "layer0":"xpadditions:items/xp_orb_item"
   }
 }

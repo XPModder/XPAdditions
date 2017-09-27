@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "xpadditions:blocks/burntStoneBlock"
+    "all": "xpadditions:blocks/burnt_stone_block"
   }
 }

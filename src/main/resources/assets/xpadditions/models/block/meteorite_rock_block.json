@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "xpadditions:blocks/meteoriteRockBlock"
+    "all": "xpadditions:blocks/meteorite_rock_block"
   }
 }
