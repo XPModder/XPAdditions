@@ -34,7 +34,7 @@ public final class ModBlocks {
         GameRegistry.registerBlock(meteoriteCobbleBlock = new BasicBlock( "meteorite_cobble_block"), "meteorite_cobble_block");
         GameRegistry.registerBlock(meteoriteRockBlock = new DropBlock( "meteorite_rock_block", Material.ROCK, Item.getItemFromBlock(ModBlocks.meteoriteCobbleBlock)), "meteorite_rock_block");
         GameRegistry.registerBlock(meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3), "meteorite_star_block");
-        GameRegistry.register(xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block"), new ResourceLocation(Reference.MOD_ID, "xp_interface_block"));
+        GameRegistry.registerBlock(xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block"), "xp_interface_block");
 
     }
 

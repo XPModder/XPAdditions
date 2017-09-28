@@ -4,17 +4,15 @@ import com.xpmodder.xpadditions.fluid.Buckets;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.UniversalBucket;
 
 import javax.annotation.Nullable;
 
 public class XPInterfaceTileEntity extends TileEntity implements IInventory{
 
     private ItemStack[] inventory;
-    private String newname;
+    private String newName = "container.xp_interface_tile_entity";
 
     public XPInterfaceTileEntity(){
 
@@ -24,20 +22,20 @@ public class XPInterfaceTileEntity extends TileEntity implements IInventory{
 
     public String getCustomName() {
 
-        return this.newname;
+        return this.newName;
 
     }
 
     public void setCustomName(String customName) {
 
-        this.newname = customName;
+        this.newName = customName;
 
     }
 
     @Override
     public int getSizeInventory() {
 
-        return 9;
+        return 5;
 
     }
 
@@ -181,14 +179,14 @@ public class XPInterfaceTileEntity extends TileEntity implements IInventory{
     @Override
     public String getName() {
 
-        return this.hasCustomName() ? this.newname : "container.xp_interface_tile_entity";
+        return this.newName;
 
     }
 
     @Override
     public boolean hasCustomName() {
 
-        return this.newname != null && !this.newname.equals("");
+        return this.newName != null && !this.newName.equals("");
 
     }
 

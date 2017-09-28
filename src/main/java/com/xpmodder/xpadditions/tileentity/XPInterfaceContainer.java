@@ -2,7 +2,6 @@ package com.xpmodder.xpadditions.tileentity;
 
 import com.xpmodder.xpadditions.fluid.Buckets;
 import com.xpmodder.xpadditions.init.ModBlocks;
-import com.xpmodder.xpadditions.init.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -18,11 +17,10 @@ public class XPInterfaceContainer extends Container {
         this.te = te;
 
         // Tile Entity, Slot 0-8, Slot IDs 0-8
-        for (int y = 0; y < 3; ++y) {
-            for (int x = 0; x < 3; ++x) {
-                this.addSlotToContainer(new Slot(te, x + y * 3, 62 + x * 18, 17 + y * 18));
-            }
-        }
+        this.addSlotToContainer(new Slot(te, 0, 8, 50));
+        this.addSlotToContainer(new Slot(te, 1, 26, 50));
+        this.addSlotToContainer(new Slot(te, 2, 134, 50));
+        this.addSlotToContainer(new Slot(te, 3, 152, 50));
 
         // Player Inventory, Slot 9-35, Slot IDs 9-35
         for (int y = 0; y < 3; ++y) {
