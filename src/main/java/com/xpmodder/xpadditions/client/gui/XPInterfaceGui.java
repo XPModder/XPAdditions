@@ -1,12 +1,16 @@
 package com.xpmodder.xpadditions.client.gui;
 
+import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
 import com.xpmodder.xpadditions.utility.LogHelper;
+import com.xpmodder.xpadditions.utility.XPHelper;
+import com.xpmodder.xpadditions.xpnetwork.xpStorage;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class XPInterfaceGui extends GuiContainer {

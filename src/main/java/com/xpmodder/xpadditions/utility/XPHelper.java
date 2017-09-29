@@ -152,4 +152,22 @@ public class XPHelper {
 
     }
 
+    public int getLevelforBlocks(int blocks){
+
+        return blocks * 9;
+
+    }
+
+    public int getLevelforOrbItems(int items){
+
+        return items;
+
+    }
+
+    public int getBlocksfromLevels(int levels){
+
+        return levels/9;
+
+    }
+
 }

@@ -25,6 +25,8 @@ public final class blockRenderRegister {
         reg(ModBlocks.meteoriteRockBlock);
         reg(ModBlocks.meteoriteStarBlock);
         reg(ModBlocks.xpInterfaceBlock);
+        reg(ModBlocks.xpControllerBlock);
+        reg(ModBlocks.xpPipe);
 
     }
 

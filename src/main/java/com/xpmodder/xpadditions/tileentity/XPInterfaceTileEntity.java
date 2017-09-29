@@ -6,10 +6,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 
 import javax.annotation.Nullable;
 
-public class XPInterfaceTileEntity extends TileEntity implements IInventory{
+public class XPInterfaceTileEntity extends TileEntity implements IInventory,ITickable{
 
     private ItemStack[] inventory;
     private String newName = "container.xp_interface_tile_entity";
@@ -187,6 +188,13 @@ public class XPInterfaceTileEntity extends TileEntity implements IInventory{
     public boolean hasCustomName() {
 
         return this.newName != null && !this.newName.equals("");
+
+    }
+
+    @Override
+    public void update() {
+
+
 
     }
 
