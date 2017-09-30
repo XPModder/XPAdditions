@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class XPHelper {
 
-    public void setPlayerXP(EntityPlayer player, int level){
+    public static void setPlayerXP(EntityPlayer player, int level){
 
         if (player.experienceLevel == level){
 
@@ -25,7 +25,7 @@ public class XPHelper {
 
     }
 
-    public void risePlayerXP(EntityPlayer player, int maxLevel){
+    public static void risePlayerXP(EntityPlayer player, int maxLevel){
 
         if (player.experienceLevel < maxLevel){
 
@@ -36,7 +36,7 @@ public class XPHelper {
 
     }
 
-    public void lowerPlayerXP(EntityPlayer player, int minLevel){
+    public static void lowerPlayerXP(EntityPlayer player, int minLevel){
 
         if (player.experienceLevel > minLevel){
 
@@ -48,7 +48,7 @@ public class XPHelper {
 
     }
 
-    public int getXPforLevelDiff(int lowLevel, int highLevel){
+    public static int getXPforLevelDiff(int lowLevel, int highLevel){
 
         double lowXP = 0;
         double highXP = 0;
@@ -89,13 +89,13 @@ public class XPHelper {
 
     }
 
-    public int getLevelfromXP(int xp){
+    public static int getLevelfromXP(int xp){
 
         return getLevelfromXP(xp, 0);
 
     }
 
-    public int getLevelfromXP(int xp, int startLevel){
+    public static int getLevelfromXP(int xp, int startLevel){
 
         double temp = 0;
         int level = 0;
@@ -128,43 +128,43 @@ public class XPHelper {
 
     }
 
-    public int getLevelFromMB(int mB){
+    public static int getLevelFromMB(int mB){
 
         return mB/1000;
 
     }
 
-    public int getMBfromLevel(int level){
+    public static int getMBfromLevel(int level){
 
         return level*1000;
 
     }
 
-    public int getMBfromXP(int xp){
+    public static int getMBfromXP(int xp){
 
         return (getLevelfromXP(xp) * 1000);
 
     }
 
-    public int getXPfromMB(int mB){
+    public static int getXPfromMB(int mB){
 
         return getXPforLevelDiff(0, mB/1000);
 
     }
 
-    public int getLevelforBlocks(int blocks){
+    public static int getLevelforBlocks(int blocks){
 
         return blocks * 9;
 
     }
 
-    public int getLevelforOrbItems(int items){
+    public static int getLevelforOrbItems(int items){
 
         return items;
 
     }
 
-    public int getBlocksfromLevels(int levels){
+    public static int getBlocksfromLevels(int levels){
 
         return levels/9;
 

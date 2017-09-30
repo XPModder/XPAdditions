@@ -2,18 +2,20 @@ package com.xpmodder.xpadditions.tileentity;
 
 import com.xpmodder.xpadditions.fluid.Buckets;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 import javax.annotation.Nullable;
 
-public class XPInterfaceTileEntity extends TileEntity implements IInventory,ITickable{
+public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
 
     private ItemStack[] inventory;
     private String newName = "container.xp_interface_tile_entity";
+
 
     public XPInterfaceTileEntity(){
 
@@ -192,10 +194,23 @@ public class XPInterfaceTileEntity extends TileEntity implements IInventory,ITic
     }
 
     @Override
-    public void update() {
+    public void updateChildren() {
 
+        int xp = ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getTotalXP(((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, XPHelper.getBlocksfromLevels(XPHelper.getLevelfromXP(xp))));
+        ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).removeXP(XPHelper.getLevelforBlocks(this.getStackInSlot(0).stackSize), ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
 
+        if (this.getStackInSlot(1).stackSize > 0){
+
+            if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)){
+
+                int amount = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(this.getStackInSlot(1).stackSize));
+                ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).addXP(amount, ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+                this.removeStackFromSlot(1);
+
+            }
+
+        }
 
     }
-
 }
