@@ -15,6 +15,8 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
     private ItemStack[] inventory;
     private String newName = "container.xp_interface_tile_entity";
+    public int xp;
+    public int maxXP;
 
 
     public XPInterfaceTileEntity(){
@@ -196,9 +198,11 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     @Override
     public void updateChildren() {
 
-        int xp = ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getTotalXP(((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+        xp = ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getTotalXP(((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
         this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, XPHelper.getBlocksfromLevels(XPHelper.getLevelfromXP(xp))));
         ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).removeXP(XPHelper.getLevelforBlocks(this.getStackInSlot(0).stackSize), ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+
+        maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(this.getInventoryStackLimit()));
 
         if (this.getStackInSlot(1).stackSize > 0){
 

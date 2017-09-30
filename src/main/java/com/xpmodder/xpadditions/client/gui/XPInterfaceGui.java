@@ -37,6 +37,13 @@ public class XPInterfaceGui extends GuiContainer {
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/xp_interface_gui.png"));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
+        if (te.isConnected()){
+
+            int heigth = ((te.xp - 0)/(te.maxXP - 0) * (100 - 0) + 0);
+            this.drawTexturedModalRect(85, 100, 12, 50, 50, 100 - height);
+
+        }
+
     }
 
     @Override
@@ -48,15 +55,6 @@ public class XPInterfaceGui extends GuiContainer {
         this.fontRendererObj.drawString(s2, 145, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 
-        if (100 < mouseX & mouseX < 120){
-
-            if (10 < mouseY & mouseY < 100){
-
-
-
-            }
-
-        }
 
     }
 
