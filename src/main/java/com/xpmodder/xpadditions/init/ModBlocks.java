@@ -2,7 +2,9 @@ package com.xpmodder.xpadditions.init;
 
 import com.xpmodder.xpadditions.block.*;
 import com.xpmodder.xpadditions.reference.Reference;
+import com.xpmodder.xpadditions.tileentity.XPControllerBlock;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceBlock;
+import com.xpmodder.xpadditions.tileentity.XPPipeBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -37,8 +39,8 @@ public final class ModBlocks {
         GameRegistry.registerBlock(meteoriteRockBlock = new DropBlock( "meteorite_rock_block", Material.ROCK, Item.getItemFromBlock(ModBlocks.meteoriteCobbleBlock)), "meteorite_rock_block");
         GameRegistry.registerBlock(meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3), "meteorite_star_block");
         GameRegistry.registerBlock(xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block"), "xp_interface_block");
-        GameRegistry.registerBlock(xpControllerBlock = new BasicBlock("xp_controller_block"), "xp_controller_block");
-        GameRegistry.registerBlock(xpPipe = new BasicBlock("xp_pipe"), "xp_pipe");
+        GameRegistry.registerBlock(xpControllerBlock = new XPControllerBlock("xp_controller_block"), "xp_controller_block");
+        GameRegistry.registerBlock(xpPipe = new XPPipeBlock("xp_pipe"), "xp_pipe");
 
     }
 

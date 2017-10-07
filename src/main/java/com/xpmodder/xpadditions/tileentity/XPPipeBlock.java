@@ -4,22 +4,20 @@ import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class XPControllerBlock extends BlockContainer {
+public class XPPipeBlock extends BlockContainer {
 
-    public XPControllerBlock(){
+    public XPPipeBlock(){
 
         super(Material.IRON);
 
     }
 
-    public XPControllerBlock(String unlocalizedName){
+    public XPPipeBlock(String unlocalizedName){
 
         super(Material.IRON);
         this.setUnlocalizedName(unlocalizedName);
@@ -30,7 +28,7 @@ public class XPControllerBlock extends BlockContainer {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        return new XPControllerTileEntity();
+        return new XPPipeTileEntity();
 
     }
 
@@ -44,15 +42,8 @@ public class XPControllerBlock extends BlockContainer {
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
 
-        XPControllerTileEntity te = (XPControllerTileEntity) world.getTileEntity(pos);
+        XPPipeTileEntity te = (XPPipeTileEntity) world.getTileEntity(pos);
         super.breakBlock(world, pos, blockstate);
-
-    }
-
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-
-
 
     }
 

@@ -19,3 +19,5 @@ tile.meteorite_cobble_block.name=Meteoric Cobble
 tile.meteorite_rock_block.name=Meteoric Rock
 tile.meteorite_star_block.name=Meteoric Rock with star fragment
 tile.xp_interface_block.name=XP Interface Block
+tile.xp_controller_block.name=XP Controller
+tile.xp_pipe.name=XP Pipe

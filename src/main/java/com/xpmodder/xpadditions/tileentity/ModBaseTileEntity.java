@@ -11,6 +11,7 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
 
     protected boolean connected = false;
     protected BlockPos controller;
+    protected int controllerID;
     protected Block[] XPBlocks = {ModBlocks.xpInterfaceBlock, ModBlocks.xpPipe};
 
     public boolean isConnected() {
@@ -34,6 +35,18 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
     public void setController(BlockPos controller) {
 
         this.controller = controller;
+
+    }
+
+    public void setControllerID(int ID){
+
+        this.controllerID = ID;
+
+    }
+
+    public int getControllerID() {
+
+        return controllerID;
 
     }
 
@@ -76,40 +89,64 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
             this.controller = new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1);
 
         }
-        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ())).getBlock()) & ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()))).isConnected()){
+        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ())).getBlock())){
 
-            this.connected = true;
-            this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()))).getController();
+            if (((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()))).isConnected()) {
 
-        }
-        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ())).getBlock()) & ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()))).isConnected()){
+                this.connected = true;
+                this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()))).getController();
 
-            this.connected = true;
-            this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()))).getController();
+            }
 
         }
-        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ())).getBlock()) & ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()))).isConnected()){
+        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ())).getBlock())){
 
-            this.connected = true;
-            this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()))).getController();
+            if (((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()))).isConnected()) {
 
-        }
-        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ())).getBlock()) & ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()))).isConnected()){
+                this.connected = true;
+                this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()))).getController();
 
-            this.connected = true;
-            this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()))).getController();
+            }
 
         }
-        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1)).getBlock()) & ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1))).isConnected()){
+        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ())).getBlock())){
 
-            this.connected = true;
-            this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1))).getController();
+            if (((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()))).isConnected()) {
+
+                this.connected = true;
+                this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()))).getController();
+
+            }
 
         }
-        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1)).getBlock()) & ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1))).isConnected()){
+        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ())).getBlock())){
 
-            this.connected = true;
-            this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1))).getController();
+            if (((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()))).isConnected()) {
+
+                this.connected = true;
+                this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()))).getController();
+
+            }
+
+        }
+        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1)).getBlock())){
+
+            if (((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1))).isConnected()) {
+
+                this.connected = true;
+                this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1))).getController();
+
+            }
+
+        }
+        else if (Arrays.asList(this.XPBlocks).contains( worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1)).getBlock())){
+
+            if (((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1))).isConnected()) {
+
+                this.connected = true;
+                this.controller = ((ModBaseTileEntity) worldObj.getTileEntity(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1))).getController();
+
+            }
 
         }
         else{

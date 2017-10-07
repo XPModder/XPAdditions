@@ -1,6 +1,5 @@
 package com.xpmodder.xpadditions.tileentity;
 
-import com.xpmodder.xpadditions.xpnetwork.xpStorage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 

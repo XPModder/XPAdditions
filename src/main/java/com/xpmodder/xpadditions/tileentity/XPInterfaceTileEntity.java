@@ -2,6 +2,7 @@ package com.xpmodder.xpadditions.tileentity;
 
 import com.xpmodder.xpadditions.fluid.Buckets;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -51,6 +52,30 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         if (index < 0 || index >= this.getSizeInventory())
             return null;
         return this.inventory[index];
+
+    }
+
+    public boolean isSlotOccupied(int index){
+
+        try{
+
+            if (this.getStackInSlot(index).stackSize > 0){
+
+                return true;
+
+            }
+            else{
+
+                return false;
+
+            }
+
+        }
+        catch (NullPointerException e){
+
+            return false;
+
+        }
 
     }
 
@@ -198,21 +223,43 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     @Override
     public void updateChildren() {
 
-        xp = ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getTotalXP(((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
-        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, XPHelper.getBlocksfromLevels(XPHelper.getLevelfromXP(xp))));
-        ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).removeXP(XPHelper.getLevelforBlocks(this.getStackInSlot(0).stackSize), ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+        try {
 
-        maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(this.getInventoryStackLimit()));
+            xp = ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getTotalXP(((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
 
-        if (this.getStackInSlot(1).stackSize > 0){
+            int inSlot = 0;
 
-            if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)){
+            if (isSlotOccupied(0)){
 
-                int amount = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(this.getStackInSlot(1).stackSize));
-                ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).addXP(amount, ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
-                this.removeStackFromSlot(1);
+                inSlot = this.getStackInSlot(0).stackSize;
 
             }
+
+            if (xp >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) & inSlot < this.getInventoryStackLimit()){
+
+                this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, inSlot + 1));
+                ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+
+            }
+
+            maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
+
+            if (this.isSlotOccupied(1)) {
+
+                if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+
+                    int amount = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getStackInSlot(1).stackSize;
+                    this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, 0));
+                    ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).addXP(amount, ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
+
+                }
+
+            }
+
+        }
+        catch (NullPointerException e){
+
+            LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() !");
 
         }
 

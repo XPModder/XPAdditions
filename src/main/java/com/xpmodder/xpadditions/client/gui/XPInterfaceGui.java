@@ -5,8 +5,10 @@ import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
 import com.xpmodder.xpadditions.utility.LogHelper;
+import com.xpmodder.xpadditions.utility.MathHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import com.xpmodder.xpadditions.xpnetwork.xpStorage;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
@@ -33,14 +35,20 @@ public class XPInterfaceGui extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
+        int sx = (width - xSize) / 2;
+        int sy = (height - ySize) / 2;
+
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/xp_interface_gui.png"));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(sx + xSize, sy, 203, 0, 30, 80);
+        this.addButton(new GuiButton(0, sx + xSize + 5, sy + 5, 21, 21, "+"));
+        this.addButton(new GuiButton(1, sx + xSize + 5, sy + 54, 21, 21, "-"));
 
         if (te.isConnected()){
 
-            int heigth = ((te.xp - 0)/(te.maxXP - 0) * (100 - 0) + 0);
-            this.drawTexturedModalRect(85, 100, 12, 50, 50, 100 - height);
+            int high = getHeightScaled(58);
+            this.drawTexturedModalRect(sx + 83, sy + 66 - high, 176, 0, 9, high);
 
         }
 
@@ -50,11 +58,27 @@ public class XPInterfaceGui extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
         String s = "Items";
-        String s2 = "Fluid";
-        this.fontRendererObj.drawString(s, 8, 6, 4210752);            //#404040
-        this.fontRendererObj.drawString(s2, 145, 6, 4210752);
+        String s2 = "Fluids";
+        String s3 = String.valueOf(te.xp / XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)));
+        String s4 = String.valueOf(te.getControllerID());
+        this.fontRendererObj.drawString(s, 8, 40, 4210752);            //#404040
+        this.fontRendererObj.drawString(s2, 135, 40, 4210752);
+        this.fontRendererObj.drawString(s3, 50, 30, 4210752);
+        this.fontRendererObj.drawString(s4, 186, 35, 16777215);         //#FFFFFF
         this.fontRendererObj.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 
+    }
+
+    private int getHeightScaled(int pixels) {
+
+        float ratio;
+
+        ratio = (float) te.xp / te.maxXP;
+
+        if(ratio > 1)
+            ratio = 1;
+
+        return  Math.round((pixels * ratio));
 
     }
 
