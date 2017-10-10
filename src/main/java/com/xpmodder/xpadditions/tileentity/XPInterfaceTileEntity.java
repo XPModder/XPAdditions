@@ -6,9 +6,10 @@ import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -16,13 +17,35 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
     private ItemStack[] inventory;
     private String newName = "container.xp_interface_tile_entity";
-    public int xp;
+    public int xp = 0;
     public int maxXP;
+    public int IDcolor = 16777215;
 
 
     public XPInterfaceTileEntity(){
 
         this.inventory = new ItemStack[this.getSizeInventory()];
+
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+
+        super.writeToNBT(compound);
+
+        compound.setIntArray("controller", new int[] {this.controller.getX(), this.controller.getY(), this.controller.getZ()});
+
+        return compound;
+
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+
+        super.readFromNBT(compound);
+
+        int[] coords = compound.getIntArray("controller");
+        this.controller = new BlockPos(coords[0], coords[1], coords[2]);
 
     }
 
@@ -225,36 +248,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
         try {
 
-            xp = ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getTotalXP(((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
-
-            int inSlot = 0;
-
-            if (isSlotOccupied(0)){
-
-                inSlot = this.getStackInSlot(0).stackSize;
-
-            }
-
-            if (xp >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) & inSlot < this.getInventoryStackLimit()){
-
-                this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, inSlot + 1));
-                ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
-
-            }
-
             maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
-
-            if (this.isSlotOccupied(1)) {
-
-                if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
-
-                    int amount = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getStackInSlot(1).stackSize;
-                    this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, 0));
-                    ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).addXP(amount, ((XPControllerTileEntity) worldObj.getTileEntity(this.controller)).getID());
-
-                }
-
-            }
 
         }
         catch (NullPointerException e){

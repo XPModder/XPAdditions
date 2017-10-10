@@ -25,7 +25,6 @@ public final class ModBlocks {
     public static Block meteoriteStarBlock;
     public static BlockContainer xpInterfaceBlock;
     public static Block xpControllerBlock;
-    public static Block xpPipe;
 
     public static void createBlocks() {
 
@@ -40,7 +39,6 @@ public final class ModBlocks {
         GameRegistry.registerBlock(meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3), "meteorite_star_block");
         GameRegistry.registerBlock(xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block"), "xp_interface_block");
         GameRegistry.registerBlock(xpControllerBlock = new XPControllerBlock("xp_controller_block"), "xp_controller_block");
-        GameRegistry.registerBlock(xpPipe = new XPPipeBlock("xp_pipe"), "xp_pipe");
 
     }
 

@@ -12,7 +12,6 @@ public class ModTileEntities {
 
         GameRegistry.registerTileEntity(XPInterfaceTileEntity.class, Reference.MOD_ID + "_xp_interface_tile_entity");
         GameRegistry.registerTileEntity(XPControllerTileEntity.class, Reference.MOD_ID + "_xp_controller_tile_entity");
-        GameRegistry.registerTileEntity(XPPipeTileEntity.class, Reference.MOD_ID + "_xp_pipe_tile_entity");
 
     }
 
