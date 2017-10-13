@@ -6,6 +6,7 @@ import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -33,7 +34,11 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
         super.writeToNBT(compound);
 
-        compound.setIntArray("controller", new int[] {this.controller.getX(), this.controller.getY(), this.controller.getZ()});
+        if(this.controller != null) {
+
+            compound.setIntArray("controller", new int[]{this.controller.getX(), this.controller.getY(), this.controller.getZ()});
+
+        }
 
         return compound;
 
@@ -45,6 +50,9 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         super.readFromNBT(compound);
 
         int[] coords = compound.getIntArray("controller");
+        LogHelper.info("X: " + coords[0]);
+        LogHelper.info("Y: " + coords[1]);
+        LogHelper.info("Z: " + coords[2]);
         this.controller = new BlockPos(coords[0], coords[1], coords[2]);
 
     }
@@ -249,6 +257,42 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         try {
 
             maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
+            if (this.controller != null) {
+
+                XPControllerTileEntity te = (XPControllerTileEntity) worldObj.getTileEntity(this.controller);
+                xp = te.getTotalXP(te.getID());
+
+                if (isSlotOccupied(1)) {
+
+                    if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+
+                        te.addXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+                        this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).stackSize - 1));
+
+                    }
+
+                }
+                if (te.getTotalXP(te.getID()) >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1))) {
+
+                    if (isSlotOccupied(0)) {
+
+                        if (this.getStackInSlot(0).stackSize < this.getInventoryStackLimit()) {
+
+                            this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).stackSize + 1));
+                            te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+
+                        }
+
+                    } else {
+
+                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, 1));
+                        te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+
+                    }
+
+                }
+
+            }
 
         }
         catch (NullPointerException e){

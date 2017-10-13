@@ -66,6 +66,12 @@ public class XPInterfaceBlock extends BlockContainer{
             ((XPInterfaceTileEntity) worldIn.getTileEntity(pos)).setCustomName(stack.getDisplayName());
 
         }
+        if (stack.hasTagCompound()){
+
+            int[] coords = stack.getTagCompound().getIntArray("controller");
+            ((XPInterfaceTileEntity) worldIn.getTileEntity(pos)).setController(new BlockPos(coords[0], coords[1], coords[2]));
+
+        }
 
     }
 

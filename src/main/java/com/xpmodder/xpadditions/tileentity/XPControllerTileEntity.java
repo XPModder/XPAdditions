@@ -258,7 +258,10 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
 
             if(getStackInSlot(0).getItem() == Item.getItemFromBlock(ModBlocks.xpInterfaceBlock)){
 
-                getStackInSlot(0).getItem().getNBTShareTag(getStackInSlot(0)).setIntArray("controller", new int[] {this.pos.getX(), this.pos.getY(), this.pos.getZ()});
+                int[] coords = {this.pos.getX(), this.pos.getY(), this.pos.getZ()};
+                NBTTagCompound compound = new NBTTagCompound();
+                compound.setIntArray("controller", coords);
+                getStackInSlot(0).setTagCompound(compound);
 
             }
 

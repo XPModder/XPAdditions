@@ -6,6 +6,7 @@ import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiLockIconButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
@@ -53,7 +54,6 @@ public class XPInterfaceGui extends GuiContainer {
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/xp_interface_gui.png"));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         this.drawTexturedModalRect(sx + xSize, sy, 203, 0, 30, 80);
-        //this.drawItemStack(new ItemStack(ModBlocks.xpBlock, 1), 49, 8, "");
 
         if (te.isConnected()){
 
