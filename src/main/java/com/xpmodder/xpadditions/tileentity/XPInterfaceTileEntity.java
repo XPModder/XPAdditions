@@ -11,8 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
 
@@ -20,7 +24,6 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     private String newName = "container.xp_interface_tile_entity";
     public int xp = 0;
     public int maxXP;
-    public int IDcolor = 16777215;
 
 
     public XPInterfaceTileEntity(){
@@ -32,13 +35,22 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
-        super.writeToNBT(compound);
+        int[] cont = {0, 0, 0};
 
         if(this.controller != null) {
 
-            compound.setIntArray("controller", new int[]{this.controller.getX(), this.controller.getY(), this.controller.getZ()});
+            LogHelper.info("Writing " + this.controller);
+            cont[0] = this.controller.getX();
+            cont[1] = this.controller.getY();
+            cont[2] = this.controller.getZ();
 
         }
+
+        compound.setInteger("controllerX", cont[0]);
+        compound.setInteger("controllerY", cont[1]);
+        compound.setInteger("controllerZ", cont[2]);
+
+        super.writeToNBT(compound);
 
         return compound;
 
@@ -49,11 +61,13 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
         super.readFromNBT(compound);
 
-        int[] coords = compound.getIntArray("controller");
-        LogHelper.info("X: " + coords[0]);
-        LogHelper.info("Y: " + coords[1]);
-        LogHelper.info("Z: " + coords[2]);
+        int[] coords = {0, 0, 0};
+        coords[0] = compound.getInteger("controllerX");
+        coords[1] = compound.getInteger("controllerY");
+        coords[2] = compound.getInteger("controllerZ");
+        LogHelper.info("Loading " + Arrays.toString(coords));
         this.controller = new BlockPos(coords[0], coords[1], coords[2]);
+        LogHelper.info("Loading " + this.controller);
 
     }
 

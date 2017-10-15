@@ -1,16 +1,18 @@
 package com.xpmodder.xpadditions.client.gui;
 
+import com.xpmodder.xpadditions.client.gui.parts.ModGuiIconButton;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLockIconButton;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
+import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ public class XPInterfaceGui extends GuiContainer {
 
     private IInventory playerInv;
     private XPInterfaceTileEntity te;
+    private ResourceLocation buttonParts = new ResourceLocation(Reference.MOD_ID, "textures/gui/parts/parts.png");
 
     public XPInterfaceGui(IInventory playerInv, XPInterfaceTileEntity te){
 
@@ -39,8 +42,9 @@ public class XPInterfaceGui extends GuiContainer {
 
         super.initGui();
 
-        this.addButton(new GuiButton(0, sx + xSize + 5, sy + 5, 21, 21, "+"));
-        this.addButton(new GuiButton(1, sx + xSize + 5, sy + 54, 21, 21, "-"));
+        this.addButton(new ModGuiIconButton(0, sx + xSize + 5, sy + 5, 21, 20, "", buttonParts, 200, 46));
+        this.addButton(new ModGuiIconButton(1, sx + xSize + 5, sy + 30, 21, 20, "", buttonParts, 200, 66));
+        this.addButton(new ModGuiIconButton(2, sx + xSize + 5, sy + 54, 21, 20, "", buttonParts, 200, 86));
 
     }
 
