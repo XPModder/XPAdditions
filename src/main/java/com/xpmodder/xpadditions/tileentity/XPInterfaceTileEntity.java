@@ -9,6 +9,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,13 +35,26 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     }
 
     @Override
+    public NBTTagCompound getUpdateTag(){
+
+        return writeToNBT(new NBTTagCompound());
+
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+
+        readFromNBT(pkt.getNbtCompound());
+
+    }
+
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         int[] cont = {0, 0, 0};
 
         if(this.controller != null) {
 
-            LogHelper.info("Writing " + this.controller);
             cont[0] = this.controller.getX();
             cont[1] = this.controller.getY();
             cont[2] = this.controller.getZ();
@@ -65,9 +80,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         coords[0] = compound.getInteger("controllerX");
         coords[1] = compound.getInteger("controllerY");
         coords[2] = compound.getInteger("controllerZ");
-        LogHelper.info("Loading " + Arrays.toString(coords));
         this.controller = new BlockPos(coords[0], coords[1], coords[2]);
-        LogHelper.info("Loading " + this.controller);
 
     }
 
