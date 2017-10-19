@@ -6,6 +6,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
@@ -29,6 +31,19 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
 
     }
 
+    @Override
+    public NBTTagCompound getUpdateTag(){
+
+        return writeToNBT(new NBTTagCompound());
+
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+
+        readFromNBT(pkt.getNbtCompound());
+
+    }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {

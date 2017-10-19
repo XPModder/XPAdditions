@@ -5,94 +5,26 @@ import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import sun.rmi.runtime.Log;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 
 public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
 
     private ItemStack[] inventory;
-    private String newName = "container.xp_interface_tile_entity";
     public int xp = 0;
     public int maxXP;
+    public int maxXPmB;
 
 
     public XPInterfaceTileEntity(){
 
         this.inventory = new ItemStack[this.getSizeInventory()];
-
-    }
-
-    @Override
-    public NBTTagCompound getUpdateTag(){
-
-        return writeToNBT(new NBTTagCompound());
-
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-
-        readFromNBT(pkt.getNbtCompound());
-
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-
-        int[] cont = {0, 0, 0};
-
-        if(this.controller != null) {
-
-            cont[0] = this.controller.getX();
-            cont[1] = this.controller.getY();
-            cont[2] = this.controller.getZ();
-
-        }
-
-        compound.setInteger("controllerX", cont[0]);
-        compound.setInteger("controllerY", cont[1]);
-        compound.setInteger("controllerZ", cont[2]);
-
-        super.writeToNBT(compound);
-
-        return compound;
-
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-
-        super.readFromNBT(compound);
-
-        int[] coords = {0, 0, 0};
-        coords[0] = compound.getInteger("controllerX");
-        coords[1] = compound.getInteger("controllerY");
-        coords[2] = compound.getInteger("controllerZ");
-        this.controller = new BlockPos(coords[0], coords[1], coords[2]);
-
-    }
-
-    public String getCustomName() {
-
-        return this.newName;
-
-    }
-
-    public void setCustomName(String customName) {
-
-        this.newName = customName;
+        this.setCustomName("container.xp_interface_tile_entity");
 
     }
 
@@ -172,7 +104,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     @Override
     public ItemStack removeStackFromSlot(int index) {
 
-        return null;
+        return getStackInSlot(index);
 
     }
 
@@ -284,38 +216,65 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         try {
 
             maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
-            if (this.controller != null) {
+            maxXPmB = XPHelper.getXPfromMB(4000);
 
-                XPControllerTileEntity te = (XPControllerTileEntity) worldObj.getTileEntity(this.controller);
-                xp = te.getTotalXP(te.getID());
+            XPControllerTileEntity te = (XPControllerTileEntity) worldObj.getTileEntity(this.controller);
+            xp = te.getTotalXP(te.getID());
 
-                if (isSlotOccupied(1)) {
+            //Items
 
-                    if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+            if (isSlotOccupied(1)) {
 
-                        te.addXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
-                        this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).stackSize - 1));
+                if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+
+                    te.addXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+                    this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).stackSize - 1));
+
+                }
+
+            }
+            if (te.getTotalXP(te.getID()) >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1))) {
+
+                if (isSlotOccupied(0)) {
+
+                    if (this.getStackInSlot(0).stackSize < this.getInventoryStackLimit()) {
+
+                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).stackSize + 1));
+                        te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+
+                    }
+
+                } else {
+
+                    this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, 1));
+                    te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+
+                }
+
+            }
+
+            //Fluids
+
+            if(isSlotOccupied(2)){
+
+                if(getStackInSlot(2).getItem() == Items.BUCKET){
+
+                    if(te.getTotalXP(te.getID()) >= XPHelper.getXPfromMB(1000)){
+
+                        te.removeXP(XPHelper.getXPfromMB(1000), te.getID());
+                        setInventorySlotContents(2, new ItemStack(Buckets.itemBucketLiquidXP.getItem(), 1));
 
                     }
 
                 }
-                if (te.getTotalXP(te.getID()) >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1))) {
 
-                    if (isSlotOccupied(0)) {
+            }
+            if(isSlotOccupied(3)){
 
-                        if (this.getStackInSlot(0).stackSize < this.getInventoryStackLimit()) {
+                if(getStackInSlot(3).getItem() == Buckets.itemBucketLiquidXP.getItem()){
 
-                            this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).stackSize + 1));
-                            te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
-
-                        }
-
-                    } else {
-
-                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, 1));
-                        te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
-
-                    }
+                    te.addXP(XPHelper.getXPfromMB(1000), te.getID());
+                    setInventorySlotContents(3, new ItemStack(Items.BUCKET, 1));
 
                 }
 

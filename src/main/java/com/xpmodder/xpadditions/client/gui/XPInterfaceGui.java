@@ -62,7 +62,9 @@ public class XPInterfaceGui extends GuiContainer {
         if (te.isConnected()){
 
             int high = getHeightScaled(58);
-            this.drawTexturedModalRect(sx + 83, sy + 66 - high, 176, 0, 9, high);
+            this.drawTexturedModalRect(sx + 83, sy + 65 - high, 176, 0, 9, high);
+            int highF = getHeightScaledFluid(58);
+            this.drawTexturedModalRect(sx + 110, sy + 65 - highF, 186, 0, 16, highF);
 
         }
 
@@ -109,6 +111,19 @@ public class XPInterfaceGui extends GuiContainer {
             ratio = 1;
 
         return  Math.round((pixels * ratio));
+
+    }
+
+    private int getHeightScaledFluid(int pixels){
+
+        float ratio;
+
+        ratio = (float) te.xp / te.maxXPmB;
+
+        if(ratio > 1)
+            ratio = 1;
+
+        return Math.round((pixels * ratio));
 
     }
 

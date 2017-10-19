@@ -52,9 +52,9 @@ public class XPInterfaceContainer extends Container {
             ItemStack current = slot.getStack();
             previous = current.copy();
 
-            if (fromSlot < 9) {
+            if (fromSlot < 4) {
                 // From TE Inventory to Player Inventory
-                if (!this.mergeItemStack(current, 9, 45, true))
+                if (!this.mergeItemStack(current, 9, 40, true))
                     return null;
             } else {
                 // From Player Inventory to TE Inventory
