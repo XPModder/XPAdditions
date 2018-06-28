@@ -6,8 +6,8 @@ import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -27,7 +27,7 @@ public class ModWorldGen implements IWorldGenerator {
 
 
 
-                if (random.nextInt(10000) == 1){
+                if (random.nextInt(5000) == 1){
 
                     int randX = (chunkX * 16) + random.nextInt(16);
                     int randZ = (chunkZ * 16) + random.nextInt(16);

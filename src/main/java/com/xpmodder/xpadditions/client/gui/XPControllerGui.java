@@ -49,9 +49,9 @@ public class XPControllerGui extends GuiContainer {
 
         String s = "Total XP:";
         String s2 = String.valueOf(this.te.getTotalXP(this.te.getID()));
-        this.fontRendererObj.drawString(s, 8, 40, 4210752);            //#404040
-        this.fontRendererObj.drawString(s2, 8, 50, 4210752);
-        this.fontRendererObj.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
+        this.fontRenderer.drawString(s, 8, 40, 4210752);            //#404040
+        this.fontRenderer.drawString(s2, 8, 50, 4210752);
+        this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 
     }
 

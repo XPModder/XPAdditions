@@ -33,7 +33,7 @@ public class XPControllerContainer extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
 
-        return this.te.isUseableByPlayer(playerIn);
+        return this.te.isUsableByPlayer(playerIn);
 
     }
 

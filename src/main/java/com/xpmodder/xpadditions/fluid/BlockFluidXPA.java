@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+
 
 public class BlockFluidXPA extends BlockFluidClassic {
 
@@ -25,20 +25,6 @@ public class BlockFluidXPA extends BlockFluidClassic {
         this.fluid = fluid;
 
         setNames(fluid);
-
-    }
-
-    public static BlockFluidXPA create(Fluid fluid, Material material){
-
-        BlockFluidXPA res;
-
-        res = new BlockFluidXPA(fluid, material);
-
-        res.init();
-
-        fluid.setBlock(res);
-
-        return res;
 
     }
 
@@ -81,12 +67,8 @@ public class BlockFluidXPA extends BlockFluidClassic {
     }
 
     protected void setNames(Fluid fluid) {
-        setUnlocalizedName(fluid.getUnlocalizedName());
+        setUnlocalizedName("block_" + fluid.getUnlocalizedName());
         setRegistryName("block_" + fluid.getName());
-    }
-
-    protected void init() {
-        GameRegistry.register(this);
     }
 
 

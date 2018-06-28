@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "BBB"  ],
+  "key": {
+    "B": [
+      {
+        "item": "minecraft:lapis_block",
+        "data": 0
+      }
+    ],
+    "A": [
+      {
+        "item": "xpadditions:star_item",
+        "data": 0
+      }
+    ]
+  },
+  "result": {
+    "item": "xpadditions:starfield_block",
+    "count": 2
+  }
+}

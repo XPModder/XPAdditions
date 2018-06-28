@@ -40,7 +40,7 @@ public class ModBucketHandler {
         if (event != null && !event.isCanceled() && event.getTarget() != null && event.getTarget().typeOfHit == RayTraceResult.Type.BLOCK
                 && event.getTarget().getBlockPos() != null && event.getFilledBucket() == null && event.getEntityPlayer() != null && event.getWorld() != null
                 && event.getWorld().isBlockModifiable(event.getEntityPlayer(), event.getTarget().getBlockPos()) && event.getEmptyBucket() != null
-                && event.getEmptyBucket().getItem() == Items.BUCKET && event.getEmptyBucket().stackSize > 0 && event.getTarget().sideHit != null
+                && event.getEmptyBucket().getItem() == Items.BUCKET && event.getEmptyBucket().getMaxStackSize() > 0 && event.getTarget().sideHit != null
                 && event.getEntityPlayer().canPlayerEdit(event.getTarget().getBlockPos().offset(event.getTarget().sideHit), event.getTarget().sideHit,
                 event.getEmptyBucket())
                 ) {

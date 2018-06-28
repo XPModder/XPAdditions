@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 import javax.annotation.Nullable;
-import java.util.*;
 
 public class XPControllerTileEntity extends TileEntity implements IInventory,ITickable{
 
@@ -104,6 +103,11 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
 
     }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
     @Nullable
     @Override
     public ItemStack getStackInSlot(int index) {
@@ -121,7 +125,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
         if (this.getStackInSlot(index) != null) {
             ItemStack itemstack;
 
-            if (this.getStackInSlot(index).stackSize <= count) {
+            if (this.getStackInSlot(index).getCount() <= count) {
                 itemstack = this.getStackInSlot(index);
                 this.setInventorySlotContents(index, null);
                 this.markDirty();
@@ -129,7 +133,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
             } else {
                 itemstack = this.getStackInSlot(index).splitStack(count);
 
-                if (this.getStackInSlot(index).stackSize <= 0) {
+                if (this.getStackInSlot(index).getCount() <= 0) {
                     this.setInventorySlotContents(index, null);
                 } else {
                     //Just to show that changes happened
@@ -159,10 +163,10 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
         if (index < 0 || index >= this.getSizeInventory())
             return;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
-            stack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit())
+            stack.setCount(this.getInventoryStackLimit());
 
-        if (stack != null && stack.stackSize == 0)
+        if (stack != null && stack.getCount() == 0)
             stack = null;
 
         this.inventory[index] = stack;
@@ -178,9 +182,9 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
 
-        return this.worldObj.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.pos.add(0.5, 0.5, 0.5)) <= 64;
+        return this.world.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.pos.add(0.5, 0.5, 0.5)) <= 64;
 
     }
 
@@ -246,7 +250,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
 
         try{
 
-            if (this.getStackInSlot(index).stackSize > 0){
+            if (this.getStackInSlot(index).getCount() > 0){
 
                 return true;
 

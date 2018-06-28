@@ -3,6 +3,7 @@ package com.xpmodder.xpadditions.tileentity;
 import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.handler.ModGUIHandler;
+import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +33,7 @@ public class XPInterfaceBlock extends BlockContainer{
 
         super(Material.IRON);
         this.setUnlocalizedName(unlocalizedName);
+        this.setRegistryName(Reference.MOD_ID, unlocalizedName);
         this.setCreativeTab(CreativeTabXPA.XPA_TAB);
 
     }

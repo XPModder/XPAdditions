@@ -76,10 +76,10 @@ public class XPInterfaceGui extends GuiContainer {
         String s = "Items";
         String s2 = "Fluids";
         String s3 = String.valueOf(te.xp / XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)));
-        this.fontRendererObj.drawString(s, 8, 40, 4210752);            //#404040
-        this.fontRendererObj.drawString(s2, 135, 40, 4210752);
-        this.fontRendererObj.drawString(s3, 50, 30, 4210752);
-        this.fontRendererObj.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
+        this.fontRenderer.drawString(s, 8, 40, 4210752);            //#404040
+        this.fontRenderer.drawString(s2, 135, 40, 4210752);
+        this.fontRenderer.drawString(s3, 50, 30, 4210752);
+        this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 
     }
 

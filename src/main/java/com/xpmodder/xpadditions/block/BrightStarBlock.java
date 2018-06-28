@@ -1,6 +1,7 @@
 package com.xpmodder.xpadditions.block;
 
 import com.xpmodder.xpadditions.particle.LargeStarParticle;
+import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,6 +22,7 @@ public class BrightStarBlock extends Block{
 
         super(Material.ROCK);
         this.setUnlocalizedName(unlocalizedName);
+        this.setRegistryName(Reference.MOD_ID, unlocalizedName);
         this.setHardness(45.0F);
         this.setResistance(9000.0F);
         this.setHarvestLevel("pickaxe", 3);

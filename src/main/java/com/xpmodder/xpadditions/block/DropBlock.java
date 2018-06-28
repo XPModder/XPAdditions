@@ -1,6 +1,7 @@
 package com.xpmodder.xpadditions.block;
 
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
+import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,6 +23,7 @@ public class DropBlock extends Block {
         this.setHardness(2.0f);
         this.setResistance(10.0f);
         this.setUnlocalizedName(unlocalizedName);
+        this.setRegistryName(Reference.MOD_ID, unlocalizedName);
         this.setCreativeTab(CreativeTabXPA.XPA_TAB);
         this.drop = drop;
         this.meta = meta;

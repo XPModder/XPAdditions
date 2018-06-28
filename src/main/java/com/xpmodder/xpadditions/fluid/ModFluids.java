@@ -32,7 +32,7 @@ public class ModFluids {
                 .setDensity(30).setViscosity(10);
         FluidRegistry.registerFluid(f);
         fluidLiquidXP = FluidRegistry.getFluid(f.getName());
-        blockLiquidXP = BlockFluidXPA.create(fluidLiquidXP, Material.WATER);
+        blockLiquidXP = new BlockFluidXPA(fluidLiquidXP, Material.WATER);
     }
 
     public static ResourceLocation getStill(String fluidName) {

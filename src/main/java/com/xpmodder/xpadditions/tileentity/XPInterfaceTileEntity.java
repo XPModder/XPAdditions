@@ -26,6 +26,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         this.inventory = new ItemStack[this.getSizeInventory()];
         this.setCustomName("container.xp_interface_tile_entity");
 
+
     }
 
     @Override
@@ -33,6 +34,11 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
         return 5;
 
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
     @Nullable
@@ -49,7 +55,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
         try{
 
-            if (this.getStackInSlot(index).stackSize > 0){
+            if (this.getStackInSlot(index).getCount() > 0){
 
                 return true;
 
@@ -76,7 +82,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         if (this.getStackInSlot(index) != null) {
             ItemStack itemstack;
 
-            if (this.getStackInSlot(index).stackSize <= count) {
+            if (this.getStackInSlot(index).getCount() <= count) {
                 itemstack = this.getStackInSlot(index);
                 this.setInventorySlotContents(index, null);
                 this.markDirty();
@@ -84,7 +90,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
             } else {
                 itemstack = this.getStackInSlot(index).splitStack(count);
 
-                if (this.getStackInSlot(index).stackSize <= 0) {
+                if (this.getStackInSlot(index).getCount() <= 0) {
                     this.setInventorySlotContents(index, null);
                 } else {
                     //Just to show that changes happened
@@ -114,10 +120,10 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         if (index < 0 || index >= this.getSizeInventory())
             return;
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit())
-            stack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit())
+            stack.setCount(this.getInventoryStackLimit());
 
-        if (stack != null && stack.stackSize == 0)
+        if (stack != null && stack.getCount() == 0)
             stack = null;
 
         this.inventory[index] = stack;
@@ -133,9 +139,9 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
 
-        return this.worldObj.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.pos.add(0.5, 0.5, 0.5)) <= 64;
+        return this.world.getTileEntity(this.getPos()) == this && player.getDistanceSq(this.pos.add(0.5, 0.5, 0.5)) <= 64;
 
     }
 
@@ -218,7 +224,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
             maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
             maxXPmB = XPHelper.getXPfromMB(4000);
 
-            XPControllerTileEntity te = (XPControllerTileEntity) worldObj.getTileEntity(this.controller);
+            XPControllerTileEntity te = (XPControllerTileEntity) world.getTileEntity(this.controller);
             xp = te.getTotalXP(te.getID());
 
             //Items
@@ -228,7 +234,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
                 if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
 
                     te.addXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
-                    this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).stackSize - 1));
+                    this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).getCount() - 1));
 
                 }
 
@@ -237,9 +243,9 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
                 if (isSlotOccupied(0)) {
 
-                    if (this.getStackInSlot(0).stackSize < this.getInventoryStackLimit()) {
+                    if (this.getStackInSlot(0).getCount() < this.getInventoryStackLimit()) {
 
-                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).stackSize + 1));
+                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).getCount() + 1));
                         te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
 
                     }

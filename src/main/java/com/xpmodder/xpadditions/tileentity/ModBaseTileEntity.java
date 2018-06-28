@@ -1,5 +1,7 @@
 package com.xpmodder.xpadditions.tileentity;
 
+import com.xpmodder.xpadditions.utility.EnumRSMode;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -12,6 +14,8 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
     protected boolean connected = false;
     protected BlockPos controller;
     protected String newName = "container.xp_base_tile_entity";
+    public static final PropertyEnum<EnumRSMode> RSMode = PropertyEnum.<EnumRSMode>create("type", EnumRSMode.class);
+
 
     public boolean isConnected() {
 
@@ -104,7 +108,7 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
 
         try {
 
-            if (worldObj.getTileEntity(this.controller) instanceof XPControllerTileEntity) {
+            if (world.getTileEntity(this.controller) instanceof XPControllerTileEntity) {
 
                 this.connected = true;
 
@@ -121,7 +125,24 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
 
         }
 
-        updateChildren();
+        if(world.isBlockPowered(this.getPos())){
+
+            if(RSMode.getName().equals(EnumRSMode.REDSTONE_IGNORED.getName()) || RSMode.getName().equals(EnumRSMode.REDSTONE_ON.getName())){
+
+                updateChildren();
+
+            }
+
+        }
+        else{
+
+            if(RSMode.getName().equals(EnumRSMode.REDSTONE_IGNORED.getName()) || RSMode.getName().equals(EnumRSMode.REDSTONE_OFF.getName())){
+
+                updateChildren();
+
+            }
+
+        }
 
     }
 

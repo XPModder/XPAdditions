@@ -1,6 +1,7 @@
 package com.xpmodder.xpadditions.block;
 
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
+import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -11,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 
 import java.util.List;
 import java.util.Random;
@@ -28,6 +30,7 @@ public class OreBlock extends Block implements IMetaBlockName {
         this.setHardness(2.0f);
         this.setResistance(15.0f);
         this.setUnlocalizedName(unlocalizedName);
+        this.setRegistryName(Reference.MOD_ID, unlocalizedName);
         this.setCreativeTab(CreativeTabXPA.XPA_TAB);
         this.drop = drop;
         this.meta = meta;
@@ -134,10 +137,11 @@ public class OreBlock extends Block implements IMetaBlockName {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
-        list.add(new ItemStack(itemIn, 1, 0)); //Meta 0
-        list.add(new ItemStack(itemIn, 1, 1)); //Meta 1
-        list.add(new ItemStack(itemIn, 1, 2)); //Meta 2
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+
+        items.add(new ItemStack(this, 1, 0)); //Meta 0
+        items.add(new ItemStack(this, 1, 1)); //Meta 1
+        items.add(new ItemStack(this, 1, 2)); //Meta 2
     }
 
     @Override

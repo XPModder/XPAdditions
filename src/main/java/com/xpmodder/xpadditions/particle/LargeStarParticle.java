@@ -41,13 +41,6 @@ public class LargeStarParticle extends Particle {
     }
 
     @Override
-    public boolean isTransparent() {
-
-        return false;
-
-    }
-
-    @Override
     public void onUpdate(){
 
         Random ran = new Random();

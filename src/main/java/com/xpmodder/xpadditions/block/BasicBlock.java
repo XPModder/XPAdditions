@@ -1,6 +1,7 @@
 package com.xpmodder.xpadditions.block;
 
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
+import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -12,6 +13,7 @@ public class BasicBlock extends Block{
         this.setCreativeTab(CreativeTabXPA.XPA_TAB);
         this.setHardness(hardness);
         this.setResistance(resistance);
+        this.setRegistryName(Reference.MOD_ID, unlocalizedName);
     }
 
     public BasicBlock(String unlocalizedName, float hardness, float resistance) {

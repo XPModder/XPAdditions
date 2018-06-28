@@ -3,6 +3,7 @@ package com.xpmodder.xpadditions.block;
 import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.MathHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,6 +23,7 @@ public class StarBlock extends Block {
 
         super(Material.ROCK);
         this.setUnlocalizedName(unlocalizedName);
+        this.setRegistryName(Reference.MOD_ID, unlocalizedName);
         this.setCreativeTab(CreativeTabXPA.XPA_TAB);
         this.setHardness(45.0F);
         this.setResistance(9000.0F);

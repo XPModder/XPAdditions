@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,10 +22,6 @@ public class Buckets {
             FluidRegistry.addBucketForFluid(ModFluids.fluidLiquidXP);
             itemBucketLiquidXP = UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, ModFluids.fluidLiquidXP);
 
-        } else {
-
-            itemBucketLiquidXP = new ItemStack(ItemBucketXPA.create(ModFluids.blockLiquidXP, ModFluids.fluidLiquidXP));
-
         }
 
     }
@@ -34,11 +29,7 @@ public class Buckets {
     @SideOnly(Side.CLIENT)
     public static void registerRenderers() {
 
-        if (!FluidRegistry.isUniversalBucketEnabled()) {
 
-            ModelLoader.setCustomModelResourceLocation(itemBucketLiquidXP.getItem(), 0, new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID + ":" + ((ItemBucketXPA) itemBucketLiquidXP.getItem()).getItemName()), "inventory"));
-
-        }
 
     }
 

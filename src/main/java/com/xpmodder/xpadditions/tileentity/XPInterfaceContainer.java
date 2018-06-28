@@ -39,7 +39,7 @@ public class XPInterfaceContainer extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
 
-        return this.te.isUseableByPlayer(playerIn);
+        return this.te.isUsableByPlayer(playerIn);
 
     }
 
@@ -68,14 +68,14 @@ public class XPInterfaceContainer extends Container {
                     return null;
             }
 
-            if (current.stackSize == 0)
+            if (current.getCount() == 0)
                 slot.putStack((ItemStack) null);
             else
                 slot.onSlotChanged();
 
-            if (current.stackSize == previous.stackSize)
+            if (current.getCount() == previous.getCount())
                 return null;
-            slot.onPickupFromSlot(playerIn, current);
+            //slot.onPickupFromSlot(playerIn, current);
         }
         return previous;
     }

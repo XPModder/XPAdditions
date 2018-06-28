@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "xpadditions:xp_block",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "xpadditions:xp_orb_item",
+    "count": 9
+  }
+}
