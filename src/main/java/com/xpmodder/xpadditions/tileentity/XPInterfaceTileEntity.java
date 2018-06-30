@@ -1,6 +1,6 @@
 package com.xpmodder.xpadditions.tileentity;
 
-import com.xpmodder.xpadditions.fluid.Buckets;
+import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
@@ -10,6 +10,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 
 import javax.annotation.Nullable;
 
@@ -166,7 +169,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         }
         else if (index == 3){
 
-            if (stack.getItem() == Buckets.itemBucketLiquidXP.getItem())
+            //if (stack.getItem() == Buckets.itemBucketLiquidXP.getItem())
                 return true;
 
         }
@@ -268,7 +271,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
                     if(te.getTotalXP(te.getID()) >= XPHelper.getXPfromMB(1000)){
 
                         te.removeXP(XPHelper.getXPfromMB(1000), te.getID());
-                        setInventorySlotContents(2, new ItemStack(Buckets.itemBucketLiquidXP.getItem(), 1));
+                        setInventorySlotContents(2, new ItemStack(FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME)).getItem(), 1));
 
                     }
 
@@ -277,13 +280,14 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
             }
             if(isSlotOccupied(3)){
 
+                /*
                 if(getStackInSlot(3).getItem() == Buckets.itemBucketLiquidXP.getItem()){
 
                     te.addXP(XPHelper.getXPfromMB(1000), te.getID());
                     setInventorySlotContents(3, new ItemStack(Items.BUCKET, 1));
 
                 }
-
+                */
             }
 
         }

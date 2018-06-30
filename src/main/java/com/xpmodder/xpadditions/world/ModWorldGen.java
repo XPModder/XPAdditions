@@ -63,9 +63,9 @@ public class ModWorldGen implements IWorldGenerator {
 
     public ModWorldGen() {
 
-        this.xp_ore_0_gen = new WorldGenMinable(ModBlocks.xpOreBlock.getStateFromMeta(0), 4);
-        this.xp_ore_1_gen = new WorldGenMinable(ModBlocks.xpOreBlock.getStateFromMeta(1), 6, BlockMatcher.forBlock(Blocks.NETHERRACK));
-        this.xp_ore_2_gen = new WorldGenMinable(ModBlocks.xpOreBlock.getStateFromMeta(2), 10, BlockMatcher.forBlock(Blocks.END_STONE));
+        this.xp_ore_0_gen = new WorldGenMinable(ModBlocks.xpOre0Block.getDefaultState(), 4);
+        this.xp_ore_1_gen = new WorldGenMinable(ModBlocks.xpOre1Block.getDefaultState(), 6, BlockMatcher.forBlock(Blocks.NETHERRACK));
+        this.xp_ore_2_gen = new WorldGenMinable(ModBlocks.xpOre2Block.getDefaultState(), 10, BlockMatcher.forBlock(Blocks.END_STONE));
 
     }
 

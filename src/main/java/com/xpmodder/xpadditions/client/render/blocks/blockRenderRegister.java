@@ -17,9 +17,9 @@ public final class blockRenderRegister {
         reg(ModBlocks.brightStarBlock);
         reg(ModBlocks.starBlock);
         reg(ModBlocks.xpBlock);
-        reg(ModBlocks.xpOreBlock, 0, "xp_ore_block_0");
-        reg(ModBlocks.xpOreBlock, 1, "xp_ore_block_1");
-        reg(ModBlocks.xpOreBlock, 2, "xp_ore_block_2");
+        reg(ModBlocks.xpOre0Block, "xp_ore_0_block");
+        reg(ModBlocks.xpOre1Block, "xp_ore_1_block");
+        reg(ModBlocks.xpOre2Block, "xp_ore_2_block");
         reg(ModBlocks.burntStoneBlock);
         reg(ModBlocks.meteoriteCobbleBlock);
         reg(ModBlocks.meteoriteRockBlock);
@@ -34,18 +34,14 @@ public final class blockRenderRegister {
                 .register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
     }
 
-    public static void reg(Block block, int meta, String file) {
+    public static void reg(Block block, String file) {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-                .register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Reference.MOD_ID + ":" + file, "inventory"));
+                .register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + file, "inventory"));
     }
 
     public static void preInit(){
 
         LogHelper.info("blockRenderRegister.preInit():");
-        LogHelper.info(new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_0", "overworld"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 0, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_0", "overworld"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 1, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_1", "nether"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock), 2, new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.xpOreBlock).getRegistryName() + "_2", "end"));
 
     }
 

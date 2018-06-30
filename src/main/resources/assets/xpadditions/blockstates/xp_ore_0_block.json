@@ -1,0 +1,6 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": { "model": "xpadditions:xp_ore_0_block"}
+  }
+}

@@ -31,8 +31,7 @@ public class XPAdditions {
 
         config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
 
-        fluids = new ModFluids();
-        fluids.registerFluids();
+        //ModFluids.registerExp();
 
         this.proxy.preInit(event);
 

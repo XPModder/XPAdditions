@@ -1,6 +1,5 @@
 package com.xpmodder.xpadditions.tileentity;
 
-import com.xpmodder.xpadditions.fluid.Buckets;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -61,9 +60,10 @@ public class XPInterfaceContainer extends Container {
                 if (current.getItem() == ModBlocks.xpBlock.getDefaultState())
                     if (!this.mergeItemStack(current, 1, 1, false))
                         return null;
-                else if (current.getItem() == Buckets.itemBucketLiquidXP.getItem())
+                /*else if (current.getItem() == Buckets.itemBucketLiquidXP.getItem())
                     if (!this.mergeItemStack(current, 3, 3, false))
                         return null;
+                        */
                 else
                     return null;
             }

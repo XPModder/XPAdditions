@@ -1,7 +1,6 @@
 package com.xpmodder.xpadditions.init;
 
 import com.xpmodder.xpadditions.block.*;
-import com.xpmodder.xpadditions.fluid.BlockFluidXPA;
 import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPControllerBlock;
@@ -26,14 +25,15 @@ public final class ModBlocks {
     public static final Block brightStarBlock = new BrightStarBlock("bright_star_block");
     public static final Block starBlock = new StarBlock("star_block");
     public static final Block xpBlock = new BasicBlock("xp_block");
-    public static final Block xpOreBlock = new OreBlock( "xp_ore_block", Material.ROCK, ModItems.xpOrbItem, 5, 20);
+    public static final Block xpOre0Block = new DropBlock("xp_ore_0_block", Material.ROCK, ModItems.xpOrbItem, 5, 20);
+    public static final Block xpOre1Block = new DropBlock("xp_ore_1_block", Material.ROCK, ModItems.xpOrbItem, 5, 20);
+    public static final Block xpOre2Block = new DropBlock("xp_ore_2_block", Material.ROCK, ModItems.xpOrbItem, 5, 20);
     public static final Block burntStoneBlock = new BasicBlock("burnt_stone_block");
     public static final Block meteoriteCobbleBlock = new BasicBlock( "meteorite_cobble_block");
     public static final Block meteoriteRockBlock = new DropBlock( "meteorite_rock_block", Material.ROCK, Item.getItemFromBlock(ModBlocks.meteoriteCobbleBlock));
     public static final Block meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3);
     public static final BlockContainer xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block");
     public static final Block xpControllerBlock = new XPControllerBlock("xp_controller_block");
-    //public static final BlockFluidXPA fluidXPABlock = new BlockFluidXPA(ModFluids.fluidLiquidXP, Material.WATER);
 
     @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
     public static class RegistrationHandler {
@@ -53,13 +53,16 @@ public final class ModBlocks {
                     brightStarBlock,
                     starBlock,
                     xpBlock,
-                    xpOreBlock,
+                    xpOre0Block,
+                    xpOre1Block,
+                    xpOre2Block,
                     burntStoneBlock,
                     meteoriteCobbleBlock,
                     meteoriteRockBlock,
                     meteoriteStarBlock,
                     xpInterfaceBlock,
-                    xpControllerBlock
+                    xpControllerBlock,
+                    ModFluids.block_exp
             );
 
         }
@@ -77,13 +80,16 @@ public final class ModBlocks {
                     new ItemBlock(brightStarBlock),
                     new ItemBlock(starBlock),
                     new ItemBlock(xpBlock),
-                    new ItemBlock(xpOreBlock),
+                    new ItemBlock(xpOre0Block),
+                    new ItemBlock(xpOre1Block),
+                    new ItemBlock(xpOre2Block),
                     new ItemBlock(burntStoneBlock),
                     new ItemBlock(meteoriteCobbleBlock),
                     new ItemBlock(meteoriteRockBlock),
                     new ItemBlock(meteoriteStarBlock),
                     new ItemBlock(xpInterfaceBlock),
-                    new ItemBlock(xpControllerBlock)
+                    new ItemBlock(xpControllerBlock),
+                    new ItemBlock(ModFluids.block_exp)
             };
 
             final IForgeRegistry<Item> registry = event.getRegistry();
