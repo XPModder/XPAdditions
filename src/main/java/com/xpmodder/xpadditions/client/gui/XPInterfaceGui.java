@@ -42,9 +42,9 @@ public class XPInterfaceGui extends GuiContainer {
 
         super.initGui();
 
-        this.addButton(new ModGuiIconButton(0, sx + xSize + 5, sy + 5, 21, 20, "", buttonParts, 200, 46));
-        this.addButton(new ModGuiIconButton(1, sx + xSize + 5, sy + 30, 21, 20, "", buttonParts, 200, 66));
-        this.addButton(new ModGuiIconButton(2, sx + xSize + 5, sy + 54, 21, 20, "", buttonParts, 200, 86));
+        this.addButton(new ModGuiIconButton(0, sx + xSize + 5, sy + 5, 21, 20, false, buttonParts, 200, 46));
+        this.addButton(new ModGuiIconButton(1, sx + xSize + 5, sy + 30, 21, 20, false, buttonParts, 200, 66));
+        this.addButton(new ModGuiIconButton(2, sx + xSize + 5, sy + 54, 21, 20, false, buttonParts, 200, 86));
 
     }
 

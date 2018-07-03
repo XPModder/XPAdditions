@@ -1,10 +1,13 @@
 package com.xpmodder.xpadditions.particle;
 
+import com.xpmodder.xpadditions.handler.ParticleTextureHandler;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.texture.PngSizeInfo;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.SimpleResource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -12,17 +15,14 @@ import java.util.Random;
 
 public class LargeStarParticle extends Particle {
 
-    public final ResourceLocation largeStarRL = new ResourceLocation(Reference.MOD_ID, "entity/large_star_particle");
+    //public final ResourceLocation largeStarRL = new ResourceLocation(Reference.MOD_ID, "entity/large_star_particle");
 
     public LargeStarParticle(World worldIn, double x, double y, double z, double velocityX, double velocityY, double velocityZ){
 
         super(worldIn, x, y, z, velocityX, velocityY, velocityZ);
 
         this.particleAlpha = 0.99F;
-
-        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(largeStarRL.toString());
-        LogHelper.info(sprite.getIconName());
-        setParticleTexture(sprite);
+        setParticleTexture(ParticleTextureHandler.starParticle);
 
     }
 

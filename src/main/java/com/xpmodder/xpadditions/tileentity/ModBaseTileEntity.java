@@ -125,6 +125,9 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
 
         }
 
+        updateChildren();
+
+        /*
         if(world.isBlockPowered(this.getPos())){
 
             if(RSMode.getName().equals(EnumRSMode.REDSTONE_IGNORED.getName()) || RSMode.getName().equals(EnumRSMode.REDSTONE_ON.getName())){
@@ -143,6 +146,7 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
             }
 
         }
+        */
 
     }
 

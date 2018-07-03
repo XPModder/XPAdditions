@@ -11,13 +11,16 @@ public class ModGuiIconButton extends GuiButton{
     ResourceLocation texture;
     int textureX;
     int textureY;
+    boolean on;
 
-    public ModGuiIconButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText, ResourceLocation buttonIcon, int textureX, int textureY) {
+    public ModGuiIconButton(int buttonId, int x, int y, int widthIn, int heightIn, boolean on, ResourceLocation buttonIcon, int textureX, int textureY) {
 
-        super(buttonId, x, y, widthIn, heightIn, buttonText);
+        super(buttonId, x, y, widthIn, heightIn, "");
         this.texture = buttonIcon;
         this.textureX = textureX;
         this.textureY = textureY;
+        this.on = on;
+
 
     }
 
@@ -30,7 +33,18 @@ public class ModGuiIconButton extends GuiButton{
             mc.getTextureManager().bindTexture(this.texture);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-            int i = this.getHoverState(this.hovered);
+            int i = 1;
+            if(!this.enabled){
+                i = 0;
+            }
+            else{
+                if(this.on){
+                    i = 2;
+                }
+                else{
+                    i = 1;
+                }
+            }
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

@@ -14,7 +14,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-import javax.annotation.Nullable;
 
 public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
 
@@ -27,6 +26,9 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     public XPInterfaceTileEntity(){
 
         this.inventory = new ItemStack[this.getSizeInventory()];
+        for(int i = 0; i < this.inventory.length; i++){
+            this.inventory[i] = ItemStack.EMPTY;
+        }
         this.setCustomName("container.xp_interface_tile_entity");
 
 
@@ -44,12 +46,11 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         return false;
     }
 
-    @Nullable
     @Override
     public ItemStack getStackInSlot(int index) {
 
         if (index < 0 || index >= this.getSizeInventory())
-            return null;
+            return ItemStack.EMPTY;
         return this.inventory[index];
 
     }
@@ -78,23 +79,22 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
     }
 
-    @Nullable
     @Override
     public ItemStack decrStackSize(int index, int count) {
 
-        if (this.getStackInSlot(index) != null) {
+        if (!this.getStackInSlot(index).isEmpty()) {
             ItemStack itemstack;
 
             if (this.getStackInSlot(index).getCount() <= count) {
                 itemstack = this.getStackInSlot(index);
-                this.setInventorySlotContents(index, null);
+                this.setInventorySlotContents(index, ItemStack.EMPTY);
                 this.markDirty();
                 return itemstack;
             } else {
                 itemstack = this.getStackInSlot(index).splitStack(count);
 
                 if (this.getStackInSlot(index).getCount() <= 0) {
-                    this.setInventorySlotContents(index, null);
+                    this.setInventorySlotContents(index, ItemStack.EMPTY);
                 } else {
                     //Just to show that changes happened
                     this.setInventorySlotContents(index, this.getStackInSlot(index));
@@ -104,12 +104,11 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
                 return itemstack;
             }
         } else {
-            return null;
+            return ItemStack.EMPTY;
         }
 
     }
 
-    @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
 
@@ -118,16 +117,16 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     }
 
     @Override
-    public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
+    public void setInventorySlotContents(int index, ItemStack stack) {
 
         if (index < 0 || index >= this.getSizeInventory())
             return;
 
-        if (stack != null && stack.getCount() > this.getInventoryStackLimit())
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
             stack.setCount(this.getInventoryStackLimit());
 
-        if (stack != null && stack.getCount() == 0)
-            stack = null;
+        if (!stack.isEmpty() && stack.getCount() == 0)
+            stack = ItemStack.EMPTY;
 
         this.inventory[index] = stack;
         this.markDirty();
@@ -201,7 +200,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     public void clear() {
 
         for (int i = 0; i < this.getSizeInventory(); i++)
-            this.setInventorySlotContents(i, null);
+            this.setInventorySlotContents(i, ItemStack.EMPTY);
 
     }
 

@@ -2,6 +2,7 @@ package com.xpmodder.xpadditions.tileentity;
 
 import com.xpmodder.xpadditions.init.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,6 +25,9 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     public XPControllerTileEntity(){
 
         this.inventory = new ItemStack[this.getSizeInventory()];
+        for(int i = 0; i < this.inventory.length; i++){
+            this.inventory[i] = ItemStack.EMPTY;
+        }
         this.ID = count;
         this.storedXP = 0;
         count ++;
@@ -108,33 +112,31 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
         return false;
     }
 
-    @Nullable
     @Override
     public ItemStack getStackInSlot(int index) {
 
         if (index < 0 || index >= this.getSizeInventory())
-            return null;
+            return ItemStack.EMPTY;
         return this.inventory[index];
 
     }
 
-    @Nullable
     @Override
     public ItemStack decrStackSize(int index, int count) {
 
-        if (this.getStackInSlot(index) != null) {
+        if (!this.getStackInSlot(index).isEmpty()) {
             ItemStack itemstack;
 
             if (this.getStackInSlot(index).getCount() <= count) {
                 itemstack = this.getStackInSlot(index);
-                this.setInventorySlotContents(index, null);
+                this.setInventorySlotContents(index, ItemStack.EMPTY);
                 this.markDirty();
                 return itemstack;
             } else {
                 itemstack = this.getStackInSlot(index).splitStack(count);
 
                 if (this.getStackInSlot(index).getCount() <= 0) {
-                    this.setInventorySlotContents(index, null);
+                    this.setInventorySlotContents(index, ItemStack.EMPTY);
                 } else {
                     //Just to show that changes happened
                     this.setInventorySlotContents(index, this.getStackInSlot(index));
@@ -144,30 +146,29 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
                 return itemstack;
             }
         } else {
-            return null;
+            return ItemStack.EMPTY;
         }
 
     }
 
-    @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
 
-        return null;
+        return ItemStack.EMPTY;
 
     }
 
     @Override
-    public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
+    public void setInventorySlotContents(int index, ItemStack stack) {
 
         if (index < 0 || index >= this.getSizeInventory())
             return;
 
-        if (stack != null && stack.getCount() > this.getInventoryStackLimit())
+        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
             stack.setCount(this.getInventoryStackLimit());
 
-        if (stack != null && stack.getCount() == 0)
-            stack = null;
+        if (!stack.isEmpty() && stack.getCount() == 0)
+            stack = ItemStack.EMPTY;
 
         this.inventory[index] = stack;
         this.markDirty();
@@ -228,7 +229,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     public void clear() {
 
         for (int i = 0; i < this.getSizeInventory(); i++)
-            this.setInventorySlotContents(i, null);
+            this.setInventorySlotContents(i, ItemStack.EMPTY);
 
     }
 

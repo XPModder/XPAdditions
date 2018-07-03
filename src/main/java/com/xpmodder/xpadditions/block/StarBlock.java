@@ -1,6 +1,6 @@
 package com.xpmodder.xpadditions.block;
 
-import com.xpmodder.xpadditions.XPAdditions;
+import com.xpmodder.xpadditions.config.ConfigIntValues;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.reference.Reference;
@@ -17,7 +17,7 @@ import net.minecraft.world.chunk.Chunk;
 
 public class StarBlock extends Block {
 
-    int radius = XPAdditions.instance.config.starBlockRadius.getInt();
+    int radius = ConfigIntValues.STAR_BLOCK_RADIUS.getValue();
 
     public StarBlock(String unlocalizedName) {
 

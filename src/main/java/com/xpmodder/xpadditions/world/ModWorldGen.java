@@ -1,5 +1,7 @@
 package com.xpmodder.xpadditions.world;
 
+import com.xpmodder.xpadditions.config.ConfigBoolValues;
+import com.xpmodder.xpadditions.config.ConfigIntValues;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -23,11 +25,12 @@ public class ModWorldGen implements IWorldGenerator {
 
             case 0:     //Overworld
 
-                this.runGenerator(xp_ore_0_gen, world, random, chunkX, chunkZ, 2, 0, 40);
+                if(ConfigBoolValues.GENERATE_OVERWORLD_ORE.isEnabled()) {
+                    this.runGenerator(xp_ore_0_gen, world, random, chunkX, chunkZ, ConfigIntValues.ORE_DENSITY.getValue(), 0, 40);
+                }
 
 
-
-                if (random.nextInt(5000) == 1){
+                if (random.nextInt(ConfigIntValues.METEOR_DENSITY.getValue()) == 1 & ConfigBoolValues.GENERATE_METEORS.isEnabled()){
 
                     int randX = (chunkX * 16) + random.nextInt(16);
                     int randZ = (chunkZ * 16) + random.nextInt(16);
@@ -42,12 +45,12 @@ public class ModWorldGen implements IWorldGenerator {
 
             case -1:    //Nether
 
-                this.runGenerator(xp_ore_1_gen, world, random, chunkX, chunkZ, 10, 0, 255);
+                this.runGenerator(xp_ore_1_gen, world, random, chunkX, chunkZ, (ConfigIntValues.ORE_DENSITY.getValue() * 5), 0, 255);
                 break;
 
             case 1:     //End
 
-                this.runGenerator(xp_ore_2_gen, world, random, chunkX, chunkZ, 30, 0, 255);
+                this.runGenerator(xp_ore_2_gen, world, random, chunkX, chunkZ, (ConfigIntValues.ORE_DENSITY.getValue() * 15), 0, 255);
                 break;
 
 

@@ -1,7 +1,9 @@
 package com.xpmodder.xpadditions.handler;
 
 
+import com.xpmodder.xpadditions.config.ConfigValues;
 import com.xpmodder.xpadditions.reference.Reference;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -11,39 +13,32 @@ import java.io.File;
 
 public class ConfigurationHandler {
 
-    public Configuration configuration;
-
-    public Property starBlockRadius;
+    public static Configuration configuration;
 
     public ConfigurationHandler(File configFile){
 
+        MinecraftForge.EVENT_BUS.register(this);
         configuration = new Configuration(configFile);
-        reload();
-
-    }
-
-    void reload(){
-
         configuration.load();
-
-        starBlockRadius = configuration.get(Configuration.CATEGORY_GENERAL, "starBlockRadius", 20, "This is the radius in which a Star Block spawns lightsources!");
-
-        update();
+        redefineConfigs();
 
     }
 
     @SubscribeEvent
     public void OnConfigChanged(ConfigChangedEvent event) {
 
-        if (event.getModID().equals(Reference.MOD_ID)) update();
+        if (event.getModID().equalsIgnoreCase(Reference.MOD_ID)) redefineConfigs();
 
     }
 
-    void update(){
 
-        starBlockRadius.set(Math.min(Math.max(starBlockRadius.getInt(20), 40), 4));
+    public static void redefineConfigs(){
 
-        configuration.save();
+        ConfigValues.defineConfigValues(configuration);
+
+        if(configuration.hasChanged()){
+            configuration.save();
+        }
 
     }
 

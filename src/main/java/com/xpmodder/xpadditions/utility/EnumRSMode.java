@@ -4,9 +4,9 @@ import net.minecraft.util.IStringSerializable;
 
 public enum EnumRSMode implements IStringSerializable {
 
-    REDSTONE_OFF(0, "redstone_off"),
-    REDSTONE_ON(1, "redstone_on"),
-    REDSTONE_IGNORED(2, "redstone_ignored");
+    REDSTONE_IGNORED(0, "redstone_ignored"),
+    REDSTONE_OFF(1, "redstone_off"),
+    REDSTONE_ON(2, "redstone_on");
 
     private int ID;
     private String name;

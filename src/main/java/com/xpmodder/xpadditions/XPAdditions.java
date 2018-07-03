@@ -13,10 +13,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 
-@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.client.gui.GuiFactory")
+@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
 public class XPAdditions {
-
-    public ConfigurationHandler config;
 
     @Mod.Instance(Reference.MOD_ID)
     public static XPAdditions instance;
@@ -29,7 +27,7 @@ public class XPAdditions {
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event){
 
-        config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
+        new ConfigurationHandler(event.getSuggestedConfigurationFile());
 
         //ModFluids.registerExp();
 
@@ -40,8 +38,6 @@ public class XPAdditions {
 
     @Mod.EventHandler
     public void Init (FMLInitializationEvent event){
-
-        MinecraftForge.EVENT_BUS.register(config);
 
         this.proxy.init(event);
 
