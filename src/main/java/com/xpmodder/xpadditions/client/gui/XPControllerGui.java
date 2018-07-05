@@ -3,13 +3,12 @@ package com.xpmodder.xpadditions.client.gui;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPControllerContainer;
 import com.xpmodder.xpadditions.tileentity.XPControllerTileEntity;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class XPControllerGui extends GuiContainer {
+public class XPControllerGui extends ModBaseGui {
 
     private IInventory playerInv;
     private XPControllerTileEntity te;
@@ -34,10 +33,7 @@ public class XPControllerGui extends GuiContainer {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-
-        int sx = (width - xSize) / 2;
-        int sy = (height - ySize) / 2;
+    protected void drawBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/xp_controller_gui.png"));

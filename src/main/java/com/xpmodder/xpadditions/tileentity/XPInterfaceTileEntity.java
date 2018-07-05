@@ -13,6 +13,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
 
 
 public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
@@ -168,7 +169,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         }
         else if (index == 3){
 
-            //if (stack.getItem() == Buckets.itemBucketLiquidXP.getItem())
+            //if (stack.getItem() == UniversalBucket.getFilledBucket(UniversalBucket,ModFluids.fluid_exp))
                 return true;
 
         }
@@ -217,6 +218,8 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
         return this.newName != null && !this.newName.equals("");
 
     }
+
+
 
     @Override
     public void updateChildren() {
