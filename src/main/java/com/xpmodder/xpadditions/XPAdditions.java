@@ -2,19 +2,27 @@ package com.xpmodder.xpadditions;
 
 import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.handler.ConfigurationHandler;
+import com.xpmodder.xpadditions.init.MessageRegistry;
+import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
 import com.xpmodder.xpadditions.proxy.CommonProxy;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
 public class XPAdditions {
+
+    public static SimpleNetworkWrapper networkWrapper;
 
     @Mod.Instance(Reference.MOD_ID)
     public static XPAdditions instance;
@@ -22,14 +30,18 @@ public class XPAdditions {
     @SidedProxy(clientSide = Reference.ClientProxyClass, serverSide = Reference.ServerProxyClass)
     public static CommonProxy proxy;
 
-    public static ModFluids fluids;
+    static{
+        //For some reason, this has to be done here
+        FluidRegistry.enableUniversalBucket();
+    }
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event){
 
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
 
-        //ModFluids.registerExp();
+        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID);
+        MessageRegistry.register(networkWrapper);
 
         this.proxy.preInit(event);
 

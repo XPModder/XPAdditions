@@ -14,8 +14,21 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
     protected boolean connected = false;
     protected BlockPos controller;
     protected String newName = "container.xp_base_tile_entity";
+    protected int RSInt = 0;
     public static final PropertyEnum<EnumRSMode> RSMode = PropertyEnum.<EnumRSMode>create("type", EnumRSMode.class);
 
+
+    public void setRS(int RSInt){
+
+        this.RSInt = RSInt;
+
+    }
+
+    public int getRS(){
+
+        return this.RSInt;
+
+    }
 
     public boolean isConnected() {
 
@@ -83,6 +96,7 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
         compound.setInteger("controllerX", cont[0]);
         compound.setInteger("controllerY", cont[1]);
         compound.setInteger("controllerZ", cont[2]);
+        compound.setInteger("RS", this.RSInt);
 
         super.writeToNBT(compound);
 
@@ -99,6 +113,7 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
         coords[0] = compound.getInteger("controllerX");
         coords[1] = compound.getInteger("controllerY");
         coords[2] = compound.getInteger("controllerZ");
+        this.RSInt = compound.getInteger("RS");
         this.controller = new BlockPos(coords[0], coords[1], coords[2]);
 
     }
@@ -126,27 +141,6 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
         }
 
         updateChildren();
-
-        /*
-        if(world.isBlockPowered(this.getPos())){
-
-            if(RSMode.getName().equals(EnumRSMode.REDSTONE_IGNORED.getName()) || RSMode.getName().equals(EnumRSMode.REDSTONE_ON.getName())){
-
-                updateChildren();
-
-            }
-
-        }
-        else{
-
-            if(RSMode.getName().equals(EnumRSMode.REDSTONE_IGNORED.getName()) || RSMode.getName().equals(EnumRSMode.REDSTONE_OFF.getName())){
-
-                updateChildren();
-
-            }
-
-        }
-        */
 
     }
 

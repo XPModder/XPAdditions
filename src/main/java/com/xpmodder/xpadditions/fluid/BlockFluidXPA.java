@@ -78,9 +78,6 @@ public class BlockFluidXPA extends BlockFluidClassic {
         Item item = Item.getItemFromBlock(block);
         ModelBakery.registerItemVariants(item);
         final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Reference.MOD_ID + ":fluid", stack.getFluid().getName());
-        LogHelper.info(modelResourceLocation);
-        LogHelper.info(block);
-        LogHelper.info(item);
         ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
         ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
 

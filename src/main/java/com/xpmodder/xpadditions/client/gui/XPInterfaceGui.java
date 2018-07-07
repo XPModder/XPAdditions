@@ -1,6 +1,8 @@
 package com.xpmodder.xpadditions.client.gui;
 
+import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
@@ -10,6 +12,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import java.io.IOException;
 
 
 public class XPInterfaceGui extends ModBaseGui {
@@ -23,6 +27,19 @@ public class XPInterfaceGui extends ModBaseGui {
 
         this.playerInv = playerInv;
         this.te = te;
+
+        if(te.getRS() == 0){
+            this.RS[0] = true;
+            this.RS[1] = this.RS[2] = false;
+        }
+        else if(te.getRS() == 1){
+            this.RS[1] = true;
+            this.RS[0] = this.RS[2] = false;
+        }
+        else{
+            this.RS[2] = true;
+            this.RS[0] = this.RS[1] = false;
+        }
 
         this.xSize = 176;
         this.ySize = 166;
@@ -67,6 +84,36 @@ public class XPInterfaceGui extends ModBaseGui {
         this.fontRenderer.drawString(s3, 50, 30, 4210752);
         this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+
+        int sx = (width - xSize) / 2;
+        int sy = (height - ySize) / 2;
+
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+
+        if(mouseButton == 0) {
+            if (mouseX >= sx + xSize + 7 && mouseX <= sx + xSize + 28) {
+                if (mouseY >= sy + 5 && mouseY <= sy + 25) {
+                    this.RS[0] = true;
+                    this.RS[1] = this.RS[2] = false;
+                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(0, this.te.getPos()));
+                }
+                else if (mouseY >= sy + 30 && mouseY <= sy + 50) {
+                    this.RS[1] = true;
+                    this.RS[0] = this.RS[2] = false;
+                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(1, this.te.getPos()));
+                }
+                else if (mouseY >= sy + 54 && mouseY <= sy + 74) {
+                    this.RS[2] = true;
+                    this.RS[0] = this.RS[1] = false;
+                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(2, this.te.getPos()));
+                }
+            }
+        }
+        super.initGui();
     }
 
     private int getHeightScaled(int pixels) {

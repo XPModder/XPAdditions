@@ -1,6 +1,9 @@
 package com.xpmodder.xpadditions.tileentity;
 
+import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
+import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -11,6 +14,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.Nullable;
 
@@ -21,6 +26,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     private int ID;
     private int storedXP;
     private String newName = "container.xp_controller_tile_entity";
+    private int RSInt = 0;
 
     public XPControllerTileEntity(){
 
@@ -55,6 +61,8 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
 
         compound.setInteger("ID", this.ID);
         compound.setInteger("storedXP", this.storedXP);
+        compound.setInteger("RS", this.RSInt);
+        LogHelper.info(this.RSInt);
 
         return compound;
 
@@ -67,6 +75,17 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
 
         this.ID = compound.getInteger("ID");
         this.storedXP = compound.getInteger("storedXP");
+        this.RSInt = compound.getInteger("RS");
+
+    }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeToNBT(compound);
+        return new SPacketUpdateTileEntity(this.pos, -1, compound);
 
     }
 
@@ -85,6 +104,20 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     public void setTotalXP(int totalXP, int id) {
 
         this.storedXP = totalXP;
+
+    }
+
+    public void setRS(int RSInt){
+
+        this.RSInt = RSInt;
+        this.markDirty();
+        LogHelper.info("RS-Settings changed: " + this.RSInt);
+
+    }
+
+    public int getRS(){
+
+        return this.RSInt;
 
     }
 
@@ -274,18 +307,35 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     @Override
     public void update() {
 
-        if(isSlotOccupied(0)){
+        if(!this.world.isRemote) {
 
-            if(getStackInSlot(0).getItem() == Item.getItemFromBlock(ModBlocks.xpInterfaceBlock)){
+            if (isSlotOccupied(0) && shouldRun()) {
 
-                int[] coords = {this.pos.getX(), this.pos.getY(), this.pos.getZ()};
-                NBTTagCompound compound = new NBTTagCompound();
-                compound.setIntArray("controller", coords);
-                getStackInSlot(0).setTagCompound(compound);
+                if (getStackInSlot(0).getItem() == Item.getItemFromBlock(ModBlocks.xpInterfaceBlock)) {
+
+                    int[] coords = {this.pos.getX(), this.pos.getY(), this.pos.getZ()};
+                    NBTTagCompound compound = new NBTTagCompound();
+                    compound.setIntArray("controller", coords);
+                    getStackInSlot(0).setTagCompound(compound);
+
+                }
 
             }
 
         }
+
+    }
+
+    private boolean shouldRun(){
+
+        if(this.RSInt == 0)
+            return true;
+        else if (this.RSInt == 1 && this.world.isBlockPowered(this.pos))
+            return true;
+        else if (this.RSInt == 2 && !this.world.isBlockPowered(this.pos))
+            return true;
+        else
+            return false;
 
     }
 

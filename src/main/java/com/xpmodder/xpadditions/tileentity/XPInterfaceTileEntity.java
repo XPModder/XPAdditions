@@ -14,6 +14,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
@@ -224,63 +226,67 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     @Override
     public void updateChildren() {
 
-        try {
+        //LogHelper.info(this.getName() + this.shouldRun());
 
-            maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
-            maxXPmB = XPHelper.getXPfromMB(4000);
+        if(this.shouldRun()) {
 
-            XPControllerTileEntity te = (XPControllerTileEntity) world.getTileEntity(this.controller);
-            xp = te.getTotalXP(te.getID());
+            try {
 
-            //Items
+                maxXP = XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)) * this.getInventoryStackLimit();
+                maxXPmB = XPHelper.getXPfromMB(4000);
 
-            if (isSlotOccupied(1)) {
+                XPControllerTileEntity te = (XPControllerTileEntity) world.getTileEntity(this.controller);
+                xp = te.getTotalXP(te.getID());
 
-                if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+                //Items
 
-                    te.addXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
-                    this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).getCount() - 1));
+                if (isSlotOccupied(1)) {
+
+                    if (this.getStackInSlot(1).getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+
+                        te.addXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
+                        this.setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(1).getCount() - 1));
+
+                    }
 
                 }
+                if (te.getTotalXP(te.getID()) >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1))) {
 
-            }
-            if (te.getTotalXP(te.getID()) >= XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1))) {
+                    if (isSlotOccupied(0)) {
 
-                if (isSlotOccupied(0)) {
+                        if (this.getStackInSlot(0).getCount() < this.getInventoryStackLimit()) {
 
-                    if (this.getStackInSlot(0).getCount() < this.getInventoryStackLimit()) {
+                            this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).getCount() + 1));
+                            te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
 
-                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, this.getStackInSlot(0).getCount() + 1));
+                        }
+
+                    } else {
+
+                        this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, 1));
                         te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
 
                     }
 
-                } else {
-
-                    this.setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, 1));
-                    te.removeXP(XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)), te.getID());
-
                 }
 
-            }
+                //Fluids
 
-            //Fluids
+                if (isSlotOccupied(2)) {
 
-            if(isSlotOccupied(2)){
+                    if (getStackInSlot(2).getItem() == Items.BUCKET) {
 
-                if(getStackInSlot(2).getItem() == Items.BUCKET){
+                        if (te.getTotalXP(te.getID()) >= XPHelper.getXPfromMB(1000)) {
 
-                    if(te.getTotalXP(te.getID()) >= XPHelper.getXPfromMB(1000)){
+                            te.removeXP(XPHelper.getXPfromMB(1000), te.getID());
+                            setInventorySlotContents(2, new ItemStack(FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME)).getItem(), 1));
 
-                        te.removeXP(XPHelper.getXPfromMB(1000), te.getID());
-                        setInventorySlotContents(2, new ItemStack(FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME)).getItem(), 1));
+                        }
 
                     }
 
                 }
-
-            }
-            if(isSlotOccupied(3)){
+                if (isSlotOccupied(3)) {
 
                 /*
                 if(getStackInSlot(3).getItem() == Buckets.itemBucketLiquidXP.getItem()){
@@ -290,14 +296,29 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
                 }
                 */
+                }
+
+            } catch (NullPointerException e) {
+
+                LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() !");
+
             }
-
-        }
-        catch (NullPointerException e){
-
-            LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() !");
-
         }
 
     }
+
+
+    private boolean shouldRun(){
+
+        if(this.RSInt == 0)
+            return true;
+        else if (this.RSInt == 1 && this.world.isBlockPowered(this.pos))
+            return true;
+        else if (this.RSInt == 2 && !this.world.isBlockPowered(this.pos))
+            return true;
+        else
+            return false;
+
+    }
+
 }
