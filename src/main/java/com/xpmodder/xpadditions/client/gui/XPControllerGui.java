@@ -82,19 +82,23 @@ public class XPControllerGui extends ModBaseGui {
             if (mouseX >= sx + xSize + 7 && mouseX <= sx + xSize + 28) {
                 if (mouseY >= sy + 5 && mouseY <= sy + 25) {
                     this.RS[0] = true;
+                    this.te.setRS(0);
                     this.RS[1] = this.RS[2] = false;
                     XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(0, this.te.getPos()));
                 }
                 else if (mouseY >= sy + 30 && mouseY <= sy + 50) {
                     this.RS[1] = true;
+                    this.te.setRS(1);
                     this.RS[0] = this.RS[2] = false;
                     XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(1, this.te.getPos()));
                 }
                 else if (mouseY >= sy + 54 && mouseY <= sy + 74) {
                     this.RS[2] = true;
+                    this.te.setRS(2);
                     this.RS[0] = this.RS[1] = false;
                     XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(2, this.te.getPos()));
                 }
+
             }
         }
         super.initGui();

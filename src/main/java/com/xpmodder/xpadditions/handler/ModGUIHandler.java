@@ -1,5 +1,6 @@
 package com.xpmodder.xpadditions.handler;
 
+import com.xpmodder.xpadditions.client.gui.BookGui;
 import com.xpmodder.xpadditions.client.gui.XPControllerGui;
 import com.xpmodder.xpadditions.client.gui.XPInterfaceGui;
 import com.xpmodder.xpadditions.tileentity.XPControllerContainer;
@@ -15,6 +16,7 @@ public class ModGUIHandler implements IGuiHandler {
 
     public static final int XP_Interface_GUI = 0;
     public static final int XP_Controller_GUI = 1;
+    public static final int Book_GUI = 2;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -44,6 +46,9 @@ public class ModGUIHandler implements IGuiHandler {
 
             case XP_Controller_GUI:
                 return new XPControllerGui(player.inventory, (XPControllerTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+
+            case Book_GUI:
+                return new BookGui(player.inventory);
 
             default:
                 return null;

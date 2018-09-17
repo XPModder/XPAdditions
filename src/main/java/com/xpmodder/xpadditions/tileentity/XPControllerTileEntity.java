@@ -62,7 +62,6 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
         compound.setInteger("ID", this.ID);
         compound.setInteger("storedXP", this.storedXP);
         compound.setInteger("RS", this.RSInt);
-        LogHelper.info(this.RSInt);
 
         return compound;
 
@@ -110,8 +109,8 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     public void setRS(int RSInt){
 
         this.RSInt = RSInt;
+        this.update();
         this.markDirty();
-        LogHelper.info("RS-Settings changed: " + this.RSInt);
 
     }
 

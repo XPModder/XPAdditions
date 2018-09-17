@@ -15,6 +15,7 @@ public class itemRenderRegister {
         reg(ModItems.bigStarItem);
         reg(ModItems.denseStarItem);
         reg(ModItems.xpOrbItem);
+        reg(ModItems.bookItem);
 
     }
 

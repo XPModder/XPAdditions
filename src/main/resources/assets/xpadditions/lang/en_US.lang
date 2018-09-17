@@ -6,6 +6,7 @@ item.big_star_item.name=Big Star
 item.dense_star_item.name=Dense Star
 item.xp_orb_item.name=Orb of XP
 item.bucketLiquid_xp.name=Liquid XP Bucket
+item.book_item.name=XPAdditions Guide
 
 tile.starfield_block.name=Starfield Block
 tile.star_block.name=Star Block

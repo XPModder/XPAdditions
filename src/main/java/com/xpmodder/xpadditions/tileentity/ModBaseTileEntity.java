@@ -21,6 +21,8 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
     public void setRS(int RSInt){
 
         this.RSInt = RSInt;
+        this.update();
+        this.markDirty();
 
     }
 

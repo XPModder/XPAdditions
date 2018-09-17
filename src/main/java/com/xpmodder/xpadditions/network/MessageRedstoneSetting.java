@@ -30,7 +30,6 @@ public class MessageRedstoneSetting implements IMessage {
 
         pos = BlockPos.fromLong(buf.readLong());
         toSend = buf.readInt();
-        LogHelper.info(buf);
 
     }
 
@@ -39,7 +38,6 @@ public class MessageRedstoneSetting implements IMessage {
 
         buf.writeLong(this.pos.toLong());
         buf.writeInt(this.toSend);
-        LogHelper.info(buf);
 
     }
 

@@ -1,6 +1,7 @@
 package com.xpmodder.xpadditions.init;
 
 import com.xpmodder.xpadditions.item.BasicItem;
+import com.xpmodder.xpadditions.item.BookItem;
 import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -18,6 +19,7 @@ public final class ModItems {
     public static final Item bigStarItem = new BasicItem("big_star_item");
     public static final Item denseStarItem = new BasicItem("dense_star_item");
     public static final Item xpOrbItem = new BasicItem("xp_orb_item");
+    public static final Item bookItem = new BookItem("book_item");
 
     private static void initialiseItems(){
 
@@ -39,7 +41,8 @@ public final class ModItems {
                     mediumStarItem,
                     bigStarItem,
                     denseStarItem,
-                    xpOrbItem
+                    xpOrbItem,
+                    bookItem
             };
 
             final IForgeRegistry<Item> registry = event.getRegistry();

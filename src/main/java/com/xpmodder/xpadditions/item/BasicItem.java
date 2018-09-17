@@ -16,4 +16,15 @@ public class BasicItem extends Item {
 
     }
 
+    public BasicItem(String UnlocalizedName, int maxStackSize){
+
+        super();
+
+        this.setUnlocalizedName(UnlocalizedName);
+        this.setRegistryName(Reference.MOD_ID, UnlocalizedName);
+        this.setCreativeTab(CreativeTabXPA.XPA_TAB);
+        this.setMaxStackSize(maxStackSize);
+
+    }
+
 }
