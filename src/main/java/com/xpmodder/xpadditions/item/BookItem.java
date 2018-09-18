@@ -18,12 +18,8 @@ public class BookItem extends BasicItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 
-        if (!worldIn.isRemote) {
+        playerIn.openGui(XPAdditions.instance, ModGUIHandler.Book_GUI, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
 
-            playerIn.openGui(XPAdditions.instance, ModGUIHandler.Book_GUI, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
-            LogHelper.info("Gui should have opened!");
-
-        }
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
