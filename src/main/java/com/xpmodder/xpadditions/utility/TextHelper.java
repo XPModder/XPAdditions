@@ -31,10 +31,9 @@ public class TextHelper {
         int line = 0;
         int counter = 0;
 
-        for(int i = 0; i < in.length; i++){
+        for(int i = 1; i < in.length; i++){
 
             if(in[i] == '\n'){
-                out[line] = " ";
                 line++;
                 counter = 0;
             }
@@ -72,7 +71,7 @@ public class TextHelper {
         for(int i = 0; i < in.length; i++){
 
             if(in[i] == '\n'){
-                line++;
+                line += 2;
                 counter = 0;
             }
             else if(in[i] == '\r'){
