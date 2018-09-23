@@ -34,6 +34,7 @@ public class BookGui extends GuiScreen {
         this.page = 0;
         this.textHelper = new TextHelper();
         this.textHelper.setFileText(bookText);
+        LogHelper.info(Arrays.toString(this.textHelper.getTextInLines(20)));
 
     }
 
@@ -69,7 +70,7 @@ public class BookGui extends GuiScreen {
         String s = "XPAdditions Guide";
         this.fontRenderer.drawString(s, (this.width / 2), 0, 4210752);            //#404040
 
-        String Text[] = this.textHelper.getTextLines(lineLength);
+        String Text[] = this.textHelper.getTextInLines(lineLength);
 
         int j = 0;
         for(int i = (0 + (this.page * 38)); i < (19 + (this.page * 38)); i++){
