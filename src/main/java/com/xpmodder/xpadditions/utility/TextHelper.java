@@ -65,30 +65,48 @@ public class TextHelper {
 
     public String[] getTextInLines( int len ) {
         String s = this.Text;
-        String out[] = new String[this.getLineNum(len)];
+        String temp[] = new String[this.getLineNum(len)];
         StringTokenizer st = new StringTokenizer(s, " ", true);
         String word;
         int currentLineLen = 0;
         int LineAt = 0;
-        out[0] = " ";
-
+        temp[0] = " ";
+        String[] words = this.Text.split(" ");
+        /*
         while (st.hasMoreTokens()) {
             int wordLen = (word = st.nextToken()).length();
 
             if (currentLineLen + wordLen <= len) {
-                out[LineAt] += (word);
+                temp[LineAt] += (word);
                 currentLineLen += wordLen;
             } else {
                 boolean firstIsSpace = word.charAt(0) == ' ';
                 LineAt++;
-                out[LineAt] = ((firstIsSpace ? "" : word));
+                temp[LineAt] = ((firstIsSpace ? "" : word));
                 currentLineLen = firstIsSpace ? 0 : wordLen;
             }
         }
 
-        out[0] = out[0].substring(2);
+        temp[0] = temp[0].substring(2);
+        */
 
-        return out;
+        for(int i = 0; i < words.length; i++){
+
+            int wordLen = words[i].length();
+            if(currentLineLen + wordLen <= len){
+                temp[LineAt] += words[i];
+                currentLineLen += wordLen;
+            }
+            else{
+                boolean firstIsSpace = words[i].charAt(0) == ' ';
+                LineAt++;
+                temp[LineAt] = ((firstIsSpace ? "" : words[i]));
+                currentLineLen = firstIsSpace ? 0 : wordLen;
+            }
+
+        }
+
+        return temp;
     }
 
     public int getLineNum( int len ) {
