@@ -27,35 +27,24 @@ public class TextHelper {
 
     public String[] getTextLines(int length){
 
-        String out[] = new String[this.getLines(length)];
-        char in[] = this.Text.toCharArray();
+        String out[] = new String[this.getLineNum(length)];
+        String s = this.Text;
+        String words[] = s.split(" \n");
         int line = 0;
         int counter = 0;
+        out[0] = " ";
 
-        for(int i = 1; i < in.length; i++){
+        for(int i = 0; i < words.length; i++){
 
-            if(in[i] == '\n'){
+            if((counter + words[i].length()) < length){
+                counter += words[i].length();
+                out[line] += " ";
+                out[line] += words[i];
+            }
+            else{
                 line++;
-                counter = 0;
-            }
-            else if(in[i] == '\r'){
-
-            }
-            else {
-
-                if(counter == 0){
-                    out[line] = "" + in[i];
-                }
-                else{
-                    out[line] += in[i];
-                }
-                counter++;
-
-                if (counter == length) {
-                    line++;
-                    counter = 0;
-                }
-
+                counter = words[i].length();
+                out[line] = words[i];
             }
 
         }
@@ -63,72 +52,25 @@ public class TextHelper {
         return out;
     }
 
-    public String[] getTextInLines( int len ) {
+    public int getLineNum( int len ) {
         String s = this.Text;
-        String temp[] = new String[this.getLineNum(len)];
-        StringTokenizer st = new StringTokenizer(s, " ", true);
-        String word;
+        String words[] = s.split(" \n");
+        int lines = 0;
         int currentLineLen = 0;
-        int LineAt = 0;
-        temp[0] = " ";
-        String[] words = this.Text.split(" ");
-        /*
-        while (st.hasMoreTokens()) {
-            int wordLen = (word = st.nextToken()).length();
-
-            if (currentLineLen + wordLen <= len) {
-                temp[LineAt] += (word);
-                currentLineLen += wordLen;
-            } else {
-                boolean firstIsSpace = word.charAt(0) == ' ';
-                LineAt++;
-                temp[LineAt] = ((firstIsSpace ? "" : word));
-                currentLineLen = firstIsSpace ? 0 : wordLen;
-            }
-        }
-
-        temp[0] = temp[0].substring(2);
-        */
 
         for(int i = 0; i < words.length; i++){
 
-            int wordLen = words[i].length();
-            if(currentLineLen + wordLen <= len){
-                temp[LineAt] += words[i];
-                currentLineLen += wordLen;
+            if(currentLineLen < (len + words[i].length())){
+                currentLineLen += words[i].length();
             }
             else{
-                boolean firstIsSpace = words[i].charAt(0) == ' ';
-                LineAt++;
-                temp[LineAt] = ((firstIsSpace ? "" : words[i]));
-                currentLineLen = firstIsSpace ? 0 : wordLen;
+                lines++;
+                currentLineLen = words[i].length();
             }
 
         }
 
-        return temp;
-    }
-
-    public int getLineNum( int len ) {
-        String s = this.Text;
-        StringTokenizer st = new StringTokenizer(s, " ", true);
-        String word;
-        int currentLineLen = 0;
-        int LineAt = 0;
-
-        while (st.hasMoreTokens()) {
-            int wordLen = (word = st.nextToken()).length();
-
-            if (currentLineLen + wordLen <= len) {
-                currentLineLen += wordLen;
-            } else {
-                boolean firstIsSpace = word.charAt(0) == ' ';
-                LineAt++;
-                currentLineLen = firstIsSpace ? 0 : wordLen;
-            }
-        }
-
-        return (LineAt + 1);
+        return lines;
     }
 
 
