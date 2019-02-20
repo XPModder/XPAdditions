@@ -11,7 +11,7 @@ public class TextHelper {
 
     private String Text = "This is a sample Text from the Book! This should print in multiple lines! And it should be longer than 100 characters now!       If you see this something went wrong! Please notify XPModde (the mod author), about this!";
 
-    public String[] getTextInLines( int len ) {
+    public String[] getTextInLines(int len) {
         String text = this.Text.substring(1);
         String temp[] = new String[this.getLineNum(len)];
         int currentLineLen = 0;
@@ -20,27 +20,25 @@ public class TextHelper {
         String[] words = text.split(" ");
 
 
-        for(int i = 0; i < words.length; i++){
+        for (int i = 0; i < words.length; i++) {
 
             int wordLen = words[i].length();
 
-            if(words[i].contains("\n")){
+            if (words[i].contains("\n")) {
                 temp[LineAt] += " ";
-                for(int j = 0; j < words[i].length(); j++){
-                    if(words[i].charAt(j) == '\n'){
-                        LineAt ++;
+                for (int j = 0; j < words[i].length(); j++) {
+                    if (words[i].charAt(j) == '\n') {
+                        LineAt++;
                         currentLineLen = 0;
                         temp[LineAt] = " ";
-                    }
-                    else{
+                    } else {
                         temp[LineAt] += words[i].charAt(j);
-                        currentLineLen ++;
+                        currentLineLen++;
                     }
 
                 }
                 words[i].replaceAll("\n", " ");
-            }
-            else {
+            } else {
                 if (currentLineLen + wordLen + 1 <= len) {
                     wordLen++;
                     temp[LineAt] += (" " + words[i]);
@@ -58,7 +56,7 @@ public class TextHelper {
         return temp;
     }
 
-    public int getLineNum( int len ) {
+    public int getLineNum(int len) {
         String s = this.Text;
         StringTokenizer st = new StringTokenizer(s, " ", true);
         String word;
@@ -81,11 +79,11 @@ public class TextHelper {
         return (LineAt + 1);
     }
 
-    public int setFileText(ResourceLocation resourceLocation){
+    public int setFileText(ResourceLocation resLoc) {
 
-        try{
+        try {
 
-            InputStream iStream = Minecraft.getMinecraft().getResourceManager().getResource(resourceLocation).getInputStream();
+            InputStream iStream = Minecraft.getMinecraft().getResourceManager().getResource(resLoc).getInputStream();
 
             String text = new Scanner(iStream, "UTF-8").useDelimiter("\\A").next();
 
@@ -93,11 +91,11 @@ public class TextHelper {
 
             return 1;
 
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             return -1;
         }
 
     }
 
 }
+
