@@ -17,6 +17,8 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Arrays;
+
 
 public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInventory,ITickable{
 
@@ -300,7 +302,7 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
             } catch (NullPointerException e) {
 
-                LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() !");
+                LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() ! Stacktrace: ");
 
             }
         }

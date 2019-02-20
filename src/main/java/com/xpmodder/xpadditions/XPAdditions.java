@@ -17,12 +17,15 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.logging.log4j.Logger;
 
 
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
 public class XPAdditions {
 
     public static SimpleNetworkWrapper networkWrapper;
+
+    public static Logger ModLogger;
 
     @Mod.Instance(Reference.MOD_ID)
     public static XPAdditions instance;
@@ -39,6 +42,7 @@ public class XPAdditions {
     public void preInit (FMLPreInitializationEvent event){
 
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
+        ModLogger = event.getModLog();
 
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID);
         MessageRegistry.register(networkWrapper);

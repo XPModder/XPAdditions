@@ -1,15 +1,15 @@
 package com.xpmodder.xpadditions.utility;
 
-import com.xpmodder.xpadditions.reference.Reference;
-import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
+
+import static com.xpmodder.xpadditions.XPAdditions.ModLogger;
 
 
 public class LogHelper {
 
     public static void log(Level logLevel, Object object){
 
-        FMLLog.log(Reference.MOD_ID, logLevel, "[" + Reference.NAME + "]: " + String.valueOf(object));
+        ModLogger.log(logLevel, String.valueOf(object));
 
     }
 
