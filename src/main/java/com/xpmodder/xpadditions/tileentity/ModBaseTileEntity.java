@@ -100,11 +100,15 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
         compound.setInteger("controllerZ", cont[2]);
         compound.setInteger("RS", this.RSInt);
 
+        compound = childWriteNBT(compound);
+
         super.writeToNBT(compound);
 
         return compound;
 
     }
+
+    public abstract NBTTagCompound childWriteNBT(NBTTagCompound compound);
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
@@ -117,8 +121,11 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
         coords[2] = compound.getInteger("controllerZ");
         this.RSInt = compound.getInteger("RS");
         this.controller = new BlockPos(coords[0], coords[1], coords[2]);
+        childReadNBT(compound);
 
     }
+
+    public abstract void childReadNBT(NBTTagCompound compound);
 
     @Override
     public void update() {

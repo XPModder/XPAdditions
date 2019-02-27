@@ -4,9 +4,11 @@ import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.handler.ModGUIHandler;
 import com.xpmodder.xpadditions.reference.Reference;
+import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class XPControllerBlock extends BlockContainer {
+
+    private String placer;
 
     public XPControllerBlock(){
 
@@ -61,6 +65,10 @@ public class XPControllerBlock extends BlockContainer {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
+        if(this.placer == null) {
+            this.placer = playerIn.getName();
+            ((XPControllerTileEntity)worldIn.getTileEntity(pos)).setOwner(playerIn);
+        }
         if (!worldIn.isRemote) {
 
             playerIn.openGui(XPAdditions.instance, ModGUIHandler.XP_Controller_GUI, worldIn, pos.getX(), pos.getY(), pos.getZ());
@@ -72,7 +80,8 @@ public class XPControllerBlock extends BlockContainer {
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 
-
+        this.placer = placer.getName();
+        ((XPControllerTileEntity)worldIn.getTileEntity(pos)).setOwner(worldIn.getPlayerEntityByName(placer.getName()));
 
     }
 

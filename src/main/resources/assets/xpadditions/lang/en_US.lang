@@ -8,6 +8,8 @@ item.xp_orb_item.name=Orb of XP
 item.bucketLiquid_xp.name=Liquid XP Bucket
 item.book_item.name=XPAdditions Guide
 
+fluid.xpjuice=Liquid XP
+
 tile.starfield_block.name=Starfield Block
 tile.star_block.name=Star Block
 tile.bright_star_block.name=Lightsource

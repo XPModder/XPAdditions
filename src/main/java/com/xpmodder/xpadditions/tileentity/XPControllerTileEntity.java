@@ -27,6 +27,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
     private int storedXP;
     private String newName = "container.xp_controller_tile_entity";
     private int RSInt = 0;
+    private EntityPlayer owner;
 
     public XPControllerTileEntity(){
 
@@ -37,6 +38,7 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
         this.ID = count;
         this.storedXP = 0;
         count ++;
+
 
     }
 
@@ -86,6 +88,14 @@ public class XPControllerTileEntity extends TileEntity implements IInventory,ITi
         this.writeToNBT(compound);
         return new SPacketUpdateTileEntity(this.pos, -1, compound);
 
+    }
+
+    public EntityPlayer getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(EntityPlayer placerOf) {
+        this.owner = placerOf;
     }
 
     public int getID() {

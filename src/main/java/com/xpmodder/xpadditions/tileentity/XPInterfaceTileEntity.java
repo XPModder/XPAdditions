@@ -9,11 +9,9 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -163,6 +161,72 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     }
 
     @Override
+    public NBTTagCompound childWriteNBT(NBTTagCompound compound){
+
+        if(isSlotOccupied(0)){
+            compound.setInteger("Slot0-Count", getStackInSlot(0).getCount());
+        }
+        else{
+            compound.setInteger("Slot0-Count", 0);
+        }
+        if(isSlotOccupied(1)){
+            compound.setInteger("Slot1-Count", getStackInSlot(1).getCount());
+        }
+        else{
+            compound.setInteger("Slot1-Count", 0);
+        }
+        if(isSlotOccupied(2)){
+            NBTTagCompound itemTags = new NBTTagCompound();
+            getStackInSlot(2).writeToNBT(itemTags);
+            compound.setTag("Slot2-Item", itemTags);
+            compound.setInteger("Slot2-Count", getStackInSlot(2).getCount());
+        }
+        else{
+            compound.setString("Slot2-Item", "null");
+            compound.setInteger("Slot2-Count", 0);
+        }
+        if(isSlotOccupied(3)){
+            NBTTagCompound itemTags = new NBTTagCompound();
+            getStackInSlot(3).writeToNBT(itemTags);
+            compound.setTag("Slot3-Item", itemTags);
+            compound.setInteger("Slot3-Count", getStackInSlot(3).getCount());
+        }
+        else{
+            compound.setString("Slot3-Item", "null");
+            compound.setInteger("Slot3-Count", 0);
+        }
+        return compound;
+
+    }
+
+    @Override
+    public void childReadNBT(NBTTagCompound compound){
+
+        if(compound.getInteger("Slot0-Count") > 0)
+            setInventorySlotContents(0, new ItemStack(ModBlocks.xpBlock, compound.getInteger("Slot0-Count")));
+        else
+            setInventorySlotContents(0, ItemStack.EMPTY);
+
+        if(compound.getInteger("Slot1-Count") > 0)
+            setInventorySlotContents(1, new ItemStack(ModBlocks.xpBlock, compound.getInteger("Slot1-Count")));
+        else
+            setInventorySlotContents(1, ItemStack.EMPTY);
+
+        if(compound.getInteger("Slot2-Count") > 0) {
+            setInventorySlotContents(2, new ItemStack(compound.getCompoundTag("Slot2-Item")));
+        }
+        else
+            setInventorySlotContents(2, ItemStack.EMPTY);
+
+        if(compound.getInteger("Slot3-Count") > 0){
+            setInventorySlotContents(3, new ItemStack(compound.getCompoundTag("Slot3-Item")));
+        }
+        else
+            setInventorySlotContents(3, ItemStack.EMPTY);
+
+    }
+
+    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
 
         if (index == 0 || index == 1) {
@@ -278,10 +342,12 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
                     if (getStackInSlot(2).getItem() == Items.BUCKET) {
 
-                        if (te.getTotalXP(te.getID()) >= XPHelper.getXPfromMB(1000)) {
+                        if (te.getTotalXP(te.getID()) >= XPHelper.getXPfromMB(Fluid.BUCKET_VOLUME)) {
 
-                            te.removeXP(XPHelper.getXPfromMB(1000), te.getID());
-                            setInventorySlotContents(2, new ItemStack(FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME)).getItem(), 1));
+                            FluidActionResult result = FluidUtil.tryFillContainer(getStackInSlot(2), new FluidTank(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME, Fluid.BUCKET_VOLUME), Fluid.BUCKET_VOLUME, te.getOwner(), true);
+                            if( result.success)
+                                te.removeXP(XPHelper.getXPfromMB(Fluid.BUCKET_VOLUME), te.getID());
+                            setInventorySlotContents(2, result.result);
 
                         }
 
@@ -290,19 +356,15 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
                 }
                 if (isSlotOccupied(3)) {
 
-                /*
-                if(getStackInSlot(3).getItem() == Buckets.itemBucketLiquidXP.getItem()){
-
-                    te.addXP(XPHelper.getXPfromMB(1000), te.getID());
-                    setInventorySlotContents(3, new ItemStack(Items.BUCKET, 1));
-
-                }
-                */
+                    if(getStackInSlot(3).getItem() == FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME)).getItem()){
+                        te.addXP(XPHelper.getXPfromMB(1000), te.getID());
+                        setInventorySlotContents(3, new ItemStack(Items.BUCKET, 1));
+                    }
                 }
 
             } catch (NullPointerException e) {
 
-                LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() ! Stacktrace: ");
+                LogHelper.error("Error: NullPointerException in XPInterfaceTileEntity.updateChildren() ! Stacktrace: " + e.fillInStackTrace());
 
             }
         }
