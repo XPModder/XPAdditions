@@ -5,6 +5,7 @@ import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPControllerBlock;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceBlock;
+import com.xpmodder.xpadditions.tileentity.XPPlayerConnectorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -34,6 +35,7 @@ public final class ModBlocks {
     public static final Block meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3);
     public static final BlockContainer xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block");
     public static final Block xpControllerBlock = new XPControllerBlock("xp_controller_block");
+    public static final Block xpPlayerConnectorBlock = new XPPlayerConnectorBlock("xp_player_connector_block");
 
     @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
     public static class RegistrationHandler {
@@ -62,6 +64,7 @@ public final class ModBlocks {
                     meteoriteStarBlock,
                     xpInterfaceBlock,
                     xpControllerBlock,
+                    xpPlayerConnectorBlock,
                     ModFluids.block_exp
             );
 
@@ -89,6 +92,7 @@ public final class ModBlocks {
                     new ItemBlock(meteoriteStarBlock),
                     new ItemBlock(xpInterfaceBlock),
                     new ItemBlock(xpControllerBlock),
+                    new ItemBlock(xpPlayerConnectorBlock),
                     new ItemBlock(ModFluids.block_exp)
             };
 
