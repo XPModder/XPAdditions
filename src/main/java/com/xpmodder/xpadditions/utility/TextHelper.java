@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 
 import java.io.InputStream;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class TextHelper {
 
@@ -24,6 +23,7 @@ public class TextHelper {
 
             int wordLen = words[i].length();
 
+            words[i] = words[i].replaceAll("\r", " ");
             if (words[i].contains("\n")) {
                 temp[LineAt] += " ";
                 for (int j = 0; j < words[i].length(); j++) {
@@ -57,23 +57,38 @@ public class TextHelper {
     }
 
     public int getLineNum(int len) {
-        String s = this.Text;
-        StringTokenizer st = new StringTokenizer(s, " ", true);
-        String word;
+        String text = this.Text.substring(1);
         int currentLineLen = 0;
         int LineAt = 0;
+        String[] words = text.split(" ");
 
-        while (st.hasMoreTokens()) {
-            int wordLen = (word = st.nextToken()).length();
-            wordLen += 1;
 
-            if (currentLineLen + wordLen <= len) {
-                currentLineLen += wordLen;
+        for (int i = 0; i < words.length; i++) {
+
+            int wordLen = words[i].length();
+
+            if (words[i].contains("\n")) {
+                for (int j = 0; j < words[i].length(); j++) {
+                    if (words[i].charAt(j) == '\n') {
+                        LineAt++;
+                        currentLineLen = 0;
+                    } else {
+                        currentLineLen++;
+                    }
+
+                }
+                words[i].replaceAll("\n", " ");
             } else {
-                boolean firstIsSpace = word.charAt(0) == ' ';
-                LineAt++;
-                currentLineLen = firstIsSpace ? 0 : wordLen;
+                if (currentLineLen + wordLen + 1 <= len) {
+                    wordLen++;
+                    currentLineLen += wordLen;
+                } else {
+                    boolean firstIsSpace = words[i].charAt(0) == ' ';
+                    LineAt++;
+                    currentLineLen = firstIsSpace ? 0 : wordLen;
+                }
             }
+
         }
 
         return (LineAt + 1);

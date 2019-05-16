@@ -69,6 +69,7 @@ public class BookGui extends GuiScreen {
         int lineLength = 20;
         String s = "XPAdditions Guide";
         this.fontRenderer.drawString(s, (this.width / 2), 0, 4210752);            //#404040
+        this.maxPage = (int)Math.floor(this.textHelper.getLineNum(lineLength) / 38.0);
 
         String Text[] = this.textHelper.getTextInLines(lineLength);
 
