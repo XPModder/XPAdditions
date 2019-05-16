@@ -82,7 +82,7 @@ public class XPInterfaceGui extends ModBaseGui {
         this.fontRenderer.drawString(s, 8, 40, 4210752);            //#404040
         this.fontRenderer.drawString(s2, 135, 40, 4210752);
         this.fontRenderer.drawString(s3, 50, 30, 4210752);
-        this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
+        this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 71, 4210752);      //#404040
 
     }
 
