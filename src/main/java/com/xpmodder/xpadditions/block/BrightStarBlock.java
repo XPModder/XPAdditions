@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -56,6 +57,11 @@ public class BrightStarBlock extends Block{
     public boolean isFullCube(IBlockState state)
     {
         return false;
+    }
+
+    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
+    {
+        return true;
     }
 
     @SideOnly(Side.CLIENT)
