@@ -1,8 +1,6 @@
 package com.xpmodder.xpadditions.professions;
 
-import com.xpmodder.xpadditions.utility.EnumCareerLevel;
-import com.xpmodder.xpadditions.utility.EnumProfessions;
-import net.minecraft.block.properties.PropertyEnum;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;

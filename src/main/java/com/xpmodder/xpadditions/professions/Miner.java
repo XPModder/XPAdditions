@@ -11,7 +11,11 @@ public class Miner extends ModProfessions {
 
     private static int ID = EnumProfessions.PROFESSION_MINER.getID();
     private static String[][] Effects = new String[7][10];
-    private static String[] validBlocks = {Blocks.STONE.getUnlocalizedName(), Blocks.COBBLESTONE.getUnlocalizedName(), Blocks.SANDSTONE.getUnlocalizedName()};
+    private static String[] validBlocks = {
+            Blocks.STONE.getUnlocalizedName(),
+            Blocks.COBBLESTONE.getUnlocalizedName(),
+            Blocks.SANDSTONE.getUnlocalizedName()
+    };
 
 
     public Miner(int level, int oldNum){

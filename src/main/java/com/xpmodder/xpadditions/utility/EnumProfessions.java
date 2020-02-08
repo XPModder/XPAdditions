@@ -7,7 +7,8 @@ public enum EnumProfessions implements IStringSerializable {
     PROFESSION_MINER(0, "profession_miner"),
     PROFESSION_FARMER(1, "profession_farmer"),
     PROFESSION_BLACKSMITH(2, "profession_blacksmith"),
-    PROFESSION_SOLDIER(3, "profession_soldier");
+    PROFESSION_BUILDER(3, "profession_builder"),
+    PROFESSION_SOLDIER(4, "profession_soldier");
 
     private int ID;
     private String name;
