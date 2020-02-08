@@ -3,7 +3,6 @@ package com.xpmodder.xpadditions.init;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPControllerTileEntity;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
-import com.xpmodder.xpadditions.tileentity.XPPipeTileEntity;
 import com.xpmodder.xpadditions.tileentity.XPPlayerConnectorTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;

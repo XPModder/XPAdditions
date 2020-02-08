@@ -1,11 +1,16 @@
 package com.xpmodder.xpadditions.tileentity;
 
+import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 
 public class XPInterfaceContainer extends Container {
 
@@ -44,7 +49,7 @@ public class XPInterfaceContainer extends Container {
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int fromSlot) {
-        ItemStack previous = null;
+        ItemStack previous = ItemStack.EMPTY;
         Slot slot = (Slot) this.inventorySlots.get(fromSlot);
 
         if (slot != null && slot.getHasStack()) {
@@ -53,28 +58,36 @@ public class XPInterfaceContainer extends Container {
 
             if (fromSlot < 4) {
                 // From TE Inventory to Player Inventory
-                if (!this.mergeItemStack(current, 9, 40, true))
-                    return null;
+                if (!this.mergeItemStack(current, 9, 40, true)) {
+                    return ItemStack.EMPTY;
+                }
             } else {
                 // From Player Inventory to TE Inventory
-                if (current.getItem() == ModBlocks.xpBlock.getDefaultState())
-                    if (!this.mergeItemStack(current, 1, 1, false))
-                        return null;
-                /*else if (current.getItem() == Buckets.itemBucketLiquidXP.getItem())
-                    if (!this.mergeItemStack(current, 3, 3, false))
-                        return null;
-                        */
+                if (current.getItem() == Item.getItemFromBlock(ModBlocks.xpBlock)) {
+                    if (!this.mergeItemStack(current, 1, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (current.getItem() == Items.BUCKET) {
+                    if (!this.mergeItemStack(current, 2, 3, false)){
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if(current.getItem() == FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, 1000)).getItem()){
+                    if (!this.mergeItemStack(current, 3, 4, false)){
+                        return ItemStack.EMPTY;
+                    }
+                }
                 else
-                    return null;
+                    return ItemStack.EMPTY;
             }
 
             if (current.getCount() == 0)
-                slot.putStack((ItemStack) null);
+                slot.putStack(ItemStack.EMPTY);
             else
                 slot.onSlotChanged();
 
             if (current.getCount() == previous.getCount())
-                return null;
+                return ItemStack.EMPTY;
             //slot.onPickupFromSlot(playerIn, current);
         }
         return previous;

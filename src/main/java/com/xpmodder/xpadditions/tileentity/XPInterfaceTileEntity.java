@@ -2,6 +2,7 @@ package com.xpmodder.xpadditions.tileentity;
 
 import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.init.ModBlocks;
+import com.xpmodder.xpadditions.utility.EnumRSMode;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -374,11 +375,11 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
 
     private boolean shouldRun(){
 
-        if(this.RSInt == 0)
+        if(this.RSInt == EnumRSMode.REDSTONE_IGNORED.getID())
             return true;
-        else if (this.RSInt == 1 && this.world.isBlockPowered(this.pos))
+        else if (this.RSInt == EnumRSMode.REDSTONE_OFF.getID() && this.world.isBlockPowered(this.pos))
             return true;
-        else if (this.RSInt == 2 && !this.world.isBlockPowered(this.pos))
+        else if (this.RSInt == EnumRSMode.REDSTONE_ON.getID() && !this.world.isBlockPowered(this.pos))
             return true;
         else
             return false;

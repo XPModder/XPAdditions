@@ -110,7 +110,8 @@ public class StarBlock extends Block {
 
                         if(remove) {
 
-                            worldIn.setBlockToAir(currPos);
+                            BrightStarBlock block = (BrightStarBlock) worldIn.getBlockState(currPos).getBlock();
+                            block.toDespawn = true;                                                                     //Flag the Block for despawning
 
                         }
 

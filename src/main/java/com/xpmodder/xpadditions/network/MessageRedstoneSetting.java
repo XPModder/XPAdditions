@@ -17,6 +17,7 @@ public class MessageRedstoneSetting implements IMessage {
 
     private int toSend;
     private BlockPos pos;
+    public static final int ID = 0;
 
     public MessageRedstoneSetting(){}
 

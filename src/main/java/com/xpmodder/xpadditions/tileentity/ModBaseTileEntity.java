@@ -14,8 +14,7 @@ public abstract class ModBaseTileEntity extends TileEntity implements ITickable 
     protected boolean connected = false;
     protected BlockPos controller;
     protected String newName = "container.xp_base_tile_entity";
-    protected int RSInt = 0;
-    public static final PropertyEnum<EnumRSMode> RSMode = PropertyEnum.<EnumRSMode>create("type", EnumRSMode.class);
+    protected int RSInt = EnumRSMode.REDSTONE_IGNORED.getID();
 
 
     public void setRS(int RSInt){

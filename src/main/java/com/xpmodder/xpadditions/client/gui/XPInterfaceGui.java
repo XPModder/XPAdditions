@@ -6,6 +6,7 @@ import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
+import com.xpmodder.xpadditions.utility.EnumRSMode;
 import com.xpmodder.xpadditions.utility.XPHelper;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
@@ -28,11 +29,11 @@ public class XPInterfaceGui extends ModBaseGui {
         this.playerInv = playerInv;
         this.te = te;
 
-        if(te.getRS() == 0){
+        if(te.getRS() == EnumRSMode.REDSTONE_IGNORED.getID()){
             this.RS[0] = true;
             this.RS[1] = this.RS[2] = false;
         }
-        else if(te.getRS() == 1){
+        else if(te.getRS() == EnumRSMode.REDSTONE_OFF.getID()){
             this.RS[1] = true;
             this.RS[0] = this.RS[2] = false;
         }
@@ -98,21 +99,21 @@ public class XPInterfaceGui extends ModBaseGui {
             if (mouseX >= sx + xSize + 7 && mouseX <= sx + xSize + 28) {
                 if (mouseY >= sy + 5 && mouseY <= sy + 25) {
                     this.RS[0] = true;
-                    this.te.setRS(0);
+                    this.te.setRS(EnumRSMode.REDSTONE_IGNORED.getID());
                     this.RS[1] = this.RS[2] = false;
-                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(0, this.te.getPos()));
+                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(EnumRSMode.REDSTONE_IGNORED.getID(), this.te.getPos()));
                 }
                 else if (mouseY >= sy + 30 && mouseY <= sy + 50) {
                     this.RS[1] = true;
-                    this.te.setRS(1);
+                    this.te.setRS(EnumRSMode.REDSTONE_OFF.getID());
                     this.RS[0] = this.RS[2] = false;
-                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(1, this.te.getPos()));
+                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(EnumRSMode.REDSTONE_OFF.getID(), this.te.getPos()));
                 }
                 else if (mouseY >= sy + 54 && mouseY <= sy + 74) {
                     this.RS[2] = true;
-                    this.te.setRS(2);
+                    this.te.setRS(EnumRSMode.REDSTONE_ON.getID());
                     this.RS[0] = this.RS[1] = false;
-                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(2, this.te.getPos()));
+                    XPAdditions.networkWrapper.sendToServer(new MessageRedstoneSetting(EnumRSMode.REDSTONE_ON.getID(), this.te.getPos()));
                 }
             }
         }
