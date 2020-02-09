@@ -4,6 +4,7 @@ import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.handler.ConfigurationHandler;
 import com.xpmodder.xpadditions.init.MessageRegistry;
 import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
+import com.xpmodder.xpadditions.professions.ProfessionsSystem;
 import com.xpmodder.xpadditions.proxy.CommonProxy;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
@@ -41,6 +42,7 @@ public class XPAdditions {
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event){
 
+        new ProfessionsSystem();
         new ConfigurationHandler(event.getSuggestedConfigurationFile());
         ModLogger = event.getModLog();
 
