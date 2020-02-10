@@ -2,12 +2,10 @@ package com.xpmodder.xpadditions.client.render.blocks;
 
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.reference.Reference;
-import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.model.ModelLoader;
 
 public final class blockRenderRegister {
 
@@ -40,10 +38,6 @@ public final class blockRenderRegister {
                 .register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + file, "inventory"));
     }
 
-    public static void preInit(){
-
-        LogHelper.info("blockRenderRegister.preInit():");
-
-    }
+    public static void preInit(){ }
 
 }

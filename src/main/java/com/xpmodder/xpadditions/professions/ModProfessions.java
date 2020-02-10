@@ -1,8 +1,6 @@
 package com.xpmodder.xpadditions.professions;
 
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 
 public abstract class ModProfessions {
@@ -52,21 +50,6 @@ public abstract class ModProfessions {
         return Effects[Level][Effect];
     }
 
-    public void onSave(EntityPlayer playerIn){
-        NBTTagCompound compound = playerIn.getEntityData();
-        compound.setInteger("xpadditions-LastNum", this.OldNum);
-        compound.setInteger("xpaddition-Level", this.Level);
-        compound.setInteger("xpadditions-Profession", this.ID);
-        playerIn.writeToNBT(compound);
-    }
-
-    public void onLoad(EntityPlayer playerIn){
-        NBTTagCompound compound = playerIn.getEntityData();
-        this.OldNum = compound.getInteger("xpadditions-LastNum");
-        this.Level = compound.getInteger("xpadditions-Level");
-        this.ID = compound.getInteger("xpadditions-Profession");
-    }
-
-    public abstract void update(World worldIn, EntityPlayer playerIn);
+    public abstract void update(World worldIn, EntityPlayerMP playerIn);
 
 }
