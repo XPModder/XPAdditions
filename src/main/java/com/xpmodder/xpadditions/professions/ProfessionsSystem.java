@@ -2,10 +2,7 @@ package com.xpmodder.xpadditions.professions;
 
 import com.xpmodder.xpadditions.capabilities.IPlayerProfessionCapability;
 import com.xpmodder.xpadditions.capabilities.PlayerProfessionProvider;
-import com.xpmodder.xpadditions.utility.EnumCareerLevel;
-import com.xpmodder.xpadditions.utility.EnumProfessions;
-import com.xpmodder.xpadditions.utility.playerProfessionNumElements;
-import com.xpmodder.xpadditions.utility.playerProfessionsElemets;
+import com.xpmodder.xpadditions.utility.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
@@ -20,44 +17,43 @@ import java.util.List;
 
 public class ProfessionsSystem {
 
-    private List<playerProfessionsElemets> playerProfessions = new LinkedList<playerProfessionsElemets>();
+    private List<playerProfessionsElements> playerProfessions = new LinkedList<playerProfessionsElements>();
     private List<playerProfessionNumElements> playerNumProfessions = new LinkedList<playerProfessionNumElements>();
     private List<playerProfessionNumElements> playerCounters = new LinkedList<playerProfessionNumElements>();
 
-    public void createMiner(EntityPlayer playerIn){
-        Miner miner = new Miner();
-        playerProfessions.add(new playerProfessionsElemets(miner, playerIn.getName()));
+    public void createProfession(int id, int level, int oldNum, EntityPlayer playerIn){
+
+        ModProfessions professions;
+
+        if(id == EnumProfessions.PROFESSION_BLACKSMITH.getID()){
+            professions = new Blacksmith(level, oldNum);
+        }
+        else if(id == EnumProfessions.PROFESSION_BUILDER.getID()){
+            professions = new Builder(level, oldNum);
+        }
+        else if(id == EnumProfessions.PROFESSION_FARMER.getID()){
+            professions = new Farmer(level, oldNum);
+        }
+        else if(id == EnumProfessions.PROFESSION_MINER.getID()){
+            professions = new Miner(level, oldNum);
+        }
+        else if(id == EnumProfessions.PROFESSION_SOLDIER.getID()){
+            professions = new Soldier(level, oldNum);
+        }
+        else if(id == EnumProfessions.PROFESSION_TRADER.getID()){
+            professions = new Trader(level, oldNum);
+        }
+        else{
+            professions = new Blacksmith();
+        }
+
+        playerProfessions.add(new playerProfessionsElements(professions, playerIn.getName()));
         this.onPlayerSave(playerIn);
+
     }
 
-    public void createFarmer(EntityPlayer playerIn){
-        Farmer farmer = new Farmer();
-        playerProfessions.add(new playerProfessionsElemets(farmer, playerIn.getName()));
-        this.onPlayerSave(playerIn);
-    }
-
-    public void createBuilder(EntityPlayer playerIn){
-        Builder builder = new Builder();
-        playerProfessions.add(new playerProfessionsElemets(builder, playerIn.getName()));
-        this.onPlayerSave(playerIn);
-    }
-
-    public void createBlacksmith(EntityPlayer playerIn){
-        Blacksmith blacksmith = new Blacksmith();
-        playerProfessions.add(new playerProfessionsElemets(blacksmith, playerIn.getName()));
-        this.onPlayerSave(playerIn);
-    }
-
-    public void createSoldier(EntityPlayer playerIn){
-        Soldier soldier = new Soldier();
-        playerProfessions.add(new playerProfessionsElemets(soldier, playerIn.getName()));
-        this.onPlayerSave(playerIn);
-    }
-
-    public void createTrader(EntityPlayer playerIn){
-        Trader trader = new Trader();
-        playerProfessions.add(new playerProfessionsElemets(trader, playerIn.getName()));
-        this.onPlayerSave(playerIn);
+    public void createProfession(int id, EntityPlayer playerIn){
+        createProfession(id, 0, 0, playerIn);
     }
 
     public void onPlayerUpdate(World worldIn, EntityPlayer playerIn){
@@ -65,11 +61,10 @@ public class ProfessionsSystem {
         if (playerProfessions.isEmpty()){
             return;
         }
-        for (int i = 0; i < playerProfessions.size(); i++){
-            playerProfessionsElemets Element = playerProfessions.get(i);
-            if(Element.playerName.equals( playerIn.getName())){
+        for (playerProfessionsElements element : playerProfessions){
+            if(element.playerName.equals( playerIn.getName())){
                 if (!worldIn.isRemote && playerIn instanceof EntityPlayerMP) {
-                    Element.profession.update(worldIn, (EntityPlayerMP) playerIn);
+                    element.profession.update(worldIn, (EntityPlayerMP) playerIn);
                 }
             }
         }
@@ -83,24 +78,8 @@ public class ProfessionsSystem {
         int level = professionCapability.getLevel();
         int oldNum = professionCapability.getLastNum();
 
-        boolean addToList = false;
-        ModProfessions professions;
-
-        if(profession == EnumProfessions.PROFESSION_MINER.getID()){
-            professions = new Miner(level, oldNum);
-            addToList = true;
-        }
-        else if(profession == EnumProfessions.PROFESSION_FARMER.getID()){
-            professions = new Farmer(level, oldNum);
-            addToList = true;
-        }
-        else{
-            professions = new Miner();
-            addToList = false;
-        }
-
-        if(addToList) {
-            playerProfessions.add(new playerProfessionsElemets(professions, playerIn.getName()));
+        if (profession != 0){
+            this.createProfession(profession, level, oldNum, playerIn);
         }
 
     }
@@ -116,11 +95,11 @@ public class ProfessionsSystem {
         if (playerProfessions.isEmpty()){
             return;
         }
-        for (int i = 0; i < playerProfessions.size(); i++){
-            if (playerProfessions.get(i).playerName.equals( playerIn.getName())){
-                professionCapability.setProfession(playerProfessions.get(i).profession.ID);
-                professionCapability.setLevel(playerProfessions.get(i).profession.Level);
-                professionCapability.setLastNum(playerProfessions.get(i).profession.OldNum);
+        for (playerProfessionsElements element : playerProfessions){
+            if (element.playerName.equals( playerIn.getName())){
+                professionCapability.setProfession(element.profession.ID);
+                professionCapability.setLevel(element.profession.Level);
+                professionCapability.setLastNum(element.profession.OldNum);
             }
         }
 
@@ -131,9 +110,9 @@ public class ProfessionsSystem {
         if (playerProfessions.isEmpty()){
             return false;
         }
-        for (int i = 0; i < playerProfessions.size(); i++){
-            if (playerProfessions.get(i).playerName.equals( playerIn.getName())){
-                if (playerProfessions.get(i).profession.ID == profession){
+        for (playerProfessionsElements element : playerProfessions){
+            if (element.playerName.equals( playerIn.getName())){
+                if (element.profession.ID == profession){
                     return true;
                 }
             }
@@ -147,8 +126,8 @@ public class ProfessionsSystem {
         if (playerProfessions.isEmpty()){
             return false;
         }
-        for (int i = 0; i < playerProfessions.size(); i++){
-            if (playerProfessions.get(i).playerName.equals( playerIn.getName())){
+        for (playerProfessionsElements element : playerProfessions){
+            if (element.playerName.equals( playerIn.getName())){
                 return true;
             }
         }
@@ -161,9 +140,9 @@ public class ProfessionsSystem {
         if (playerProfessions.isEmpty()){
             return EnumProfessions.PROFESSION_NONE.getID();
         }
-        for (int i = 0; i < playerProfessions.size(); i++){
-            if (playerProfessions.get(i).playerName.equals( playerIn.getName())){
-                return playerProfessions.get(i).profession.ID;
+        for (playerProfessionsElements element : playerProfessions){
+            if (element.playerName.equals( playerIn.getName())){
+                return element.profession.ID;
             }
         }
         return EnumProfessions.PROFESSION_NONE.getID();
@@ -182,6 +161,29 @@ public class ProfessionsSystem {
 
     }
 
+    public int getPlayerProfessionNumber(EntityPlayer playerIn){
+
+        int number = 0;
+        for (playerProfessionsElements element : playerProfessions){
+            if(element.playerName.equals(playerIn.getName())){
+                number++;
+            }
+        }
+        return number;
+
+    }
+
+    public int getPlayerAllowedNumber(EntityPlayer playerIn){
+
+        for (playerProfessionNumElements element : playerNumProfessions){
+            if(element.playerName.equals(playerIn.getName())){
+                return element.num;
+            }
+        }
+        return 0;
+
+    }
+
     @SubscribeEvent
     public void onPlayerGetXP(PlayerPickupXpEvent event){
         int level = event.getEntityPlayer().experienceLevel;
@@ -193,7 +195,7 @@ public class ProfessionsSystem {
                 found = true;
                 if (level < 30) {
                     element.num = 0;
-                    for (playerProfessionsElemets elemet2 : playerProfessions){
+                    for (playerProfessionsElements elemet2 : playerProfessions){
                         if (elemet2.playerName.equals(player.getName())){
                             playerProfessions.remove(elemet2);
                             this.onPlayerSave(player);
@@ -202,9 +204,8 @@ public class ProfessionsSystem {
                     }
                 }
                 if (level >= 30 && level < 100) {
-                    if (!hasPlayerAnyProfession(player)) {
+                    if (element.num == 0) {
                         element.num = 1;
-                        //createMiner(event.getEntityPlayer());
                         player.sendMessage(new TextComponentString("You unlocked your first profession!"));
                         player.sendMessage(new TextComponentString("Select your profession in the XPAdditions Guide!"));
                     }
@@ -237,6 +238,22 @@ public class ProfessionsSystem {
 
         EntityPlayer player = event.player;
         boolean found = false;
+
+        if (player.experienceLevel < 30){
+            for (playerProfessionNumElements element : playerNumProfessions) {
+                if (element.playerName.equals(player.getName())) {
+                    element.num = 0;
+                    for (playerProfessionsElements element2 : playerProfessions){
+                        if (element2.playerName.equals(player.getName())){
+                            playerProfessions.remove(element2);
+                            this.onPlayerSave(player);
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
 
         for (playerProfessionNumElements element : playerCounters){
             if (element.playerName.equals(player.getName())){

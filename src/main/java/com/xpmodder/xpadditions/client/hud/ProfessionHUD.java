@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import static com.xpmodder.xpadditions.XPAdditions.professionsSystem;
+import static com.xpmodder.xpadditions.handler.GeneralEventHandler.professionsSystem;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = Reference.MOD_ID)
 public final class ProfessionHUD {
@@ -24,10 +24,12 @@ public final class ProfessionHUD {
         Profiler profiler = mc.mcProfiler;
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
-        String Text = "Your current profession is: ";
-        Text += professionsSystem.getPlayerProfessionName(mc.player);
+        if(professionsSystem != null) {
+            String Text = "Your current profession is: ";
+            Text += professionsSystem.getPlayerProfessionName(mc.player);
 
-        mc.fontRenderer.drawString(Text, 10, 10, 4210752);
+            mc.fontRenderer.drawString(Text, 10, 10, 4210752);
+        }
 
     }
 

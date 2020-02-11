@@ -5,10 +5,10 @@ import net.minecraft.util.IStringSerializable;
 public enum EnumProfessions implements IStringSerializable {
 
     PROFESSION_NONE(0, "None"),
-    PROFESSION_MINER(1, "Miner"),
-    PROFESSION_FARMER(2, "Farmer"),
-    PROFESSION_BLACKSMITH(3, "Blacksmith"),
-    PROFESSION_BUILDER(4, "Builder"),
+    PROFESSION_BLACKSMITH(1, "Blacksmith"),
+    PROFESSION_BUILDER(2, "Builder"),
+    PROFESSION_FARMER(3, "Farmer"),
+    PROFESSION_MINER(4, "Miner"),
     PROFESSION_SOLDIER(5, "Soldier"),
     PROFESSION_TRADER(6, "Trader");
 

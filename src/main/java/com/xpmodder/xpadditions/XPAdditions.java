@@ -3,6 +3,7 @@ package com.xpmodder.xpadditions;
 import com.xpmodder.xpadditions.capabilities.ModCapabilities;
 import com.xpmodder.xpadditions.fluid.ModFluids;
 import com.xpmodder.xpadditions.handler.ConfigurationHandler;
+import com.xpmodder.xpadditions.handler.GeneralEventHandler;
 import com.xpmodder.xpadditions.init.MessageRegistry;
 import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
 import com.xpmodder.xpadditions.professions.ProfessionsSystem;
@@ -29,7 +30,7 @@ public class XPAdditions {
 
     public static Logger ModLogger;
 
-    public static ProfessionsSystem professionsSystem;
+    public static GeneralEventHandler generalEventHandler;
 
     @Mod.Instance(Reference.MOD_ID)
     public static XPAdditions instance;
@@ -45,8 +46,8 @@ public class XPAdditions {
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event){
 
-        professionsSystem = new ProfessionsSystem();
-        MinecraftForge.EVENT_BUS.register(professionsSystem);
+        generalEventHandler = new GeneralEventHandler();
+        MinecraftForge.EVENT_BUS.register(generalEventHandler);
 
         MinecraftForge.EVENT_BUS.register(ModCapabilities.class);
 
