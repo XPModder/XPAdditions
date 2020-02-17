@@ -162,6 +162,7 @@ public class StarBlock extends Block {
                                 if(place) {
 
                                     worldIn.setBlockState(currPos, ModBlocks.brightStarBlock.getDefaultState());
+                                    ((BrightStarBlock) worldIn.getBlockState(currPos).getBlock()).setToDespawn(false);
                                     place = false;
 
                                 }

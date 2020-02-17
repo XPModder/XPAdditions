@@ -30,11 +30,8 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     public XPInterfaceTileEntity(){
 
         this.inventory = new ItemStack[this.getSizeInventory()];
-        for(int i = 0; i < this.inventory.length; i++){
-            this.inventory[i] = ItemStack.EMPTY;
-        }
+        Arrays.fill(this.inventory, ItemStack.EMPTY);
         this.setCustomName("container.xp_interface_tile_entity");
-
 
     }
 
@@ -230,16 +227,19 @@ public class XPInterfaceTileEntity extends ModBaseTileEntity implements IInvento
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
 
-        if (index == 0 || index == 1) {
+        switch(index){
+            case 0:
+                return false;
 
-            if (stack.getItem() == ModBlocks.xpBlock.getDefaultState())
-                return true;
+            case 1:
+                return stack.getItem() == Item.getItemFromBlock(ModBlocks.xpBlock);
 
-        }
-        else if (index == 3){
+            case 2:
+                return stack.getItem() == Items.BUCKET;
 
-            //if (stack.getItem() == UniversalBucket.getFilledBucket(UniversalBucket,ModFluids.fluid_exp))
-                return true;
+            case 3:
+
+                return stack.getItem() == FluidUtil.getFilledBucket(new FluidStack(ModFluids.fluid_exp, Fluid.BUCKET_VOLUME)).getItem();
 
         }
 

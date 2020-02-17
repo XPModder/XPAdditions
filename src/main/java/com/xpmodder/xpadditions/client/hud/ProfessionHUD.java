@@ -20,16 +20,22 @@ public final class ProfessionHUD {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onDrawScreenPre(RenderGameOverlayEvent.Pre event){
 
+        GlStateManager.pushMatrix();
         Minecraft mc = Minecraft.getMinecraft();
         Profiler profiler = mc.mcProfiler;
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
         if(professionsSystem != null) {
-            String Text = "Your current profession is: ";
-            Text += professionsSystem.getPlayerProfessionName(mc.player);
+            if(!professionsSystem.getPlayerProfessionName(mc.player).equals("None")) {
+                String Text = "Your current profession is: ";
+                Text += professionsSystem.getPlayerProfessionName(mc.player);
 
-            mc.fontRenderer.drawString(Text, 10, 10, 4210752);
+                GlStateManager.scale(0.5, 0.5, 0.5);
+                mc.fontRenderer.drawString(Text, 10, 10, 4210752);
+
+            }
         }
+        GlStateManager.popMatrix();
 
     }
 

@@ -36,6 +36,7 @@ public final class ModBlocks {
     public static final BlockContainer xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block");
     public static final Block xpControllerBlock = new XPControllerBlock("xp_controller_block");
     public static final Block xpPlayerConnectorBlock = new XPPlayerConnectorBlock("xp_player_connector_block");
+    public static final Block baseCraftingBlock = new BasicBlock("base_crafting_block");
 
     @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
     public static class RegistrationHandler {
@@ -65,6 +66,7 @@ public final class ModBlocks {
                     xpInterfaceBlock,
                     xpControllerBlock,
                     xpPlayerConnectorBlock,
+                    baseCraftingBlock,
                     ModFluids.block_exp
             );
 
@@ -93,6 +95,7 @@ public final class ModBlocks {
                     new ItemBlock(xpInterfaceBlock),
                     new ItemBlock(xpControllerBlock),
                     new ItemBlock(xpPlayerConnectorBlock),
+                    new ItemBlock(baseCraftingBlock),
                     new ItemBlock(ModFluids.block_exp)
             };
 

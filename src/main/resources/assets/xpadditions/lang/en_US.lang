@@ -26,3 +26,4 @@ tile.xp_controller_block.name=XP Controller
 tile.xp_pipe.name=XP Pipe
 tile.block_xpjuice.name=Liquid XP
 tile.xp_player_connector_block.name=XP Player Connector
+tile.base_crafting_block.name=Base Crafting Block

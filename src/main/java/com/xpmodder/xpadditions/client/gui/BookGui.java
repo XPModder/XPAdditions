@@ -77,7 +77,8 @@ public class BookGui extends GuiScreen {
         int endY = (this.height / 2) + (this.ySize / 2);
         int lineLength = 20;
         String s = "XPAdditions Guide";
-        this.fontRenderer.drawString(s, (this.width / 2), 0, this.textColor);            //#404040
+        int TitleWidth = this.fontRenderer.getStringWidth(s);
+        this.fontRenderer.drawString(s, (this.width / 2) - (TitleWidth / 2), 0, this.textColor);            //#404040
         this.maxPage = (int) Math.floor(this.textHelper.getLineNum(lineLength) / 38.0);
 
         if (professionsSystem.getPlayerProfessionNumber(player) < professionsSystem.getPlayerAllowedNumber(player)){

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "BCB"  ],
+  "key": {
+    "C": [
+      {
+        "item": "minecraft:redstone",
+        "data": 0
+      }
+    ],
+    "B": [
+      {
+        "item": "xpadditions:xp_orb_item",
+        "data": 0
+      }
+    ],
+    "A": [
+      {
+        "item": "xpadditions:base_crafting_block",
+        "data": 0
+      }
+    ]
+  },
+  "result": {
+    "item": "xpadditions:xp_controller_block",
+    "count": 1
+  }
+}

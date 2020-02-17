@@ -41,6 +41,11 @@ public class BrightStarBlock extends Block{
         this.setTickRandomly(true);
         this.toDespawn = false;
 
+
+    }
+
+    public void setToDespawn(boolean set){
+        this.toDespawn = set;
     }
 
     @SideOnly(Side.CLIENT)
@@ -49,28 +54,33 @@ public class BrightStarBlock extends Block{
         return BlockRenderLayer.TRANSLUCENT;
     }
 
+
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return NULL_AABB;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos)
+    {
+        return FULL_BLOCK_AABB;
     }
 
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
     {
     }
 
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
-    {
-        return true;
-    }
-
     @Override
-    public boolean isCollidable() {
+    public boolean isFullCube(IBlockState state){
         return false;
     }
 
     @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public boolean isOpaqueCube(IBlockState state)
+    {
         return false;
     }
 
