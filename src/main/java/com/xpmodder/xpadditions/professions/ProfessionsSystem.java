@@ -21,27 +21,27 @@ public class ProfessionsSystem {
     private List<playerProfessionNumElements> playerNumProfessions = new LinkedList<playerProfessionNumElements>();
     private List<playerProfessionNumElements> playerCounters = new LinkedList<playerProfessionNumElements>();
 
-    public void createProfession(int id, int level, int oldNum, EntityPlayer playerIn){
+    public void createProfession(int id, int level, int xp, EntityPlayer playerIn){
 
         ModProfessions professions;
 
         if(id == EnumProfessions.PROFESSION_BLACKSMITH.getID()){
-            professions = new Blacksmith(level, oldNum);
+            professions = new Blacksmith(level, xp);
         }
         else if(id == EnumProfessions.PROFESSION_BUILDER.getID()){
-            professions = new Builder(level, oldNum);
+            professions = new Builder(level, xp);
         }
         else if(id == EnumProfessions.PROFESSION_FARMER.getID()){
-            professions = new Farmer(level, oldNum);
+            professions = new Farmer(level, xp);
         }
         else if(id == EnumProfessions.PROFESSION_MINER.getID()){
-            professions = new Miner(level, oldNum);
+            professions = new Miner(level, xp);
         }
         else if(id == EnumProfessions.PROFESSION_SOLDIER.getID()){
-            professions = new Soldier(level, oldNum);
+            professions = new Soldier(level, xp);
         }
         else if(id == EnumProfessions.PROFESSION_TRADER.getID()){
-            professions = new Trader(level, oldNum);
+            professions = new Trader(level, xp);
         }
         else{
             professions = new Blacksmith();
@@ -76,10 +76,10 @@ public class ProfessionsSystem {
         IPlayerProfessionCapability professionCapability = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
         int profession = professionCapability.getProfession();
         int level = professionCapability.getLevel();
-        int oldNum = professionCapability.getLastNum();
+        int xp = professionCapability.getLastNum();
 
         if (profession != 0){
-            this.createProfession(profession, level, oldNum, playerIn);
+            this.createProfession(profession, level, xp, playerIn);
         }
 
     }
@@ -99,7 +99,7 @@ public class ProfessionsSystem {
             if (element.playerName.equals( playerIn.getName())){
                 professionCapability.setProfession(element.profession.ID);
                 professionCapability.setLevel(element.profession.Level);
-                professionCapability.setLastNum(element.profession.OldNum);
+                professionCapability.setLastNum(element.profession.xp);
             }
         }
 
@@ -181,6 +181,40 @@ public class ProfessionsSystem {
             }
         }
         return 0;
+
+    }
+
+    public int getPlayerProfessionXP(EntityPlayer playerIn){
+
+        if (playerProfessions.isEmpty()){
+            return 0;
+        }
+        for (playerProfessionsElements element : playerProfessions){
+            if (element.playerName.equals( playerIn.getName())){
+                return element.profession.xp;
+            }
+        }
+
+        return 0;
+
+    }
+
+    public String getPlayerProfessionLevel(EntityPlayer playerIn){
+
+        if (playerProfessions.isEmpty()){
+            return "";
+        }
+        for (playerProfessionsElements element : playerProfessions){
+            if (element.playerName.equals( playerIn.getName())){
+                for (EnumCareerLevel element2 : EnumCareerLevel.values()){
+                    if(element.profession.Level == element2.getID()){
+                        return element2.getName();
+                    }
+                }
+            }
+        }
+
+        return "";
 
     }
 

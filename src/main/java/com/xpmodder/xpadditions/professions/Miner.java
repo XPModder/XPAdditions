@@ -39,7 +39,7 @@ public class Miner extends ModProfessions {
                 }
             }
         }
-        if (num > this.OldNum){
+        if (num > this.xp){
             this.Counter = 100;
         }
         else{

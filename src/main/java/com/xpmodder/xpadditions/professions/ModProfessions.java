@@ -9,13 +9,13 @@ public abstract class ModProfessions {
     protected int ID;
     protected String[][] Effects = new String[7][10];
     protected int Counter = 100;
-    protected int OldNum = 0;
+    protected int xp = 0;
 
     public ModProfessions(int id, int level, String[][] effects, int OldNum){
         this.ID = id;
         this.Level = level;
         this.Effects = effects;
-        this.OldNum = OldNum;
+        this.xp = OldNum;
     }
 
     public ModProfessions(int id, String[][] effects){

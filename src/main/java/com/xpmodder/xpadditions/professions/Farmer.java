@@ -1,7 +1,6 @@
 package com.xpmodder.xpadditions.professions;
 
 import com.xpmodder.xpadditions.utility.EnumProfessions;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.stats.StatBase;
@@ -43,7 +42,7 @@ public class Farmer extends ModProfessions {
                 }
             }
         }
-        if (num > this.OldNum){
+        if (num > this.xp){
             this.Counter = 100;
         }
         else{

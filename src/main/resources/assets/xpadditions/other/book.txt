@@ -2,7 +2,7 @@
 
 XP also known as Experience is no secret to you. You have long last learned how to use the power of this magical substance you get from killing monsters, mining ores, cooking and other things. You used the magical power of XP to enchant your weapons, tools and armor to make them more and more powerful and finally you used XP to repair these items and found a way to give this ability to the items themselves. After doing all of these things you think you understand everything about XP...
 But you are wrong! All the things you know about it are very basic and do not require any further understanding of the matter however there is more, way more!
-Having found this book you probably would like to learn what is possible, so I shall give you some examples: One can use the power of XP to move objects in the world or to move items from one place to another. When done correctly one can gain new abilities like flight or swimming like a fish. And a true master can even transport him- / herself from one point to another no matter how far apart they are.
+Having found this book you probably would like to learn what is possible, so I shall give you some examples: One can use the power of XP to gain abilities you may not even have dreamed of. When done correctly one can gain new abilities like flight or swimming like a fish. And a true master can even become basically invulnerable to anyone else.
 I understand that you are keen on learning more, but you need to do so slowly as nothing is more destructive than the unlished power of XP.
 
 ----Itroduction----
@@ -11,3 +11,24 @@ I understand that you are keen on learning more, but you need to do so slowly as
 
 For you to understand how to use the power of XP you first need to understand what XP is and where it comes from. So let me start at the beginning:
 Everyone knows about the villagers scattered around the world in small groups that live in their little villages you probably encountered some of them already, however you never thought about the fact that they have been in this world way longer than you. Naturally this means that they know more about this world than you and you might have realised that when a cartographer could sell you a map to some sort of temple or monument. What you dont know is, that they also know a lot about XP.  They are the ones that a long time ago discovered the power of XP and harnessed it for their convenience and this helped them a lot towards gaining power in the world.
+
+
+----Basics----
+You want to learn more about the powers of XP and think that you can become a true expert?
+Than you have found the correct book.
+To begin your journey and your path to expertise, you first need to decide on the profession you want to learn. Be aware that you are only allowed to choose once, so choose wisely!
+Once you have gained some general XP you will recieve a message, telling you that you have unlocked your first profession. Upon receiving this message and opening this book, you will find a page to choose between the different professions available to you.
+The choice you make there can nit easily be undone and you may only loose this profession, by loosing all your professional experience.
+Your profession has many consequences. It will influence the traits and abilities you can get. When you achieve expertise in your profession and hold that for a while, you will eventually be able to get a second profession, but you may never get more than 2 professions.
+Different professions have different traits and abilities. Once you have chosen a profession, you will gain general XP (that is the regular Minecraft XP) and professional XP (represented by a second XP-Bar slightly over the first.
+You will need both regular and professional XP to progress in your profession. Your professional XP is earned by profession-specific tasks, that you have to fullfill. Not doing any of the professional tasks for your profession, will slowly reduce your professional XP until it is at 0. At this point you will loose your profession including all traits and your general XP will be drastically reduced as well.
+Starting a new Profession you will be a novice and by earning professional XP you progress further in your profession and eventually get a higher level.
+Each level will unlock new traits and abilities you may use as long as you are in that level. The one exception to this is the level of novice, wich will not give you any traits or abilities.
+Further back in this book you will find a list of traits and abilities for each profession, to help you decide the profession you want to choose.
+These traits and abilities will, of cause get better and better with higher level and becoming an expert in your profession, will unlock the most powerful traits and abilities (like creative-mode flight or invulnerability).
+
+
+----How to gain professional XP----
+Gaining professional XP can be very easy. For example a farmer can gain professional XP by tilling dirt, breeding animals or planting and  harvesting crops.
+These easy tasks, however will only get you very small amounts of professional XP and may be mainly used to maintain your profession and level. There are however some different tasks that will gain you way more professional XP. These tasks are, of cause harder and take more time.
+Some of the tasks may also scale with your level. (for example you need to till more dirt to get XP when you are a master, than when you are a novice)
