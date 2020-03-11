@@ -1,6 +1,8 @@
 package com.xpmodder.xpadditions.client.hud;
 
 import com.xpmodder.xpadditions.reference.Reference;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
