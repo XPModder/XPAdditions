@@ -3,21 +3,25 @@ package com.xpmodder.xpadditions.professions;
 import com.xpmodder.xpadditions.utility.EnumProfessions;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class Farmer extends ModProfessions {
 
     private static int ID = EnumProfessions.PROFESSION_FARMER.getID();
     private static String[][] Effects = new String[7][10];
-    private static String[] Tools = {
-            Items.WOODEN_HOE.getUnlocalizedName(),
-            Items.STONE_HOE.getUnlocalizedName(),
-            Items.IRON_HOE.getUnlocalizedName(),
-            Items.GOLDEN_HOE.getUnlocalizedName(),
-            Items.DIAMOND_HOE.getUnlocalizedName(),
-            Items.BONE.getUnlocalizedName()
+    private static Item[] Tools = {
+            Items.WOODEN_HOE,
+            Items.STONE_HOE,
+            Items.IRON_HOE,
+            Items.GOLDEN_HOE,
+            Items.DIAMOND_HOE,
+            Items.BONE
     };
 
     public Farmer(int level, int oldNum){
@@ -32,21 +36,31 @@ public class Farmer extends ModProfessions {
     public void update(World worldIn, EntityPlayerMP playerIn) {
 
         int num = 0;
-        StatBase statBase = StatList.ANIMALS_BRED;
-        num += playerIn.getStatFile().readStat(statBase);
-        for (int i = 0; i < StatList.USE_ITEM_STATS.size(); i++){
-            statBase = StatList.USE_ITEM_STATS.get(i);
-            for (int j = 0; j < Tools.length; j++){
-                if (statBase.statId == Tools[j]){
-                    num += playerIn.getStatFile().readStat(statBase);
+        Random rand = new Random();
+
+        if(rand.nextInt(10) == 1){      //There is a 10% chance to loose xp each update cycle
+            this.xp --;
+        }
+
+        for(StatBase statBase: StatList.USE_ITEM_STATS) {
+
+            for (Item item : Tools) {           //Loop through the Items
+
+                if (statBase.getStatName().getFormattedText().contains(item.getItemStackDisplayName(new ItemStack(item)))) {         //get the uses of the current item
+                    num += playerIn.getStatFile().readStat(statBase);       //and increase the number by that value
                 }
+
             }
+
         }
-        if (num > this.xp){
-            this.Counter = 100;
+
+        if (num > this.Counter) {       //When the number is bigger than the pervious one
+            this.xp++;                  //Increase the xp
+            this.Counter = num;         //And set the Counter to our new value
         }
-        else{
-            this.Counter--;
+
+        if(this.xp < 0){
+            this.xp = 0;        //When we End up with a negative xp value, correct that.
         }
 
     }
