@@ -79,12 +79,18 @@ public class Blacksmith extends ModProfessions {
         }
 
         if (num > this.Counter) {       //When the number is bigger than the pervious one
-            this.xp++;                  //Increase the xp
+            this.xp += 10;              //Increase the xp
             this.Counter = num;         //And set the Counter to our new value
         }
 
         if(this.xp < 0){
             this.xp = 0;        //When we End up with a negative xp value, correct that.
+        }
+        else if(this.xp >= ((this.Level + 1) ^ 2) * 100){     //When we reach the threshhold for the next Level, we will level up!
+            this.Level++;
+        }
+        else if(this.xp < (this.Level ^ 2) * 100){            //when we fall below the threshhold for the current level, we will level down!
+            this.Level--;
         }
 
     }

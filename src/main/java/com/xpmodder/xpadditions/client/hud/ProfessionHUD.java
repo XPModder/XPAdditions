@@ -55,7 +55,10 @@ public class ProfessionHUD extends Gui {
         }
 
         int TextY = (int)Math.round((y / scale) - 10);
-        int amountFilled = (professionsSystem.getPlayerProfessionXP(mc.player) / 100) * this.xSize;
+        //Calculate the amount of the bar that is filled using the upper bound for the next level and the lower bound for the current level
+        double upperBound = ((professionsSystem.getPlayerProfessionXP(mc.player) + 1) ^ 2) * 100.0;
+        double lowerBound = (professionsSystem.getPlayerProfessionXP(mc.player) ^ 2) * 100.0;
+        int amountFilled = (int)Math.round( (professionsSystem.getPlayerProfessionXP(mc.player) - lowerBound) / (upperBound - lowerBound)) * this.xSize;
 
 
         if(!mc.player.isSpectator()) {                      //Only Render Hud when not in spectator mode

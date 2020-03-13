@@ -59,6 +59,12 @@ public class Trader extends ModProfessions {
         if(this.xp < 0){
             this.xp = 0;        //When we End up with a negative xp value, correct that.
         }
+        else if(this.xp >= ((this.Level + 1) ^ 2) * 100){     //When we reach the threshhold for the next Level, we will level up!
+            this.Level++;
+        }
+        else if(this.xp < (this.Level ^ 2) * 100){            //when we fall below the threshhold for the current level, we will level down!
+            this.Level--;
+        }
 
     }
 
