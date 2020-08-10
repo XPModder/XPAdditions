@@ -10,11 +10,12 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 
 public class CommonProxy {
 
-    public void preInit(FMLPreInitializationEvent e) {
+    public void preInit(FMLCommonSetupEvent e) {
 
         ModCapabilities.register();
 

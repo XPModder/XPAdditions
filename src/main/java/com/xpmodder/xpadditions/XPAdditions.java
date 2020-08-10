@@ -1,25 +1,19 @@
 package com.xpmodder.xpadditions;
 
 import com.xpmodder.xpadditions.capabilities.ModCapabilities;
-import com.xpmodder.xpadditions.fluid.ModFluids;
-import com.xpmodder.xpadditions.handler.ConfigurationHandler;
 import com.xpmodder.xpadditions.handler.GeneralEventHandler;
 import com.xpmodder.xpadditions.init.MessageRegistry;
-import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
-import com.xpmodder.xpadditions.professions.ProfessionsSystem;
 import com.xpmodder.xpadditions.proxy.CommonProxy;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
@@ -27,35 +21,34 @@ import org.apache.logging.log4j.Logger;
 @Mod(Reference.MOD_ID)
 public class XPAdditions {
 
-    public static SimpleNetworkWrapper networkWrapper;
+    public static SimpleChannel networkWrapper;
 
-    public static Logger ModLogger;
+    public static Logger ModLogger = LogManager.getLogger();
 
     public static GeneralEventHandler generalEventHandler;
 
-    @Mod.Instance(Reference.MOD_ID)
-    public static XPAdditions instance;
-
-    @SidedProxy(clientSide = Reference.ClientProxyClass, serverSide = Reference.ServerProxyClass)
+    //Proxies seem to be obsolete now
+    //@SidedProxy(clientSide = Reference.ClientProxyClass, serverSide = Reference.ServerProxyClass)
     public static CommonProxy proxy;
 
-    static{
-        //For some reason, this has to be done here
-        FluidRegistry.enableUniversalBucket();
-    }
+    public XPAdditions(){
 
-    @Mod.EventHandler
-    public void preInit (FMLPreInitializationEvent event){
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
 
-        generalEventHandler = new GeneralEventHandler();
         MinecraftForge.EVENT_BUS.register(generalEventHandler);
 
         MinecraftForge.EVENT_BUS.register(ModCapabilities.class);
+    }
 
-        new ConfigurationHandler(event.getSuggestedConfigurationFile());
-        ModLogger = event.getModLog();
 
-        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID);
+    public void preInit (final FMLCommonSetupEvent event){
+
+        generalEventHandler = new GeneralEventHandler();
+
+        //Configuration needs complete Rewriting!
+        //new ConfigurationHandler(event.getSuggestedConfigurationFile());
+
+        networkWrapper = NetworkRegistry.newSimpleChannel(new ResourceLocation(Reference.MOD_ID, "main"), ()-> Reference.PROTOCOL_VERSION, Reference.PROTOCOL_VERSION::equals, Reference.PROTOCOL_VERSION::equals);
         MessageRegistry.register(networkWrapper);
 
         this.proxy.preInit(event);
@@ -63,6 +56,9 @@ public class XPAdditions {
         LogHelper.info("PreInitialization complete!");
     }
 
+    //Do Init Events need to be done in preInit as well now?
+    //This doesnt work any longer
+    /*
     @Mod.EventHandler
     public void Init (FMLInitializationEvent event){
 
@@ -70,13 +66,7 @@ public class XPAdditions {
 
         LogHelper.info("Initialization complete!");
     }
+     */
 
-    @Mod.EventHandler
-    public void postInit (FMLPostInitializationEvent event){
-
-        this.proxy.postInit(event);
-
-        LogHelper.info("PostInitialization complete!");
-    }
 
 }

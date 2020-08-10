@@ -3,7 +3,7 @@ package com.xpmodder.xpadditions.handler;
 import com.xpmodder.xpadditions.professions.ProfessionsSystem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class GeneralEventHandler {
 
