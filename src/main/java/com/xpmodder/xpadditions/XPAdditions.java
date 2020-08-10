@@ -23,7 +23,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
+//@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
+@Mod(Reference.MOD_ID)
 public class XPAdditions {
 
     public static SimpleNetworkWrapper networkWrapper;
