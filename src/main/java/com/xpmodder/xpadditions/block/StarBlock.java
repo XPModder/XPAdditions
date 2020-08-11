@@ -1,20 +1,18 @@
 package com.xpmodder.xpadditions.block;
 
 import com.xpmodder.xpadditions.config.ConfigIntValues;
-import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.reference.Reference;
-import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.MathHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.ToolType;
@@ -39,33 +37,33 @@ public class StarBlock extends Block {
 
     }
 
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 
-        super.onBlockAdded(worldIn, pos, state);
+        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
 
         addLightsource(worldIn, pos);
 
     }
 
-    public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
+    public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) {
+
+        RemoveLightsources(worldIn.getWorld(), pos);
+
+    }
+
+    public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn){
 
         RemoveLightsources(worldIn, pos);
 
     }
 
-    public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn){
-
-        RemoveLightsources(worldIn, pos);
-
-    }
-
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void tick(BlockState state, World worldIn, BlockPos pos, Random rand)
     {
         addLightsource(worldIn, pos);
     }
 
     //When the block is right-clicked, add a new lightsource and remove a little XP from the player
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult hit)
     {
         if(playerIn.isCreative()){
 
@@ -155,9 +153,9 @@ public class StarBlock extends Block {
 
                         if (worldIn.isAirBlock(currPos)) {
 
-                            chunk = worldIn.getChunkFromBlockCoords(currPos);
+                            chunk = worldIn.getChunkAt(currPos);
 
-                            if (chunk.getLightFor(EnumSkyBlock.BLOCK, currPos) < 8) {
+                            if (chunk.getLightValue(currPos) < 8) {
 
                                 if(place) {
 

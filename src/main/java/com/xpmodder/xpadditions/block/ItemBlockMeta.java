@@ -1,28 +1,22 @@
 package com.xpmodder.xpadditions.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 
-public class ItemBlockMeta extends ItemBlock {
+public class ItemBlockMeta extends BlockItem {
 
     public ItemBlockMeta(Block block) {
-        super(block);
+        super(block, new Item.Properties().maxDamage(0).setNoRepair());
         if (!(block instanceof IMetaBlockName)) {
-            throw new IllegalArgumentException(String.format("The given Block %s is not an instance of ISpecialBlockName!", block.getUnlocalizedName()));
+            throw new IllegalArgumentException(String.format("The given Block %s is not an instance of ISpecialBlockName!", block.getRegistryName()));
         }
-        this.setMaxDamage(0);
-        this.setHasSubtypes(true);
+
     }
 
     public int getMetadata(int damage)
     {
         return damage;
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + "." + ((IMetaBlockName)this.block).getSpecialName(stack);
     }
 
 }

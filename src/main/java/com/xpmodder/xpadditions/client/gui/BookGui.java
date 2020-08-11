@@ -4,12 +4,17 @@ import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.EnumProfessions;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.TextHelper;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,7 +22,7 @@ import java.util.Arrays;
 import static com.xpmodder.xpadditions.handler.GeneralEventHandler.professionsSystem;
 
 
-public class BookGui extends GuiScreen {
+public class BookGui extends Screen {
 
     int xSize = 250;
     int ySize = 202;
@@ -32,7 +37,7 @@ public class BookGui extends GuiScreen {
 
     public BookGui(IInventory playerInv){
 
-        super();
+        super(new StringTextComponent("XPAdditions Guide"));
 
         this.xSize = 250;
         this.ySize = 202;
@@ -44,6 +49,8 @@ public class BookGui extends GuiScreen {
         LogHelper.info(Arrays.toString(this.textHelper.getTextInLines(20)));
 
     }
+
+    //TODO: fix methods and find FontRenderer
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -68,7 +75,7 @@ public class BookGui extends GuiScreen {
 
     public void drawForegroundLayer(int mouseX, int mouseY) {
 
-        EntityPlayer player = this.mc.player;
+        PlayerEntity player = this.minecraft.player;
 
         int startX = (this.width / 2) - (this.xSize / 2);
         int startX2 = (this.width / 2);
@@ -77,8 +84,9 @@ public class BookGui extends GuiScreen {
         int endY = (this.height / 2) + (this.ySize / 2);
         int lineLength = 20;
         String s = "XPAdditions Guide";
-        int TitleWidth = this.fontRenderer.getStringWidth(s);
-        this.fontRenderer.drawString(s, (this.width / 2) - (TitleWidth / 2), 0, this.textColor);            //#404040
+        int TitleWidth = this.getStringWidth(s);
+
+        this.drawString(s, (this.width / 2) - (TitleWidth / 2), 0, this.textColor);            //#404040
         this.maxPage = (int) Math.floor(this.textHelper.getLineNum(lineLength) / 38.0);
 
         if (professionsSystem.getPlayerProfessionNumber(player) < professionsSystem.getPlayerAllowedNumber(player)){

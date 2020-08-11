@@ -2,20 +2,26 @@ package com.xpmodder.xpadditions.client.gui.parts;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 
-public class ModGuiIconButton extends GuiButton{
+
+public class ModGuiIconButton extends Button {
 
     ResourceLocation texture;
     int textureX;
     int textureY;
     boolean on;
 
+    public void onPressed(){
+
+    }
+
+    //TODO: Fix Button
+
     public ModGuiIconButton(int buttonId, int x, int y, int widthIn, int heightIn, boolean on, ResourceLocation buttonIcon, int textureX, int textureY) {
 
-        super(buttonId, x, y, widthIn, heightIn, "");
+        super(buttonId, x, y, widthIn, heightIn, "", (IPressable) -> {this.onPressed();});
         this.texture = buttonIcon;
         this.textureX = textureX;
         this.textureY = textureY;

@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public final class ModCapabilities {
 
-    private static final ResourceLocation PROFESSION_CAP = new ResourceLocation("profession", Reference.MOD_ID);
+    private static final ResourceLocation PROFESSION_CAP = new ResourceLocation(Reference.MOD_ID, "profession");
 
     public static void register(){
         CapabilityManager.INSTANCE.register(IPlayerProfessionCapability.class, new PlayerProfessionStorage(), new PlayerProfessionCallable());
@@ -32,8 +32,8 @@ public final class ModCapabilities {
     public static void onPlayerClone(PlayerEvent.Clone event){
 
         PlayerEntity player = event.getPlayer();
-        IPlayerProfessionCapability professionCapability = player.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
-        IPlayerProfessionCapability oldProfessionCapability = event.getOriginal().getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
+        IPlayerProfessionCapability professionCapability = player.getCapability(PlayerProfessionProvider.PROFESSION_CAP).orElseThrow(() -> new IllegalArgumentException("LazyOptional must not be empty!"));
+        IPlayerProfessionCapability oldProfessionCapability = event.getOriginal().getCapability(PlayerProfessionProvider.PROFESSION_CAP).orElseThrow(() -> new IllegalArgumentException("LazyOptional must not be empty!"));
 
         professionCapability.setProfession(oldProfessionCapability.getProfession());
         professionCapability.setLastNum(oldProfessionCapability.getLastNum());
