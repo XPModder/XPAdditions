@@ -3,16 +3,15 @@ package com.xpmodder.xpadditions.professions;
 import com.xpmodder.xpadditions.capabilities.IPlayerProfessionCapability;
 import com.xpmodder.xpadditions.capabilities.PlayerProfessionProvider;
 import com.xpmodder.xpadditions.utility.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class ProfessionsSystem {
     private List<playerProfessionNumElements> playerNumProfessions = new LinkedList<playerProfessionNumElements>();
     private List<playerProfessionNumElements> playerCounters = new LinkedList<playerProfessionNumElements>();
 
-    public void createProfession(int id, int level, int xp, EntityPlayer playerIn){
+    public void createProfession(int id, int level, int xp, PlayerEntity playerIn){
 
         ModProfessions professions;
 
@@ -53,26 +52,26 @@ public class ProfessionsSystem {
 
     }
 
-    public void createProfession(int id, EntityPlayer playerIn){
+    public void createProfession(int id, PlayerEntity playerIn){
         createProfession(id, 0, 0, playerIn);
     }
 
-    public void onPlayerUpdate(World worldIn, EntityPlayer playerIn){
+    public void onPlayerUpdate(World worldIn, PlayerEntity playerIn){
 
         if (playerProfessions.isEmpty()){
             return;
         }
         for (playerProfessionsElements element : playerProfessions){
             if(element.playerName.equals( playerIn.getName())){
-                if (!worldIn.isRemote && playerIn instanceof EntityPlayerMP) {
-                    element.profession.update(worldIn, (EntityPlayerMP) playerIn);
+                if (!worldIn.isRemote && playerIn instanceof PlayerEntityMP) {
+                    element.profession.update(worldIn, (PlayerEntityMP) playerIn);
                 }
             }
         }
 
     }
 
-    public void onPlayerLoad(EntityPlayer playerIn){
+    public void onPlayerLoad(PlayerEntity playerIn){
 
         IPlayerProfessionCapability professionCapability = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
         int profession = professionCapability.getProfession();
@@ -85,7 +84,7 @@ public class ProfessionsSystem {
 
     }
 
-    public void onPlayerSave(EntityPlayer playerIn){
+    public void onPlayerSave(PlayerEntity playerIn){
 
         IPlayerProfessionCapability professionCapability = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
 
@@ -106,7 +105,7 @@ public class ProfessionsSystem {
 
     }
 
-    public boolean hasPlayerProfession(int profession, EntityPlayer playerIn){
+    public boolean hasPlayerProfession(int profession, PlayerEntity playerIn){
 
         if (playerProfessions.isEmpty()){
             return false;
@@ -122,7 +121,7 @@ public class ProfessionsSystem {
 
     }
 
-    public boolean hasPlayerAnyProfession(EntityPlayer playerIn){
+    public boolean hasPlayerAnyProfession(PlayerEntity playerIn){
 
         if (playerProfessions.isEmpty()){
             return false;
@@ -136,7 +135,7 @@ public class ProfessionsSystem {
 
     }
 
-    public int getPlayerProfession(EntityPlayer playerIn){
+    public int getPlayerProfession(PlayerEntity playerIn){
 
         if (playerProfessions.isEmpty()){
             return EnumProfessions.PROFESSION_NONE.getID();
@@ -150,7 +149,7 @@ public class ProfessionsSystem {
 
     }
 
-    public String getPlayerProfessionName(EntityPlayer playerIn){
+    public String getPlayerProfessionName(PlayerEntity playerIn){
 
         int id = getPlayerProfession(playerIn);
         for (EnumProfessions profession : EnumProfessions.values()) {
@@ -162,7 +161,7 @@ public class ProfessionsSystem {
 
     }
 
-    public int getPlayerProfessionNumber(EntityPlayer playerIn){
+    public int getPlayerProfessionNumber(PlayerEntity playerIn){
 
         int number = 0;
         for (playerProfessionsElements element : playerProfessions){
@@ -174,7 +173,7 @@ public class ProfessionsSystem {
 
     }
 
-    public int getPlayerAllowedNumber(EntityPlayer playerIn){
+    public int getPlayerAllowedNumber(PlayerEntity playerIn){
 
         for (playerProfessionNumElements element : playerNumProfessions){
             if(element.playerName.equals(playerIn.getName())){
@@ -185,7 +184,7 @@ public class ProfessionsSystem {
 
     }
 
-    public int getPlayerProfessionXP(EntityPlayer playerIn){
+    public int getPlayerProfessionXP(PlayerEntity playerIn){
 
         if (playerProfessions.isEmpty()){
             return 0;
@@ -200,7 +199,7 @@ public class ProfessionsSystem {
 
     }
 
-    public String getPlayerProfessionLevel(EntityPlayer playerIn){
+    public String getPlayerProfessionLevel(PlayerEntity playerIn){
 
         if (playerProfessions.isEmpty()){
             return "";
@@ -220,9 +219,10 @@ public class ProfessionsSystem {
     }
 
     @SubscribeEvent
-    public void onPlayerGetXP(PlayerPickupXpEvent event){
-        int level = event.getEntityPlayer().experienceLevel;
-        EntityPlayer player = event.getEntityPlayer();
+    public void onPlayerGetXP(PlayerXpEvent.PickupXp event){
+
+        int level = event.getPlayer().experienceLevel;
+        PlayerEntity player = event.getPlayer();
         boolean found = false;
 
         for (playerProfessionNumElements element : playerNumProfessions) {
@@ -249,7 +249,7 @@ public class ProfessionsSystem {
         }
 
         if (!found){
-            playerNumProfessions.add(new playerProfessionNumElements(0, player.getName()));
+            playerNumProfessions.add(new playerProfessionNumElements(0, new TextComponent(player.getName())));
         }
 
     }
@@ -257,21 +257,21 @@ public class ProfessionsSystem {
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event){
 
-        onPlayerLoad(event.player);
+        onPlayerLoad(event.getPlayer());
 
     }
 
     @SubscribeEvent
     public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event){
 
-        onPlayerSave(event.player);
+        onPlayerSave(event.getPlayer());
 
     }
 
     @SubscribeEvent
     public void onPlayerUpdateEvent(TickEvent.PlayerTickEvent event){
 
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
         boolean found = false;
 
         if (player.experienceLevel < 30){

@@ -2,12 +2,13 @@ package com.xpmodder.xpadditions.capabilities;
 
 import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
 
 public final class ModCapabilities {
 
@@ -21,7 +22,7 @@ public final class ModCapabilities {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
 
-        if (event.getObject() instanceof EntityPlayer){
+        if (event.getObject() instanceof PlayerEntity){
             event.addCapability(PROFESSION_CAP, new PlayerProfessionProvider());
         }
 
@@ -29,7 +30,8 @@ public final class ModCapabilities {
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event){
-        EntityPlayer player = event.getEntityPlayer();
+
+        PlayerEntity player = event.getPlayer();
         IPlayerProfessionCapability professionCapability = player.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
         IPlayerProfessionCapability oldProfessionCapability = event.getOriginal().getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
 

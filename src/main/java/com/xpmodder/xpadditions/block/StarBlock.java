@@ -17,6 +17,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.ToolType;
 
 import java.util.Random;
 
@@ -27,15 +28,14 @@ public class StarBlock extends Block {
 
     public StarBlock(String unlocalizedName) {
 
-        super(Material.ROCK);
-        this.setUnlocalizedName(unlocalizedName);
+        super(
+                Block.Properties.create(Material.ROCK)
+                .hardnessAndResistance(45.0F, 9000.0F).harvestLevel(3)
+                .harvestTool(ToolType.PICKAXE)
+                .lightValue(0)
+                .tickRandomly()
+        );
         this.setRegistryName(Reference.MOD_ID, unlocalizedName);
-        this.setCreativeTab(CreativeTabXPA.XPA_TAB);
-        this.setHardness(45.0F);
-        this.setResistance(9000.0F);
-        this.setHarvestLevel("pickaxe", 3);
-        this.setLightLevel(0.0F);
-        this.setTickRandomly(true);
 
     }
 
