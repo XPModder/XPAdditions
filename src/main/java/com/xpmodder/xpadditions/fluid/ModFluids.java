@@ -1,31 +1,41 @@
 package com.xpmodder.xpadditions.fluid;
 
 
-import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
-import com.xpmodder.xpadditions.utility.LogHelper;
-import net.minecraft.block.material.Material;
+import com.google.common.collect.UnmodifiableIterator;
+import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.IFluidState;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fluids.*;
+
+import java.util.Iterator;
 
 public class ModFluids {
 
-    public static fluidExp fluid_exp;
-    public static BlockFluidXPA block_exp;
+    public static final FlowingFluid FLOWING_EXP = (FlowingFluid)register("flowing_exp", new fluidExp.Flowing());
+    public static final FlowingFluid STILL_EXP = (FlowingFluid)register("still_exp", new fluidExp.Source());
 
-    public static void registerExp() {
-        try {
-            if (fluid_exp != null) {
-                return;
+    private static <T extends Fluid> T register(String registryName, T fluid) {
+
+        //No idea what the problem is
+        //return (Fluid) Registry.register(Registry.FLUID, registryName, fluid);
+        return fluid;
+
+    }
+
+    static {
+        Iterator iterator = Registry.FLUID.iterator();
+
+        while(iterator.hasNext()) {
+            Fluid fluid = (Fluid)iterator.next();
+            UnmodifiableIterator fluidIterator = fluid.getStateContainer().getValidStates().iterator();
+
+            while(fluidIterator.hasNext()) {
+                IFluidState fluidState = (IFluidState)fluidIterator.next();
+                Fluid.STATE_REGISTRY.add(fluidState);
             }
-            fluid_exp = new fluidExp();
-            FluidRegistry.registerFluid(fluid_exp);
-            block_exp = new BlockFluidXPA(fluid_exp, Material.WATER);
-            fluid_exp.setBlock(block_exp);
-            FluidRegistry.addBucketForFluid(fluid_exp);
-            block_exp.initModel();
         }
-        catch (Exception e){
-            LogHelper.error("Exception occured in ModFluids.registerExp! Stacktrace: " + e.fillInStackTrace());
-        }
+
     }
 
 }

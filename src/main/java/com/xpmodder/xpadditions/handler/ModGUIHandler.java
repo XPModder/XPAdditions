@@ -7,10 +7,11 @@ import com.xpmodder.xpadditions.tileentity.XPControllerContainer;
 import com.xpmodder.xpadditions.tileentity.XPControllerTileEntity;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+
 
 public class ModGUIHandler implements IGuiHandler {
 
@@ -19,7 +20,7 @@ public class ModGUIHandler implements IGuiHandler {
     public static final int Book_GUI = 2;
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
 
         switch(ID){
 
@@ -37,7 +38,7 @@ public class ModGUIHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
 
         switch(ID){
 

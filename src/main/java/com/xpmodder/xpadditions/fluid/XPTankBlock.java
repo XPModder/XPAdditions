@@ -1,12 +1,18 @@
 package com.xpmodder.xpadditions.fluid;
 
 
-import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+
 
 public class XPTankBlock extends Block{
 
+    public XPTankBlock(Properties p_i48440_1_) {
+        super(p_i48440_1_);
+    }
+
+
+    //TODO: remove or create
+    /*
     public XPTankBlock(String unlocalizedName, Material material, float hardness, float resistance) {
         super(material);
         this.setUnlocalizedName(unlocalizedName);
@@ -22,6 +28,8 @@ public class XPTankBlock extends Block{
     public XPTankBlock(String unlocalizedName) {
         this(unlocalizedName, 2.0f, 10.0f);
     }
+
+     */
 
 
 

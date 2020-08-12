@@ -1,37 +1,18 @@
 package com.xpmodder.xpadditions.fluid;
 
-import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
-import com.xpmodder.xpadditions.reference.Reference;
-import com.xpmodder.xpadditions.utility.LogHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.BlockFluidClassic;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.fluid.FlowingFluid;
 
 
-public class BlockFluidXPA extends BlockFluidClassic {
+public class BlockFluidXPA extends FlowingFluidBlock {
 
+    protected BlockFluidXPA(FlowingFluid p_i49014_1_, Properties p_i49014_2_) {
+        super(p_i49014_1_, p_i49014_2_);
+    }
+
+    //TODO: remove if not required
+    /*
     public static FluidStack stack;
 
     public BlockFluidXPA(Fluid fluid, Material material) {
@@ -87,5 +68,7 @@ public class BlockFluidXPA extends BlockFluidClassic {
             }
         });
     }
+
+     */
 
 }

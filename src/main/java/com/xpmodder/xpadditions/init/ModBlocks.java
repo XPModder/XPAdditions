@@ -8,11 +8,13 @@ import com.xpmodder.xpadditions.tileentity.XPInterfaceBlock;
 import com.xpmodder.xpadditions.tileentity.XPPlayerConnectorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -33,10 +35,11 @@ public final class ModBlocks {
     public static final Block meteoriteCobbleBlock = new BasicBlock( "meteorite_cobble_block");
     public static final Block meteoriteRockBlock = new DropBlock( "meteorite_rock_block", Material.ROCK, Item.getItemFromBlock(ModBlocks.meteoriteCobbleBlock));
     public static final Block meteoriteStarBlock = new DropBlock( "meteorite_star_block", Material.ROCK, ModItems.starItem, 1, 3);
-    public static final BlockContainer xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block");
+    public static final Block xpInterfaceBlock = new XPInterfaceBlock("xp_interface_block");
     public static final Block xpControllerBlock = new XPControllerBlock("xp_controller_block");
     public static final Block xpPlayerConnectorBlock = new XPPlayerConnectorBlock("xp_player_connector_block");
     public static final Block baseCraftingBlock = new BasicBlock("base_crafting_block");
+    public static final Block fluidEXP = new FlowingFluidBlock(ModFluids.STILL_EXP, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops());
 
     @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
     public static class RegistrationHandler {
@@ -67,7 +70,7 @@ public final class ModBlocks {
                     xpControllerBlock,
                     xpPlayerConnectorBlock,
                     baseCraftingBlock,
-                    ModFluids.block_exp
+                    fluidEXP
             );
 
         }
