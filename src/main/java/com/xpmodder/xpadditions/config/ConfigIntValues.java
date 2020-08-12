@@ -7,7 +7,7 @@ public enum ConfigIntValues {
     ORE_DENSITY("XP Ore: Density", ConfigCategories.WORLD, 2, 1, 100, "How much XP Ore is generated");
 
     public final String name;
-    public final String category;
+    public final ConfigCategories category;
     public final int defaultValue;
     public final int min;
     public final int max;
@@ -17,7 +17,7 @@ public enum ConfigIntValues {
 
     ConfigIntValues(String name, ConfigCategories category, int defaultValue, int min, int max, String desc){
         this.name = name;
-        this.category = category.name;
+        this.category = category;
         this.defaultValue = defaultValue;
         this.min = min;
         this.max = max;

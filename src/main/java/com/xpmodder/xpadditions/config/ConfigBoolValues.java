@@ -8,7 +8,7 @@ public enum ConfigBoolValues {
     GENERATE_END_ORE("End XP Ore", ConfigCategories.WORLD, true, "Should XP Ore be generated in the End?");
 
     public final String name;
-    public final String category;
+    public final ConfigCategories category;
     public final boolean defaultValue;
     public final String desc;
 
@@ -16,7 +16,7 @@ public enum ConfigBoolValues {
 
     ConfigBoolValues(String name, ConfigCategories category, boolean defaultValue, String desc){
         this.name = name;
-        this.category = category.name;
+        this.category = category;
         this.defaultValue = defaultValue;
         this.desc = desc;
     }

@@ -1,6 +1,7 @@
 package com.xpmodder.xpadditions;
 
 import com.xpmodder.xpadditions.capabilities.ModCapabilities;
+import com.xpmodder.xpadditions.config.ModConfiguration;
 import com.xpmodder.xpadditions.handler.GeneralEventHandler;
 import com.xpmodder.xpadditions.init.MessageRegistry;
 import com.xpmodder.xpadditions.proxy.ClientProxy;
@@ -11,9 +12,12 @@ import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
@@ -34,15 +38,22 @@ public class XPAdditions {
 
     public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
-    //Proxies seem to be obsolete now
 
     public XPAdditions(){
+
+        //TODO: Remove old Config Classes if no longer needed
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ModConfiguration.CLIENT_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfiguration.COMMON_CONFIG);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
 
         MinecraftForge.EVENT_BUS.register(generalEventHandler);
 
         MinecraftForge.EVENT_BUS.register(ModCapabilities.class);
+
+        ModConfiguration.loadConfig(ModConfiguration.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(Reference.MOD_ID + "-client.toml"));
+        ModConfiguration.loadConfig(ModConfiguration.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(Reference.MOD_ID + "-common.toml"));
+
     }
 
 
