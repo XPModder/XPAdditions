@@ -1,17 +1,18 @@
 package com.xpmodder.xpadditions.client.hud;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.xpmodder.xpadditions.reference.Reference;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.profiler.Profiler;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.profiler.IProfiler;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import static com.xpmodder.xpadditions.handler.GeneralEventHandler.professionsSystem;
 
-public class ProfessionHUD extends Gui {
+public class ProfessionHUD extends Screen {
 
     private static ResourceLocation parts = new ResourceLocation(Reference.MOD_ID, "textures/gui/hud_parts.png");
     private int width;
@@ -20,20 +21,22 @@ public class ProfessionHUD extends Gui {
     private int ySize = 5;
     private final int White = 16777215;     //255,255,255
 
-    public ProfessionHUD() {}
+    public ProfessionHUD(ITextComponent title) {
+        super(title);
+    }
 
     public void Render(RenderGameOverlayEvent.Pre event){
 
         GlStateManager.pushMatrix();
-        Minecraft mc = Minecraft.getMinecraft();
-        Profiler profiler = mc.mcProfiler;
+        Minecraft mc = Minecraft.getInstance();
+        IProfiler profiler = mc.getProfiler();
         profiler.startSection("xpadditions-hud");
-        ScaledResolution scaledRes = new ScaledResolution(mc);
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-        GlStateManager.enableAlpha();
+        MainWindow scaledRes = mc.mainWindow;
+        GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+        GlStateManager.enableAlphaTest();
         mc.getTextureManager().bindTexture(parts);          //Bind the texture for our hud elemets
-        this.width = mc.displayWidth;
-        this.height = mc.displayHeight;
+        this.width = mc.currentScreen.width;
+        this.height = mc.currentScreen.height;
         int x = (scaledRes.getScaledWidth() / 2) - (xSize / 2);     //Calculate the x and y coordinates for the profession bar
         int y = (scaledRes.getScaledHeight() - 55);
         double scale = 0.5;                                         //Scale for the GlStateManager
@@ -65,12 +68,12 @@ public class ProfessionHUD extends Gui {
 
             if (professionsSystem != null) {
 
-                this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
-                this.drawTexturedModalRect(x, y, 0, 5, amountFilled, this.ySize);
+                this.blit(x, y, 0, 0, this.xSize, this.ySize);
+                this.blit(x, y, 0, 5, amountFilled, this.ySize);
 
                 if (!professionsSystem.getPlayerProfessionName(mc.player).equals("None")) {
 
-                    GlStateManager.scale(scale, scale, scale);
+                    GlStateManager.scaled(scale, scale, scale);
                     this.drawString(mc.fontRenderer, Text, TextX1, TextY, this.White);
                     this.drawString(mc.fontRenderer, Text2, TextX2, TextY, this.White);
                     this.drawString(mc.fontRenderer, Text3, TextX3, TextY, this.White);
@@ -79,7 +82,7 @@ public class ProfessionHUD extends Gui {
             }
         }
         mc.getTextureManager().deleteTexture(parts);
-        mc.getTextureManager().bindTexture(ICONS);
+        mc.getTextureManager().bindTexture(GUI_ICONS_LOCATION);
         GlStateManager.popMatrix();
         profiler.endSection();
 

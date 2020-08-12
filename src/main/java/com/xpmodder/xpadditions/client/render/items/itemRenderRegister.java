@@ -3,7 +3,7 @@ package com.xpmodder.xpadditions.client.render.items;
 import com.xpmodder.xpadditions.init.ModItems;
 import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 
 public class itemRenderRegister {
@@ -20,8 +20,8 @@ public class itemRenderRegister {
     }
 
     public static void reg(Item item) {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-                .register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+        Minecraft.getInstance().getItemRenderer().getItemModelMesher()
+                .register(item, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getRegistryName().toString().substring(5), "inventory"));
     }
 
 }

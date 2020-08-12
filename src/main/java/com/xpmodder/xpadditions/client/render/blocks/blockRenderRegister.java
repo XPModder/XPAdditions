@@ -4,7 +4,7 @@ import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 
 public final class blockRenderRegister {
@@ -22,20 +22,20 @@ public final class blockRenderRegister {
         reg(ModBlocks.meteoriteCobbleBlock);
         reg(ModBlocks.meteoriteRockBlock);
         reg(ModBlocks.meteoriteStarBlock);
-        reg(ModBlocks.xpInterfaceBlock);
+        //reg(ModBlocks.xpInterfaceBlock);
         reg(ModBlocks.xpControllerBlock);
         reg(ModBlocks.xpPlayerConnectorBlock);
 
     }
 
     public static void reg(Block block) {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-                .register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
+        Minecraft.getInstance().getItemRenderer().getItemModelMesher()
+                .register(Item.getItemFromBlock(block), new ModelResourceLocation(Reference.MOD_ID + ":" + block.getRegistryName().toString().substring(5), "inventory"));
     }
 
     public static void reg(Block block, String file) {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
-                .register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + file, "inventory"));
+        Minecraft.getInstance().getItemRenderer().getItemModelMesher()
+                .register(Item.getItemFromBlock(block), new ModelResourceLocation(Reference.MOD_ID + ":" + file, "inventory"));
     }
 
     public static void preInit(){ }

@@ -1,15 +1,14 @@
 package com.xpmodder.xpadditions.client.hud;
 
 import com.xpmodder.xpadditions.reference.Reference;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = Reference.MOD_ID)
+
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Reference.MOD_ID)
 public class HudEventHandler {
 
     private static ProfessionHUD professionHUD = new ProfessionHUD();

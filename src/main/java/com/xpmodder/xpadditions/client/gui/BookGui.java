@@ -1,22 +1,17 @@
 package com.xpmodder.xpadditions.client.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.EnumProfessions;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import com.xpmodder.xpadditions.utility.TextHelper;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import static com.xpmodder.xpadditions.handler.GeneralEventHandler.professionsSystem;
@@ -50,26 +45,26 @@ public class BookGui extends Screen {
 
     }
 
-    //TODO: fix methods and find FontRenderer
+    //Note: drawTextureModelRect -> this.blit(x,y,u,v,width,height)
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    public void render(int mouseX, int mouseY, float partialTicks) {
 
         this.drawBackgroundLayer(partialTicks, mouseX, mouseY);
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableLighting();
-        GlStateManager.disableDepth();
-        super.drawScreen(mouseX, mouseY, partialTicks);
+        GlStateManager.disableDepthTest();
+        super.render(mouseX, mouseY, partialTicks);
         this.drawForegroundLayer(mouseX, mouseY);
 
     }
 
     public void drawBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/book_gui.png"));
-        this.drawTexturedModalRect((this.width / 2) - (this.xSize / 2), (this.height / 2) - (this.ySize / 2), 0, 0, this.xSize, this.ySize);
+        this.minecraft.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/book_gui.png"));
+        this.blit((this.width / 2) - (this.xSize / 2), (this.height / 2) - (this.ySize / 2), 0, 0, this.xSize, this.ySize);
 
     }
 
@@ -83,28 +78,27 @@ public class BookGui extends Screen {
         int endX = (this.width / 2) + (this.xSize / 2);
         int endY = (this.height / 2) + (this.ySize / 2);
         int lineLength = 20;
-        String s = "XPAdditions Guide";
-        int TitleWidth = this.getStringWidth(s);
 
-        this.drawString(s, (this.width / 2) - (TitleWidth / 2), 0, this.textColor);            //#404040
         this.maxPage = (int) Math.floor(this.textHelper.getLineNum(lineLength) / 38.0);
 
         if (professionsSystem.getPlayerProfessionNumber(player) < professionsSystem.getPlayerAllowedNumber(player)){
 
             this.regularText = false;
-            this.fontRenderer.drawString("You have unlocked", startX + 10, startY + 10, this.textColor);
-            this.fontRenderer.drawString("a profession!", startX + 10, startY + 20, this.textColor);
-            this.fontRenderer.drawString("Select your preferred", startX + 10, startY + 40, this.textColor);
-            this.fontRenderer.drawString("new profession on", startX + 10, startY + 50, this.textColor);
-            this.fontRenderer.drawString("the right page!", startX + 10, startY + 60, this.textColor);
+            this.font.drawString("You have unlocked", startX + 10, startY + 10, this.textColor);
+            this.font.drawString("a profession!", startX + 10, startY + 20, this.textColor);
+            this.font.drawString("Select your preferred", startX + 10, startY + 40, this.textColor);
+            this.font.drawString("new profession on", startX + 10, startY + 50, this.textColor);
+            this.font.drawString("the right page!", startX + 10, startY + 60, this.textColor);
 
-            this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/parts/parts.png"));
-            this.addButton(new GuiButton(0, startX2 + 4, startY + 10, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_BLACKSMITH.getName()));
-            this.addButton(new GuiButton(1, startX2 + ((this.xSize / 4) + 2), startY + 10, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_BUILDER.getName()));
-            this.addButton(new GuiButton(2, startX2 + 4, startY + 35, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_FARMER.getName()));
-            this.addButton(new GuiButton(3, startX2 + ((this.xSize / 4) + 2), startY + 35, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_MINER.getName()));
-            this.addButton(new GuiButton(4, startX2 + 4, startY + 60, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_SOLDIER.getName()));
-            this.addButton(new GuiButton(5, startX2 + ((this.xSize / 4) + 2), startY + 60, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_TRADER.getName()));
+            this.minecraft.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/parts/parts.png"));
+            this.addButton(new Button(startX2 + 4, startY + 10, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_BLACKSMITH.getName(), this::onButtonPressed));
+            this.addButton(new Button(startX2 + ((this.xSize / 4) + 2), startY + 10, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_BUILDER.getName(), this::onButtonPressed));
+            this.addButton(new Button(startX2 + 4, startY + 35, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_FARMER.getName(), this::onButtonPressed));
+            this.addButton(new Button(startX2 + ((this.xSize / 4) + 2), startY + 35, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_MINER.getName(), this::onButtonPressed));
+            this.addButton(new Button(startX2 + 4, startY + 60, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_SOLDIER.getName(), this::onButtonPressed));
+            this.addButton(new Button(startX2 + ((this.xSize / 4) + 2), startY + 60, (this.xSize / 4) - 6, 20, EnumProfessions.PROFESSION_TRADER.getName(), this::onButtonPressed));
+
+
 
         }
         else {
@@ -116,7 +110,7 @@ public class BookGui extends Screen {
             for (int i = (0 + (this.page * 38)); i < (19 + (this.page * 38)); i++) {
 
                 if (i < Text.length) {
-                    this.fontRenderer.drawString(Text[i], startX + 10, startY + (10 * j) + 8, this.textColor);
+                    this.font.drawString(Text[i], startX + 10, startY + (10 * j) + 8, this.textColor);
                     j++;
                 }
 
@@ -125,7 +119,7 @@ public class BookGui extends Screen {
             for (int i = (19 + (this.page * 38)); i < (38 + (this.page * 38)); i++) {
 
                 if (i < Text.length) {
-                    this.fontRenderer.drawString(Text[i], startX2 + 10, startY + (10 * j) + 8, this.textColor);
+                    this.font.drawString(Text[i], startX2 + 10, startY + (10 * j) + 8, this.textColor);
                     j++;
                 }
 
@@ -133,23 +127,23 @@ public class BookGui extends Screen {
 
             //Arrows: 1: 2, 228 | 2: 25, 228 | 3: 2, 241 | 4: 25, 241 | Size: 19, 11
 
-            GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-            this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/book_gui.png"));
+            GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+            this.minecraft.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/book_gui.png"));
 
             if (mouseY < endY + 11 && mouseY > endY) {
                 if (mouseX < startX + 14 && mouseX > startX - 5) {
-                    this.drawTexturedModalRect(startX - 5, endY, 25, 241, 19, 11);
+                    this.blit(startX - 5, endY, 25, 241, 19, 11);
                 } else {
-                    this.drawTexturedModalRect(startX - 5, endY, 2, 241, 19, 11);
+                    this.blit(startX - 5, endY, 2, 241, 19, 11);
                 }
                 if (mouseX < endX + 4 && mouseX > endX - 15) {
-                    this.drawTexturedModalRect(endX - 15, endY, 25, 228, 19, 11);
+                    this.blit(endX - 15, endY, 25, 228, 19, 11);
                 } else {
-                    this.drawTexturedModalRect(endX - 15, endY, 2, 228, 19, 11);
+                    this.blit(endX - 15, endY, 2, 228, 19, 11);
                 }
             } else {
-                this.drawTexturedModalRect(startX - 5, endY, 2, 241, 19, 11);
-                this.drawTexturedModalRect(endX - 15, endY, 2, 228, 19, 11);
+                this.blit(startX - 5, endY, 2, 241, 19, 11);
+                this.blit(endX - 15, endY, 2, 228, 19, 11);
             }
 
         }
@@ -157,7 +151,7 @@ public class BookGui extends Screen {
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
 
         int startX = (this.width / 2) - (this.xSize / 2);
         int endX = (this.width / 2) + (this.xSize / 2);
@@ -178,18 +172,19 @@ public class BookGui extends Screen {
             }
         }
 
-        super.initGui();
+        super.init();
+
+        return true;
+
     }
 
-    @Override
-    protected void actionPerformed(GuiButton button) throws IOException
-    {
+    public void onButtonPressed(Button button){
 
         if (!this.regularText) {
 
-            professionsSystem.createProfession(button.id + 1, this.mc.player);
+            professionsSystem.createProfession(EnumProfessions.valueOf(button.getMessage()).getID(), this.minecraft.player);
 
-            buttonList.clear();
+            buttons.clear();
             this.regularText = true;
 
         }

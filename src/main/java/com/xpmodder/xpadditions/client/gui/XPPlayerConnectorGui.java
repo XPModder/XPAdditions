@@ -2,6 +2,8 @@ package com.xpmodder.xpadditions.client.gui;
 
 import com.xpmodder.xpadditions.tileentity.XPPlayerConnectorContainer;
 import com.xpmodder.xpadditions.tileentity.XPPlayerConnectorTileEntity;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 
 public class XPPlayerConnectorGui extends ModBaseGui {
@@ -9,9 +11,9 @@ public class XPPlayerConnectorGui extends ModBaseGui {
     private IInventory playerInv;
     private XPPlayerConnectorTileEntity te;
 
-    public XPPlayerConnectorGui(IInventory playerInv, XPPlayerConnectorTileEntity te) {
+    public XPPlayerConnectorGui(PlayerInventory playerInv, XPPlayerConnectorTileEntity te) {
 
-        super(new XPPlayerConnectorContainer(playerInv, te));
+        super(new XPPlayerConnectorContainer(playerInv, te), playerInv, "XP Player Connector");
 
         this.playerInv = playerInv;
         this.te = te;
@@ -31,4 +33,8 @@ public class XPPlayerConnectorGui extends ModBaseGui {
 
     }
 
+    @Override
+    protected void onButtonPress(Button button) {
+
+    }
 }

@@ -3,11 +3,14 @@ package com.xpmodder.xpadditions;
 import com.xpmodder.xpadditions.capabilities.ModCapabilities;
 import com.xpmodder.xpadditions.handler.GeneralEventHandler;
 import com.xpmodder.xpadditions.init.MessageRegistry;
+import com.xpmodder.xpadditions.proxy.ClientProxy;
 import com.xpmodder.xpadditions.proxy.CommonProxy;
+import com.xpmodder.xpadditions.proxy.ServerProxy;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -15,6 +18,8 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.lang.reflect.Proxy;
 
 
 //@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
@@ -27,9 +32,9 @@ public class XPAdditions {
 
     public static GeneralEventHandler generalEventHandler;
 
+    public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+
     //Proxies seem to be obsolete now
-    //@SidedProxy(clientSide = Reference.ClientProxyClass, serverSide = Reference.ServerProxyClass)
-    public static CommonProxy proxy;
 
     public XPAdditions(){
 

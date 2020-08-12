@@ -1,5 +1,6 @@
 package com.xpmodder.xpadditions.client.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.init.ModBlocks;
 import com.xpmodder.xpadditions.network.MessageRedstoneSetting;
@@ -8,13 +9,13 @@ import com.xpmodder.xpadditions.tileentity.XPInterfaceContainer;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
 import com.xpmodder.xpadditions.utility.EnumRSMode;
 import com.xpmodder.xpadditions.utility.XPHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import java.io.IOException;
 
 
 public class XPInterfaceGui extends ModBaseGui {
@@ -22,9 +23,9 @@ public class XPInterfaceGui extends ModBaseGui {
     private IInventory playerInv;
     private XPInterfaceTileEntity te;
 
-    public XPInterfaceGui(IInventory playerInv, XPInterfaceTileEntity te){
+    public XPInterfaceGui(PlayerInventory playerInv, XPInterfaceTileEntity te){
 
-        super(new XPInterfaceContainer(playerInv, te));
+        super(new XPInterfaceContainer(playerInv, te), playerInv, "XP Interface");
 
         this.playerInv = playerInv;
         this.te = te;
@@ -53,22 +54,22 @@ public class XPInterfaceGui extends ModBaseGui {
         int sx = (width - xSize) / 2;
         int sy = (height - ySize) / 2;
 
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
         GlStateManager.enableLighting();
 
-        this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Item.getItemFromBlock(ModBlocks.xpBlock)), sx + 49, sy + 8);
+        this.itemRenderer.renderItemAndEffectIntoGUI(new ItemStack(Item.getItemFromBlock(ModBlocks.xpBlock)), sx + 49, sy + 8);
 
         GlStateManager.disableLighting();
 
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/xp_interface_gui.png"));
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        this.minecraft.getTextureManager().bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/gui/xp_interface_gui.png"));
+        this.blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
         if (te.isConnected()){
 
             int high = getHeightScaled(58);
-            this.drawTexturedModalRect(sx + 83, sy + 66 - high, 176, 0, 9, high);
+            this.blit(sx + 83, sy + 66 - high, 176, 0, 9, high);
             int highF = getHeightScaledFluid(58);
-            this.drawTexturedModalRect(sx + 110, sy + 66 - highF, 186, 0, 16, highF);
+            this.blit(sx + 110, sy + 66 - highF, 186, 0, 16, highF);
 
         }
 
@@ -80,15 +81,14 @@ public class XPInterfaceGui extends ModBaseGui {
         String s = "Items";
         String s2 = "Fluids";
         String s3 = String.valueOf(te.xp / XPHelper.getXPforLevelDiff(0, XPHelper.getLevelforBlocks(1)));
-        this.fontRenderer.drawString(s, 8, 40, 4210752);            //#404040
-        this.fontRenderer.drawString(s2, 135, 40, 4210752);
-        this.fontRenderer.drawString(s3, 50, 30, 4210752);
-        this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 71, 4210752);      //#404040
+        this.font.drawString(s, 8, 40, 4210752);            //#404040
+        this.font.drawString(s2, 135, 40, 4210752);
+        this.font.drawString(s3, 50, 30, 4210752);
 
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
 
         int sx = (width - xSize) / 2;
         int sy = (height - ySize) / 2;
@@ -117,7 +117,10 @@ public class XPInterfaceGui extends ModBaseGui {
                 }
             }
         }
-        super.initGui();
+        super.init();
+
+        return true;
+
     }
 
     private int getHeightScaled(int pixels) {
@@ -146,4 +149,8 @@ public class XPInterfaceGui extends ModBaseGui {
 
     }
 
+    @Override
+    protected void onButtonPress(Button button) {
+
+    }
 }
