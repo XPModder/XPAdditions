@@ -5,6 +5,7 @@ import com.xpmodder.xpadditions.tileentity.XPControllerTileEntity;
 import com.xpmodder.xpadditions.tileentity.XPInterfaceTileEntity;
 import com.xpmodder.xpadditions.tileentity.XPPlayerConnectorTileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModTileEntities {
@@ -14,6 +15,7 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(XPInterfaceTileEntity.class, new ResourceLocation(Reference.MOD_ID, "xp_interface_tile_entity"));
         GameRegistry.registerTileEntity(XPControllerTileEntity.class, new ResourceLocation(Reference.MOD_ID, "_xp_controller_tile_entity"));
         GameRegistry.registerTileEntity(XPPlayerConnectorTileEntity.class, new ResourceLocation(Reference.MOD_ID, "_xp_player_connector_tile_entity"));
+
 
     }
 

@@ -25,6 +25,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Proxy;
 
+//TODO: Packages: network, particle, proxy, reference, tileentity, utility, world, xpnetwork
+//TODO: Classes: init.ModBlocks, init.ModTileEntities, item.BookItem
 
 //@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, guiFactory = "com.xpmodder.xpadditions.config.GuiFactory")
 @Mod(Reference.MOD_ID)

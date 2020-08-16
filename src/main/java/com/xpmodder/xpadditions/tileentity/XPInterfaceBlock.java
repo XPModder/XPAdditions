@@ -4,22 +4,23 @@ import com.xpmodder.xpadditions.XPAdditions;
 import com.xpmodder.xpadditions.creativetab.CreativeTabXPA;
 import com.xpmodder.xpadditions.handler.ModGUIHandler;
 import com.xpmodder.xpadditions.reference.Reference;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class XPInterfaceBlock extends BlockContainer{
+public class XPInterfaceBlock extends ContainerBlock {
 
 
 
@@ -32,23 +33,21 @@ public class XPInterfaceBlock extends BlockContainer{
     public XPInterfaceBlock(String unlocalizedName){
 
         super(Material.IRON);
-        this.setUnlocalizedName(unlocalizedName);
         this.setRegistryName(Reference.MOD_ID, unlocalizedName);
-        this.setCreativeTab(CreativeTabXPA.XPA_TAB);
 
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
 
         return new XPInterfaceTileEntity();
 
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state){
+    public BlockRenderType getRenderType(BlockState state){
 
-        return EnumBlockRenderType.MODEL;
+        return BlockRenderType.MODEL;
 
     }
 
@@ -61,11 +60,11 @@ public class XPInterfaceBlock extends BlockContainer{
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 
         if (stack.hasDisplayName()) {
 
-            ((XPInterfaceTileEntity) worldIn.getTileEntity(pos)).setCustomName(stack.getDisplayName());
+            ((XPInterfaceTileEntity) worldIn.getTileEntity(pos)).setCustomName(stack.getDisplayName().getString());
 
         }
         if (stack.hasTagCompound()){
@@ -78,7 +77,7 @@ public class XPInterfaceBlock extends BlockContainer{
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult hit) {
 
         if (!worldIn.isRemote) {
 

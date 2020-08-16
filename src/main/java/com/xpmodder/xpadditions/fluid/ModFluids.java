@@ -6,7 +6,6 @@ import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.util.registry.Registry;
-import net.minecraftforge.fluids.*;
 
 import java.util.Iterator;
 
@@ -17,9 +16,7 @@ public class ModFluids {
 
     private static <T extends Fluid> T register(String registryName, T fluid) {
 
-        //No idea what the problem is
-        //return (Fluid) Registry.register(Registry.FLUID, registryName, fluid);
-        return fluid;
+        return (T) Registry.register(Registry.FLUID, registryName, fluid);
 
     }
 

@@ -4,14 +4,15 @@ import com.xpmodder.xpadditions.capabilities.IPlayerProfessionCapability;
 import com.xpmodder.xpadditions.capabilities.PlayerProfessionProvider;
 import com.xpmodder.xpadditions.utility.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ProfessionsSystem {
             professions = new Blacksmith();
         }
 
-        playerProfessions.add(new playerProfessionsElements(professions, playerIn.getName()));
+        playerProfessions.add(new playerProfessionsElements(professions, playerIn.getName().getString()));
         this.onPlayerSave(playerIn);
 
     }
@@ -63,8 +64,8 @@ public class ProfessionsSystem {
         }
         for (playerProfessionsElements element : playerProfessions){
             if(element.playerName.equals( playerIn.getName())){
-                if (!worldIn.isRemote && playerIn instanceof PlayerEntityMP) {
-                    element.profession.update(worldIn, (PlayerEntityMP) playerIn);
+                if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity) {
+                    element.profession.update(worldIn, (ServerPlayerEntity) playerIn);
                 }
             }
         }
@@ -73,7 +74,8 @@ public class ProfessionsSystem {
 
     public void onPlayerLoad(PlayerEntity playerIn){
 
-        IPlayerProfessionCapability professionCapability = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
+        LazyOptional<IPlayerProfessionCapability> profCap = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
+        IPlayerProfessionCapability professionCapability = profCap.orElseThrow(() -> new IllegalArgumentException("LazyOptional must not be empty!"));
         int profession = professionCapability.getProfession();
         int level = professionCapability.getLevel();
         int xp = professionCapability.getLastNum();
@@ -86,7 +88,8 @@ public class ProfessionsSystem {
 
     public void onPlayerSave(PlayerEntity playerIn){
 
-        IPlayerProfessionCapability professionCapability = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
+        LazyOptional<IPlayerProfessionCapability> profCap = playerIn.getCapability(PlayerProfessionProvider.PROFESSION_CAP, null);
+        IPlayerProfessionCapability professionCapability = profCap.orElseThrow(() -> new IllegalArgumentException("LazyOptional must not be empty!"));
 
         professionCapability.setProfession(EnumProfessions.PROFESSION_NONE.getID());
         professionCapability.setLevel(EnumCareerLevel.LEVEL_NOVICE.getID());
@@ -241,15 +244,15 @@ public class ProfessionsSystem {
                 if (level >= 30 && level < 100) {
                     if (element.num == 0) {
                         element.num = 1;
-                        player.sendMessage(new TextComponentString("You unlocked your first profession!"));
-                        player.sendMessage(new TextComponentString("Select your profession in the XPAdditions Guide!"));
+                        player.sendMessage(new StringTextComponent("You unlocked your first profession!"));
+                        player.sendMessage(new StringTextComponent("Select your profession in the XPAdditions Guide!"));
                     }
                 }
             }
         }
 
         if (!found){
-            playerNumProfessions.add(new playerProfessionNumElements(0, new TextComponent(player.getName())));
+            playerNumProfessions.add(new playerProfessionNumElements(0, player.getName().getString()));
         }
 
     }
@@ -302,7 +305,7 @@ public class ProfessionsSystem {
         }
 
         if (!found){
-            playerCounters.add(new playerProfessionNumElements(0, player.getName()));
+            playerCounters.add(new playerProfessionNumElements(0, player.getName().getString()));
         }
 
     }

@@ -1,12 +1,12 @@
 package com.xpmodder.xpadditions.network;
 
+
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+
 
 public class MessageDestroyBlock implements IMessage {
 
@@ -40,15 +40,15 @@ public class MessageDestroyBlock implements IMessage {
     public static class MessageHandler implements IMessageHandler<MessageDestroyBlock, IMessage>{
 
         @Override
-        public IMessage onMessage(MessageDestroyBlock message, MessageContext ctx) {
+        public Message onMessage(MessageDestroyBlock message, MessageContext ctx) {
 
-            EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
+            ServerPlayerEntity serverPlayer = ctx.getServerHandler().player;
             World serverWorld = serverPlayer.getServerWorld();
             BlockPos pos = message.blockPos;
             int destroy = message.toSend;
 
             if(destroy == 1){
-                serverWorld.setBlockToAir(pos);
+                serverWorld.removeBlock(pos, false);
             }
 
             return null;

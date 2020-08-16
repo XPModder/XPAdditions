@@ -6,6 +6,7 @@ import com.xpmodder.xpadditions.handler.ModGUIHandler;
 import com.xpmodder.xpadditions.reference.Reference;
 import com.xpmodder.xpadditions.utility.LogHelper;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class XPControllerBlock extends BlockContainer {
+public class XPControllerBlock extends ContainerBlock {
 
     private String placer;
 

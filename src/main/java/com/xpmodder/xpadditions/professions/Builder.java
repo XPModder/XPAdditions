@@ -1,12 +1,11 @@
 package com.xpmodder.xpadditions.professions;
 
 import com.xpmodder.xpadditions.utility.EnumProfessions;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatBase;
-import net.minecraft.stats.StatList;
+import net.minecraft.stats.Stat;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -18,8 +17,8 @@ public class Builder extends ModProfessions {
     private static Item[] Tools = {
             Item.getItemFromBlock(Blocks.STONE),
             Item.getItemFromBlock(Blocks.SANDSTONE),
-            Item.getItemFromBlock(Blocks.BRICK_BLOCK),
-            Item.getItemFromBlock(Blocks.STONEBRICK)                  //To be continued
+            Item.getItemFromBlock(Blocks.BRICKS),
+            Item.getItemFromBlock(Blocks.STONE_BRICKS)                  //To be continued
     };
 
     public Builder(int level, int oldNum){
@@ -31,7 +30,7 @@ public class Builder extends ModProfessions {
     }
 
     @Override
-    public void update(World worldIn, EntityPlayerMP playerIn) {
+    public void update(World worldIn, ServerPlayerEntity playerIn) {
 
         int num = 0;
         Random rand = new Random();
@@ -40,12 +39,12 @@ public class Builder extends ModProfessions {
             this.xp --;
         }
 
-        for(StatBase statBase: StatList.USE_ITEM_STATS) {
+        for(Stat statBase: Stats.ITEM_USED) {
 
             for (Item item : Tools) {           //Loop through the Items
 
-                if (statBase.getStatName().getFormattedText().contains(item.getItemStackDisplayName(new ItemStack(item)))) {         //get the uses of the current item
-                    num += playerIn.getStatFile().readStat(statBase);       //and increase the number by that value
+                if (statBase.getName().contains(item.getName().getString())) {         //get the uses of the current item
+                    num += playerIn.getStats().getValue(statBase);       //and increase the number by that value
                 }
 
             }
@@ -53,7 +52,7 @@ public class Builder extends ModProfessions {
         }
 
         if (num > this.Counter) {       //When the number is bigger than the pervious one
-            this.xp++;                  //Increase the xp
+            this.xp += 10;              //Increase the xp
             this.Counter = num;         //And set the Counter to our new value
         }
 

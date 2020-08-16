@@ -8,22 +8,17 @@ public class BasicItem extends Item {
 
     public BasicItem(String UnlocalizedName){
 
-        super();
+        super(new Item.Properties().group(CreativeTabXPA.XPA_TAB).setNoRepair());
 
-        this.setUnlocalizedName(UnlocalizedName);
         this.setRegistryName(Reference.MOD_ID, UnlocalizedName);
-        this.setCreativeTab(CreativeTabXPA.XPA_TAB);
 
     }
 
     public BasicItem(String UnlocalizedName, int maxStackSize){
 
-        super();
+        super(new Item.Properties().group(CreativeTabXPA.XPA_TAB).setNoRepair().maxStackSize(maxStackSize));
 
-        this.setUnlocalizedName(UnlocalizedName);
         this.setRegistryName(Reference.MOD_ID, UnlocalizedName);
-        this.setCreativeTab(CreativeTabXPA.XPA_TAB);
-        this.setMaxStackSize(maxStackSize);
 
     }
 

@@ -1,6 +1,6 @@
 package com.xpmodder.xpadditions.professions;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
 
 public abstract class ModProfessions {
@@ -50,6 +50,6 @@ public abstract class ModProfessions {
         return Effects[Level][Effect];
     }
 
-    public abstract void update(World worldIn, EntityPlayerMP playerIn);
+    public abstract void update(World worldIn, ServerPlayerEntity playerIn);
 
 }
