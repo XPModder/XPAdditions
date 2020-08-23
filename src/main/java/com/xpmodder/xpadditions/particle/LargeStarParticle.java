@@ -1,35 +1,22 @@
 package com.xpmodder.xpadditions.particle;
 
-import com.xpmodder.xpadditions.handler.ParticleTextureHandler;
-import com.xpmodder.xpadditions.reference.Reference;
-import com.xpmodder.xpadditions.utility.LogHelper;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.texture.PngSizeInfo;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.SimpleResource;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class LargeStarParticle extends Particle {
+//TODO: create all the other classes and assets now required for particles!
 
-    //public final ResourceLocation largeStarRL = new ResourceLocation(Reference.MOD_ID, "entity/large_star_particle");
+public class LargeStarParticle extends Particle {
 
     public LargeStarParticle(World worldIn, double x, double y, double z, double velocityX, double velocityY, double velocityZ){
 
         super(worldIn, x, y, z, velocityX, velocityY, velocityZ);
 
         this.particleAlpha = 0.99F;
-        setParticleTexture(ParticleTextureHandler.starParticle);
-
-    }
-
-    @Override
-    public int getFXLayer() {
-
-        return 1;
 
     }
 
@@ -41,43 +28,42 @@ public class LargeStarParticle extends Particle {
     }
 
     @Override
-    public void onUpdate(){
+    public void tick(){
 
-        Random ran = new Random();
-        int num = ran.nextInt(20);
+        Random ran = new Random();          //Random used for randomly changing particle size
 
-        if (particleScale > 2){
-            particleScale = 1;
+        int num = ran.nextInt(20);   //This will be used to increase or decrease particle size. 20 -> inc/dec size by up to 0.2
+
+        boolean grow = ran.nextBoolean();   //Determine if we want to grow or shrink the particle
+
+        if(this.width < 0.5f){              //When the particle is already very small, make sure we grow it and do not shrink it any more
+            grow = true;
+        }
+        else if(this.width > 2.5f){         //When the particle is very big, make sure we shrink it and don't grow it any more
+            grow = false;
         }
 
-        switch(num){
-
-            case 1:
-                particleScale = particleScale * (float)1.1;
-                break;
-
-            case 4:
-                particleScale = particleScale * (float)1.2;
-                break;
-
-            case 8:
-                particleScale = particleScale * (float)0.9;
-                break;
-
-            case 12:
-                particleScale = particleScale * (float)0.8;
-                break;
-
-            case 16:
-                particleScale = 1;
-                break;
-
+        if(grow){                           //When we grow the particle, increase its width and height by (num / 100)
+            setSize(this.width + (num / 100.0f), this.height + (num / 100.0f));
+        }                                   //Otherwise decrease the width and height by (num / 100)
+        else {
+            setSize(this.width - (num / 100.0f), this.height - (num / 100.0f));
         }
 
-        if (this.particleMaxAge-- <= 0) {
+        if (this.maxAge-- <= 0) {           //Finally decrease its max age so it will expire eventually
             this.setExpired();
         }
 
+    }
+
+    @Override
+    public void renderParticle(BufferBuilder bufferBuilder, ActiveRenderInfo activeRenderInfo, float v, float v1, float v2, float v3, float v4, float v5) {
+
+    }
+
+    @Override
+    public IParticleRenderType getRenderType() {
+        return null;
     }
 
 }
