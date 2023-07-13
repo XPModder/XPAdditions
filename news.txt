@@ -1,4 +1,0 @@
-Currently doing last changes to 1.12.2!
-1.12.2 will never get a release as Forge has stopped all support for 1.12 .
-This means 1.12.2 will get a very early beta/late alpha version only that is far from complete, or tested.
-Developement will continue for MC 1.14.4, as soon as the conversion to the new version is done.

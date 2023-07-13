@@ -1,6 +1,0 @@
-{
-  "parent": "xpadditions:item/standard_item",
-  "textures": {
-    "all":"xpadditions:fluids/xpjuice_still"
-  }
-}
